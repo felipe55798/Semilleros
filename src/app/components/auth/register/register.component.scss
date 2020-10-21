@@ -1,0 +1,14 @@
+ion-item{
+    border: 1px solid rgba(0, 0, 0, 0.2);
+    margin: 1em 0;
+
+    ion-label{
+        color: rgba(0, 0, 0, 0.5);
+    }
+
+    ion-button{
+        button{
+            border-radius: 0 !important;
+        }
+    }
+}
