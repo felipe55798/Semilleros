@@ -2,6 +2,7 @@ import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { LoginComponent } from './auth/login/login.component';
 import { RegisterComponent } from './auth/register/register.component';
+import { IonicModule } from '@ionic/angular';
 
 
 
@@ -11,7 +12,8 @@ import { RegisterComponent } from './auth/register/register.component';
     RegisterComponent
   ],
   imports: [
-    CommonModule
+    CommonModule,
+    IonicModule
   ],
   exports:[
     LoginComponent,

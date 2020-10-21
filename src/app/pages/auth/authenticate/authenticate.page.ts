@@ -7,9 +7,14 @@ import { Component, OnInit } from '@angular/core';
 })
 export class AuthenticatePage implements OnInit {
 
+  option:string = "login";
+
   constructor() { }
 
   ngOnInit() {
   }
 
+  cambio(event){
+    this.option = event.detail.value;
+  }
 }

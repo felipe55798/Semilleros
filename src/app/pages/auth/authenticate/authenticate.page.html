@@ -7,7 +7,8 @@
         </div>
         <ion-card class="card_auth">
           <ion-card-content>
-            Awesome content
+            <app-login *ngIf="option === 'login'" ></app-login>
+            <app-register *ngIf="option === 'register'" ></app-register>
           </ion-card-content>
         </ion-card>
       </ion-col>
@@ -15,7 +16,14 @@
   </ion-grid>
 </ion-content>
 <ion-footer>
-  <ion-toolbar>
-    <ion-title>Footer</ion-title>
+  <ion-toolbar color="dark">
+    <ion-segment mode="ios" [value]="option" (ionChange)="cambio($event)">
+      <ion-segment-button value="login">
+        <ion-label>Friends</ion-label>
+      </ion-segment-button>
+      <ion-segment-button value="register">
+        <ion-label>Enemies</ion-label>
+      </ion-segment-button>
+    </ion-segment>
   </ion-toolbar>
 </ion-footer>
