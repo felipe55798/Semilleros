@@ -1,43 +1,120 @@
-<ion-item>
-  <ion-icon name="person-outline" slot="end" position="floating" class="ion-align-self-center"></ion-icon>
-  <ion-label position="floating">Nombres</ion-label>
-  <ion-input type="text"></ion-input>
-</ion-item>
+<form [formGroup]="user" (ngSubmit)="register()" >
+  <ion-item>
+    <ion-icon name="person-outline" slot="end" position="floating" class="ion-align-self-center"></ion-icon>
+    <ion-label position="floating">Nombres</ion-label>
+    <ion-input formControlName="name" type="text"></ion-input>
+  </ion-item>
+  <div class="error-message error_custom" *ngIf="error.name" >
+    <ion-icon slot="start" name="information-circle-outline"></ion-icon>
+    {{ error.name[0] }}
+  </div>
+  <div class="validation-errors">
+    <ng-container *ngFor="let validation of validation_messages.name">
+      <div class="error-message" *ngIf="user.get('name').hasError(validation.type) && (user.get('name').dirty || user.get('name').touched)">
+        <ion-icon slot="start" name="information-circle-outline"></ion-icon>
+        {{ validation.message }}
+      </div>
+    </ng-container>
+  </div>
+  
+  <ion-item>
+    <ion-icon name="person" slot="end" position="floating" class="ion-align-self-center"></ion-icon>
+    <ion-label position="floating">Apellidos</ion-label>
+    <ion-input formControlName="lastname" type="text"></ion-input>
+  </ion-item>
+  <div class="error-message error_custom" *ngIf="error.lastname" >
+    <ion-icon slot="start" name="information-circle-outline"></ion-icon>
+    {{ error.lastname[0] }}
+  </div>
+  <div class="validation-errors">
+    <ng-container *ngFor="let validation of validation_messages.lastname">
+      <div class="error-message" *ngIf="user.get('lastname').hasError(validation.type) && (user.get('lastname').dirty || user.get('lastname').touched)">
+        <ion-icon slot="start" name="information-circle-outline"></ion-icon>
+        {{ validation.message }}
+      </div>
+    </ng-container>
+  </div>
+  
+  <ion-item>
+    <ion-icon name="mail" slot="end" position="floating" class="ion-align-self-center"></ion-icon>
+    <ion-label position="floating">Email</ion-label>
+    <ion-input formControlName="email" type="text"></ion-input>
+  </ion-item>
+  <div class="error-message error_custom" *ngIf="error.email" >
+    <ion-icon slot="start" name="information-circle-outline"></ion-icon>
+    {{ error.email[0] }}
+  </div>
+  <div class="validation-errors">
+    <ng-container *ngFor="let validation of validation_messages.email">
+      <div class="error-message" *ngIf="user.get('email').hasError(validation.type) && (user.get('email').dirty || user.get('email').touched)">
+        <ion-icon slot="start" name="information-circle-outline"></ion-icon>
+        {{ validation.message }}
+      </div>
+    </ng-container>
+  </div>
+  
+  <ion-item>
+    <ion-icon name="call" slot="end" position="floating" class="ion-align-self-center"></ion-icon>
+    <ion-label position="floating">Cellphone</ion-label>
+    <ion-input formControlName="cellphone" type="text"></ion-input>
+  </ion-item>
+  <div class="error-message error_custom" *ngIf="error.cellphone" >
+    <ion-icon slot="start" name="information-circle-outline"></ion-icon>
+    {{ error.cellphone[0] }}
+  </div>
+  <div class="validation-errors">
+    <ng-container *ngFor="let validation of validation_messages.cellphone">
+      <div class="error-message" *ngIf="user.get('cellphone').hasError(validation.type) && (user.get('cellphone').dirty || user.get('cellphone').touched)">
+        <ion-icon slot="start" name="information-circle-outline"></ion-icon>
+        {{ validation.message }}
+      </div>
+    </ng-container>
+  </div>
+  
+  <ion-item>
+    <ion-icon name="eye" slot="end" position="floating" class="ion-align-self-center"></ion-icon>
+    <ion-label position="floating">Contraseña</ion-label>
+    <ion-input formControlName="password" type="password"></ion-input>
+  </ion-item>
+  <div class="error-message error_custom" *ngIf="error.password" >
+    <ion-icon slot="start" name="information-circle-outline"></ion-icon>
+    {{ error.password[0] }}
+  </div>
+  <div class="validation-errors">
+    <ng-container *ngFor="let validation of validation_messages.password">
+      <div class="error-message" *ngIf="user.get('password').hasError(validation.type) && (user.get('password').dirty || user.get('password').touched)">
+        <ion-icon slot="start" name="information-circle-outline"></ion-icon>
+        {{ validation.message }}
+      </div>
+    </ng-container>
+  </div>
+  
+  <ion-item>
+    <ion-icon name="eye" slot="end" position="floating" class="ion-align-self-center"></ion-icon>
+    <ion-label position="floating">Confirmar Contraseña</ion-label>
+    <ion-input formControlName="password_confirmation" type="password"></ion-input>
+  </ion-item>
+  <div class="error-message error_custom" *ngIf="error.password_confirmation" >
+    <ion-icon slot="start" name="information-circle-outline"></ion-icon>
+    {{ error.password_confirmation[0] }}
+  </div>
+  <div class="validation-errors">
+    <ng-container *ngFor="let validation of validation_messages.password_confirmation">
+      <div class="error-message" *ngIf="user.get('password_confirmation').hasError(validation.type) && (user.get('password_confirmation').dirty || user.get('password_confirmation').touched)">
+        <ion-icon slot="start" name="information-circle-outline"></ion-icon>
+        {{ validation.message }}
+      </div>
+    </ng-container>
+  </div>
+  
+  <ion-row>
+    <ion-col size="12">
+      <ion-button type="submit" [disabled]="user.invalid" expand="block" class="ion-no-margin" fill="solid">
+        Registrarse
+      </ion-button>
 
-<ion-item>
-  <ion-icon name="person" slot="end" position="floating" class="ion-align-self-center"></ion-icon>
-  <ion-label position="floating">Apellidos</ion-label>
-  <ion-input type="text"></ion-input>
-</ion-item>
-
-<ion-item>
-  <ion-icon name="mail" slot="end" position="floating" class="ion-align-self-center"></ion-icon>
-  <ion-label position="floating">Email</ion-label>
-  <ion-input type="text"></ion-input>
-</ion-item>
-
-<ion-item>
-  <ion-icon name="call" slot="end" position="floating" class="ion-align-self-center"></ion-icon>
-  <ion-label position="floating">Cellphone</ion-label>
-  <ion-input type="text"></ion-input>
-</ion-item>
-
-<ion-item>
-  <ion-icon name="eye" slot="end" position="floating" class="ion-align-self-center"></ion-icon>
-  <ion-label position="floating">Contraseña</ion-label>
-  <ion-input type="text"></ion-input>
-</ion-item>
-
-<ion-item>
-  <ion-icon name="eye" slot="end" position="floating" class="ion-align-self-center"></ion-icon>
-  <ion-label position="floating">Confirmar Contraseña</ion-label>
-  <ion-input type="text"></ion-input>
-</ion-item>
-
-<ion-row>
-  <ion-col size="12">
-    <ion-button (click)="register()" expand="block" class="ion-no-margin" fill="solid">
-      Registrarse
-    </ion-button>
-  </ion-col>
-</ion-row>
+      <span class="ion-text-center ion-margin-top"  style="display: block;">¿Ya tiene cuenta?</span>
+      <a href="" class="already">Iniciar sesión</a>
+    </ion-col>
+  </ion-row>
+</form>

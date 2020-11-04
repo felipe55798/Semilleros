@@ -1,21 +1,48 @@
-<ion-item>
-  <ion-icon slot="end" class="ion-align-self-center" name="mail"></ion-icon>
-  <ion-label position="floating">Correo electrónico</ion-label>
-  <ion-input></ion-input>
-</ion-item>
+<form [formGroup]="data" (ngSubmit)="login()" >
+  <ion-item>
+    <ion-icon slot="end" class="ion-align-self-center" name="mail"></ion-icon>
+    <ion-label position="floating">Correo electrónico</ion-label>
+    <ion-input type="email" formControlName="email" ></ion-input>
+  </ion-item>
+  <div class="error-message error_custom" *ngIf="error_unprocesable.email" >
+    {{ data.getError("email") }}
+    <ion-icon slot="start" name="information-circle-outline"></ion-icon>
+    {{ error_unprocesable.email[0] }}
+  </div>
+  <div class="validation-errors">
+    <ng-container *ngFor="let validation of validation_messages.email">
+      <div class="error-message" *ngIf="data.get('email').hasError(validation.type) && (data.get('email').dirty || data.get('email').touched)">
+        <ion-icon slot="start" name="information-circle-outline"></ion-icon>
+        {{ validation.message }}
+      </div>
+    </ng-container>
+  </div>
 
-<ion-item>
-  <ion-icon slot="end" class="ion-align-self-center" name="lock-closed"></ion-icon>
-  <ion-label position="floating">Contraseña</ion-label>
-  <ion-input></ion-input>
-</ion-item>
-
-<ion-row>
-  <ion-col size="12">
-    <ion-button (click)="login()" expand="block" class="ion-no-margin" fill="solid">
-      Iniciar sesión
-    </ion-button>
-
-    <a href="" class="already">¿Olvidó la contraseña?</a>
-  </ion-col>
-</ion-row>
+  <ion-item>
+    <ion-icon slot="end" class="ion-align-self-center" name="lock-closed"></ion-icon>
+    <ion-label position="floating">Contraseña</ion-label>
+    <ion-input type="password" formControlName="password"></ion-input>
+  </ion-item>
+  <div class="error-message error_custom" *ngIf="error_unprocesable.password" >
+    <ion-icon slot="start" name="information-circle-outline"></ion-icon>
+    {{ error_unprocesable.password[0] }}
+  </div>
+  <div class="validation-errors">
+    <ng-container *ngFor="let validation of validation_messages.password">
+      <div class="error-message" *ngIf="data.get('password').hasError(validation.type) && (data.get('password').dirty || data.get('password').touched)">
+        <ion-icon slot="start" name="information-circle-outline"></ion-icon>
+        {{ validation.message }}
+      </div>
+    </ng-container>
+  </div>
+  
+  <ion-row>
+    <ion-col size="12">
+      <ion-button type="submit" [disabled]="data.invalid" expand="block" class="ion-no-margin" fill="solid">
+        Iniciar sesión
+      </ion-button>
+  
+      <a href="" class="already">¿Olvidó la contraseña?</a>
+    </ion-col>
+  </ion-row>
+</form>
