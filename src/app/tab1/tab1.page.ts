@@ -7,6 +7,17 @@ import { Component } from '@angular/core';
 })
 export class Tab1Page {
 
+  slidesOpts = {
+    slidesPerView:1.1,
+    freeMode:true,
+    spaceBetween:-10
+  };
+
+  show = false;
   constructor() {}
+
+  showContentCard(){
+    this.show = !this.show;
+  }
 
 }

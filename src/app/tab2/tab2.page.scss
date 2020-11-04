@@ -1,0 +1,25 @@
+.dpt_font{
+    background-color:  #0069a3;
+}
+
+.dpt_font_2{
+    background-color:  #ffc935;
+}
+
+.dpt_w{
+    color: white;
+}
+
+.dpt_w_2{
+    color:  #0069a3;
+}
+
+/* DOES NOT WORK - not specific enough */
+.modal-wrapper {
+    background: #222;
+  }
+  
+  /* Works - pass "my-custom-class" in cssClass to increase specificity */
+  .my-custom-class .modal-wrapper {
+    background: #222;
+  }

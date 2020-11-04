@@ -14,7 +14,11 @@ const routes: Routes = [
     path:'',
     pathMatch:'full',
     redirectTo:'auth'
+  },  {
+    path: 'modal',
+    loadChildren: () => import('./modal/modal/modal.module').then( m => m.ModalPageModule)
   }
+
 
 ];
 @NgModule({
