@@ -2,14 +2,15 @@ import { Injectable } from '@angular/core';
 import { HttpClient, HttpHeaders, HttpErrorResponse } from '@angular/common/http';
 import { Observable, throwError } from 'rxjs';
 import { retry, catchError } from 'rxjs/operators';
+import { environment } from 'src/environments/environment';
+
 
 @Injectable({
   providedIn: 'root'
 })
 export class ServiceService {
 
-  // API path
-  base_path_departments = 'http://localhost:8000/departments';
+  path = 'http://127.0.0.1:8000/api/v1/departments';
 
   constructor(private http: HttpClient) { }
 
@@ -19,16 +20,16 @@ export class ServiceService {
     })
   }
 
-  getList(): Observable<any> {
-    return this.http
-      .get<any>(this.base_path_departments)
-      .pipe(
-        retry(2),
-        catchError(this.handleError)
-      )
+  getDepartmentsList() {
+    return this.http.get(this.path)
+    .pipe(
+      retry(2),
+      catchError(this.handleError)
+    );
   }
 
   handleError(error: HttpErrorResponse) {
+    console.log('El error fue: ' + error)
     if (error.error instanceof ErrorEvent) {
       // A client-side or network error occurred. Handle it accordingly.
       console.error('An error occurred:', error.error.message);
