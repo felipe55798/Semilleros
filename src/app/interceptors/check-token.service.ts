@@ -63,7 +63,7 @@ export class CheckTokenService implements HttpInterceptor{
           }else{
             if (err.status === 404 && error.error.err === 'token_not_found') {
               this.authService.logout();
-              return next.handle(this.injectToken(req))
+              return next.handle(this.injectToken(requ))
             }
           }
         }
@@ -80,8 +80,8 @@ export class CheckTokenService implements HttpInterceptor{
   }
 
 
-  injectToken(request:HttpRequest<any>){
-    this.getToken().pipe(
+  injectToken(request:HttpRequest<any>):any{
+    return this.getToken().pipe(
       map((res)=>{
         return request.clone({
           setHeaders: {
