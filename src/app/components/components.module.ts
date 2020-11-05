@@ -8,6 +8,7 @@ import { DepartmentComponent } from './common/department/department.component';
 import { GroupComponent } from './common/group/group.component';
 import { PublicationComponent } from './common/publication/publication.component';
 import { EmptyComponent } from './common/shared/empty/empty.component';
+import { SeedlingComponent } from './common/seedling/seedling.component';
 
 
 
@@ -18,7 +19,8 @@ import { EmptyComponent } from './common/shared/empty/empty.component';
     DepartmentComponent,
     GroupComponent,
     PublicationComponent,
-    EmptyComponent
+    EmptyComponent,
+    SeedlingComponent
   ],
   imports: [
     CommonModule,
@@ -32,7 +34,8 @@ import { EmptyComponent } from './common/shared/empty/empty.component';
     DepartmentComponent,
     GroupComponent,
     PublicationComponent,
-    EmptyComponent
+    EmptyComponent,
+    SeedlingComponent
   ]
 })
 export class ComponentsModule { }

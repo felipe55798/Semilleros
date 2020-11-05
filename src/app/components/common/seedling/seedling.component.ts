@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, Input, OnInit } from '@angular/core';
 import { Seedling } from 'src/app/interfaces/seedling';
 
 @Component({
@@ -8,8 +8,11 @@ import { Seedling } from 'src/app/interfaces/seedling';
 })
 export class SeedlingComponent implements OnInit {
 
+  @Input() seedling:Seedling = {};
   constructor() { }
 
-  ngOnInit() {}
+  ngOnInit() {
+    console.log('propiedad Seedling: ' + this.seedling);
+  }
 
 }
