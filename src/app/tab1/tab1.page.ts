@@ -2,6 +2,7 @@ import { Component } from '@angular/core';
 import { error } from 'protractor';
 import { Group } from '../interfaces/group';
 import { GroupsService } from '../services/groups.service';
+import { SeedlingsService } from '../services/seedlings.service';
 
 @Component({
   selector: 'app-tab1',
@@ -18,10 +19,12 @@ export class Tab1Page {
 
   show = false;
   groups: Group[] = [];
-  constructor(public apiService: GroupsService) {}
+  constructor(public apiService: GroupsService,
+              public apiSeedling: SeedlingsService) {}
 
   ngOnInit() {
     this.getGroups();
+    this.getSeedlings();
   }
 
   showContentCard(){
@@ -29,8 +32,14 @@ export class Tab1Page {
   }
 
   getGroups() {
-    //Get saved list of students
     this.apiService.getGroupsList().subscribe(
+      response => this.handleResponse(response), 
+      err => this.handleError(err)
+      );
+  }
+
+  getSeedlings() {
+    this.apiSeedling.getSeedlingsList().subscribe(
       response => this.handleResponse(response), 
       err => this.handleError(err)
       );
