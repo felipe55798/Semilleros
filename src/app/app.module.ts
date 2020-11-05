@@ -11,6 +11,7 @@ import { AppComponent } from './app.component';
 
 import { HttpClientModule, HTTP_INTERCEPTORS } from '@angular/common/http';
 
+import { IonicStorageModule } from '@ionic/storage';
 import { TokenInjectionService } from './interceptors/token-injection.service';
 
 @NgModule({
@@ -21,7 +22,8 @@ import { TokenInjectionService } from './interceptors/token-injection.service';
     BrowserModule,
     IonicModule.forRoot(),
     AppRoutingModule,
-    HttpClientModule
+    HttpClientModule,
+    IonicStorageModule.forRoot()
   ],
 
   providers: [

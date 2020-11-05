@@ -17,67 +17,10 @@
     <a href="">Ver Todos</a>
   </div>
   <ion-slides pager="false" [options]="slidesOpts" >
-    <ion-slide>
+    <ion-slide *ngFor="let group of groups">
       <ion-row>
-        <ion-col size="12" >
-          <ion-card>
-            <img src="assets/images/fondo-3.jpg"/>
-            <ion-card-content>
-              <ion-card-title>Grupo de Investigación 1</ion-card-title>
-              <div class="group_desc">
-                This is content, without any paragraph or header tags,
-                within an ion-card-content element.
-              </div>
-            </ion-card-content>
-          </ion-card>
-        </ion-col>
-      </ion-row>
-    </ion-slide>
-    <ion-slide>
-      <ion-row>
-        <ion-col size="12">
-          <ion-card>
-            <img src="assets/images/fondo-3.jpg"/>
-            <ion-card-content>
-              <ion-card-title>Grupo de Investigación 1</ion-card-title>
-              <div class="group_desc">
-                This is content, without any paragraph or header tags,
-                within an ion-card-content element.
-              </div>
-            </ion-card-content>
-          </ion-card>
-        </ion-col>
-      </ion-row>
-    </ion-slide>
-    <ion-slide>
-      <ion-row>
-        <ion-col size="12">
-          <ion-card>
-            <img src="assets/images/fondo-3.jpg"/>
-            <ion-card-content>
-              <ion-card-title>Grupo de Investigación 1</ion-card-title>
-              <div class="group_desc">
-                This is content, without any paragraph or header tags,
-                within an ion-card-content element.
-              </div>
-            </ion-card-content>
-          </ion-card>
-        </ion-col>
-      </ion-row>
-    </ion-slide>
-    <ion-slide>
-      <ion-row>
-        <ion-col size="12">
-          <ion-card>
-            <img src="assets/images/fondo-3.jpg"/>
-            <ion-card-content>
-              <ion-card-title>Grupo de Investigación 1</ion-card-title>
-              <div class="group_desc">
-                This is content, without any paragraph or header tags,
-                within an ion-card-content element.
-              </div>
-            </ion-card-content>
-          </ion-card>
+        <ion-col size="12" > 
+          <app-group [group]=group></app-group>
         </ion-col>
       </ion-row>
     </ion-slide>
@@ -88,70 +31,7 @@
     <a href="">Ver Todos</a>
   </div>
   <ion-slides pager="false" [options]="slidesOpts" >
-    <ion-slide>
-      <ion-row>
-        <ion-col size="12" >
-          <ion-card>
-            <img src="assets/images/fondo-3.jpg"/>
-            <ion-card-content>
-              <ion-card-title>Grupo de Investigación 1</ion-card-title>
-              <div class="group_desc">
-                This is content, without any paragraph or header tags,
-                within an ion-card-content element.
-              </div>
-            </ion-card-content>
-          </ion-card>
-        </ion-col>
-      </ion-row>
-    </ion-slide>
-    <ion-slide>
-      <ion-row>
-        <ion-col size="12">
-          <ion-card>
-            <img src="assets/images/fondo-3.jpg"/>
-            <ion-card-content>
-              <ion-card-title>Grupo de Investigación 1</ion-card-title>
-              <div class="group_desc">
-                This is content, without any paragraph or header tags,
-                within an ion-card-content element.
-              </div>
-            </ion-card-content>
-          </ion-card>
-        </ion-col>
-      </ion-row>
-    </ion-slide>
-    <ion-slide>
-      <ion-row>
-        <ion-col size="12">
-          <ion-card>
-            <img src="assets/images/fondo-3.jpg"/>
-            <ion-card-content>
-              <ion-card-title>Grupo de Investigación 1</ion-card-title>
-              <div class="group_desc">
-                This is content, without any paragraph or header tags,
-                within an ion-card-content element.
-              </div>
-            </ion-card-content>
-          </ion-card>
-        </ion-col>
-      </ion-row>
-    </ion-slide>
-    <ion-slide>
-      <ion-row>
-        <ion-col size="12">
-          <ion-card>
-            <img src="assets/images/fondo-3.jpg"/>
-            <ion-card-content>
-              <ion-card-title>Grupo de Investigación 1</ion-card-title>
-              <div class="group_desc">
-                This is content, without any paragraph or header tags,
-                within an ion-card-content element.
-              </div>
-            </ion-card-content>
-          </ion-card>
-        </ion-col>
-      </ion-row>
-    </ion-slide>
+    <app-group *ngFor="let group of groups ; let i = index" [group]=group></app-group>
   </ion-slides>
 
   <div class="cat_title">
