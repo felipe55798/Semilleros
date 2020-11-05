@@ -6,11 +6,12 @@ import { AuthService } from '../services/auth.service';
 @Injectable({
   providedIn: 'root'
 })
-export class CheckTokenGuard implements CanActivate {
-  constructor(private authService:AuthService ){}
-  async canActivate(
+export class NoLoggedInGuard implements CanActivate {
+  constructor(private authService:AuthService){}
+  canActivate(
     next: ActivatedRouteSnapshot,
-    state: RouterStateSnapshot): Promise<boolean> {
-    return await this.authService.checkToken();
+    state: RouterStateSnapshot):Promise<boolean> | boolean{
+    return this.authService.noLoggedIn();
   }
+  
 }

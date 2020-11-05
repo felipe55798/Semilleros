@@ -1,14 +1,18 @@
 import { NgModule } from '@angular/core';
 import { PreloadAllModules, RouterModule, Routes } from '@angular/router';
+import { CheckTokenGuard } from './guards/check-token.guard';
+import { NoLoggedInGuard } from './guards/no-logged-in.guard';
 
 const routes: Routes = [
   {
     path: 'tabs',
-    loadChildren: () => import('./tabs/tabs.module').then(m => m.TabsPageModule)
+    loadChildren: () => import('./tabs/tabs.module').then(m => m.TabsPageModule),
+    canActivate:[CheckTokenGuard]
   },
   {
     path: 'auth',
-    loadChildren: () => import('./pages/auth/auth.module').then( m => m.AuthModule)
+    loadChildren: () => import('./pages/auth/auth.module').then( m => m.AuthModule),
+    canActivate:[NoLoggedInGuard]
   },
   {
     path:'',

@@ -25,10 +25,9 @@ export class AuthService {
 
   login(data){
     return this.http.post(`${url}/login`,data).pipe(
-      map((data:any)=>{
+      map(async(data:any)=>{
         const info = data.authaccess;
-        this.setToken(info.access_token,info.refresh_token)
-        
+        await this.setToken(info.access_token,info.refresh_token)
         this.token = info.access_token;
         this.user = info.user;
 
@@ -55,9 +54,9 @@ export class AuthService {
     return this.http.get(`${URL}/refresh`,tokenObj);
   }
 
-  setToken(token:string,refresh_token:string){
-    this.storage.set('token',token);
-    this.storage.set('refresh_token',refresh_token)
+  async setToken(token:string,refresh_token:string){
+    await this.storage.set('token',token);
+    await this.storage.set('refresh_token',refresh_token)
   }
 
   async logout(){
@@ -66,5 +65,40 @@ export class AuthService {
     await this.storage.clear()
 
     this.navCtrl.navigateRoot('/tabs/tab1');
+  }
+
+  async loadToken(){
+    this.token = await this.storage.get('token') || null;
+  }
+
+  async checkToken():Promise<boolean>{
+    await this.loadToken()
+
+    if (!this.token) {
+      await this.logout()
+      return Promise.resolve(false);
+    }
+
+    if (this.user) {
+      return Promise.resolve(true);
+    }
+
+    return new Promise(resolve=>{
+      this.http.get(`${url}/me`).subscribe(
+        (res)=>{
+          return resolve(true);
+        }
+      )
+    })
+  }
+
+  async noLoggedIn(){
+    await this.loadToken()
+    if (this.user || this.token) {
+      this.navCtrl.navigateRoot('/tabs/tab1')
+      return false;
+    }else{
+      return true;
+    }
   }
 }
