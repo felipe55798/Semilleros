@@ -1,6 +1,7 @@
 import { Component } from '@angular/core';
 import { error } from 'protractor';
 import { Group } from '../interfaces/group';
+import { Seedling } from '../interfaces/seedling';
 import { GroupsService } from '../services/groups.service';
 import { SeedlingsService } from '../services/seedlings.service';
 
@@ -19,6 +20,7 @@ export class Tab1Page {
 
   show = false;
   groups: Group[] = [];
+  seedlings: Seedling[] = [];
   constructor(public apiService: GroupsService,
               public apiSeedling: SeedlingsService) {}
 
@@ -40,7 +42,7 @@ export class Tab1Page {
 
   getSeedlings() {
     this.apiSeedling.getSeedlingsList().subscribe(
-      response => this.handleResponse(response), 
+      response => this.handleResponseSeedling(response), 
       err => this.handleError(err)
       );
   }
@@ -52,6 +54,11 @@ export class Tab1Page {
   handleResponse(response) {
     console.log(response);
     this.groups = response.groups;
+  }
+
+  handleResponseSeedling(response) {
+    console.log(response);
+    this.seedlings = response.seedlings;
   }
 
 }

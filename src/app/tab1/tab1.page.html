@@ -27,11 +27,17 @@
   </ion-slides>
 
   <div class="cat_title">
-    <span > <h3>Semilleros de Investigación</h3></span>
+    <span ><h3>Semilleros de Investigación</h3></span>
     <a href="">Ver Todos</a>
   </div>
   <ion-slides pager="false" [options]="slidesOpts" >
-    <app-group *ngFor="let group of groups ; let i = index" [group]=group></app-group>
+    <ion-slide *ngFor="let seedling of seedlings">
+      <ion-row>
+        <ion-col size="12" > 
+          <app-seedling [seedling]=seedling></app-seedling>
+        </ion-col>
+      </ion-row>
+    </ion-slide>
   </ion-slides>
 
   <div class="cat_title">
