@@ -1,9 +1,17 @@
+import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
+import { environment } from 'src/environments/environment';
+
+const url = `${environment.url}/v1/publications`
 
 @Injectable({
   providedIn: 'root'
 })
 export class PublicationService {
 
-  constructor() { }
+  constructor(private http:HttpClient) { }
+
+  getPublications(){
+    return this.http.get(`${url}`);
+  }
 }

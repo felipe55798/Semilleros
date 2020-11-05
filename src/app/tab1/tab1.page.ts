@@ -1,7 +1,9 @@
 import { Component } from '@angular/core';
 import { error } from 'protractor';
 import { Group } from '../interfaces/group';
+import { Publication } from '../interfaces/publication';
 import { GroupsService } from '../services/groups.service';
+import { PublicationService } from '../services/publication.service';
 import { SeedlingsService } from '../services/seedlings.service';
 
 @Component({
@@ -11,6 +13,9 @@ import { SeedlingsService } from '../services/seedlings.service';
 })
 export class Tab1Page {
 
+  publications:Publication[] = [];
+  groups:Group[] = [];
+
   slidesOpts = {
     slidesPerView:1.1,
     freeMode:true,
@@ -18,9 +23,10 @@ export class Tab1Page {
   };
 
   show = false;
-  groups: Group[] = [];
+
   constructor(public apiService: GroupsService,
-              public apiSeedling: SeedlingsService) {}
+              public apiSeedling: SeedlingsService,
+              private publicationService:PublicationService) {}
 
   ngOnInit() {
     this.getGroups();
@@ -37,6 +43,14 @@ export class Tab1Page {
       err => this.handleError(err)
       );
   }
+  handleResponse(response) {
+    console.log(response.groups);
+    this.groups = response.groups;
+  }
+  
+  handleError(error: any) {
+    console.error(error);
+  }
 
   getSeedlings() {
     this.apiSeedling.getSeedlingsList().subscribe(
@@ -45,13 +59,19 @@ export class Tab1Page {
       );
   }
 
-  handleError(error: any) {
-    console.error(error);
+  getPublications(){
+    this.publicationService.getPublications().subscribe(
+      res=>this.handleResponsePublication(res),
+      err=>this.handleErrorPublications(err)
+    )
   }
 
-  handleResponse(response) {
-    console.log(response);
-    this.groups = response.groups;
+  handleResponsePublication(res){
+    this.publications = res.publications;
+  }
+
+  handleErrorPublications(err){
+    console.log(err);
   }
 
 }

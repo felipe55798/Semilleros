@@ -6,6 +6,8 @@ import { IonicModule } from '@ionic/angular';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { DepartmentComponent } from './common/department/department.component';
 import { GroupComponent } from './common/group/group.component';
+import { PublicationComponent } from './common/publication/publication.component';
+import { EmptyComponent } from './common/shared/empty/empty.component';
 
 
 
@@ -14,7 +16,9 @@ import { GroupComponent } from './common/group/group.component';
     LoginComponent,
     RegisterComponent,
     DepartmentComponent,
-    GroupComponent
+    GroupComponent,
+    PublicationComponent,
+    EmptyComponent
   ],
   imports: [
     CommonModule,
@@ -26,7 +30,9 @@ import { GroupComponent } from './common/group/group.component';
     LoginComponent,
     RegisterComponent,
     DepartmentComponent,
-    GroupComponent
+    GroupComponent,
+    PublicationComponent,
+    EmptyComponent
   ]
 })
 export class ComponentsModule { }
