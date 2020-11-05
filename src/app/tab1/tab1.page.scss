@@ -1,0 +1,35 @@
+.card_cat img{
+    height: 55px;
+    max-height: 55px;
+}
+.cat_title{
+    padding-left: 15px;
+    padding-top: 15px;
+    padding-right: 15px;
+    margin-bottom: 15px;
+
+    a{
+        margin: auto;
+        text-decoration: none;
+        font-size: 13px;
+        border: 2px solid #1e91d4;
+        padding: 2px 5px;
+        border-radius: 10px;
+    }
+}
+
+.group_desc{
+    text-align: justify;
+}
+
+.cont-non{
+    display: none;
+}
+
+.showContent{
+    display: block !important;
+}
+
+ion-slides{
+    height: 250px;
+}

@@ -1,13 +1,11 @@
 import { NgModule } from '@angular/core';
 import { PreloadAllModules, RouterModule, Routes } from '@angular/router';
-import { CheckTokenGuard } from './guards/check-token.guard';
 import { NoLoggedInGuard } from './guards/no-logged-in.guard';
 
 const routes: Routes = [
   {
     path: 'tabs',
-    loadChildren: () => import('./tabs/tabs.module').then(m => m.TabsPageModule),
-    canActivate:[CheckTokenGuard]
+    loadChildren: () => import('./tabs/tabs.module').then(m => m.TabsPageModule)
   },
   {
     path: 'auth',
@@ -18,7 +16,16 @@ const routes: Routes = [
     path:'',
     pathMatch:'full',
     redirectTo:'auth'
+  },
+  {
+    path: 'modal',
+    loadChildren: () => import('./modal/modal/modal.module').then( m => m.ModalPageModule)
+  },
+  {
+    path: 'modal',
+    loadChildren: () => import('./modal/modal/modal.module').then( m => m.ModalPageModule)
   }
+
 
 ];
 @NgModule({
