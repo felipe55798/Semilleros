@@ -1,5 +1,6 @@
 import { NgModule } from '@angular/core';
 import { PreloadAllModules, RouterModule, Routes } from '@angular/router';
+import { NoLoggedInGuard } from './guards/no-logged-in.guard';
 
 const routes: Routes = [
   {
@@ -8,19 +9,13 @@ const routes: Routes = [
   },
   {
     path: 'auth',
-    loadChildren: () => import('./pages/auth/auth.module').then( m => m.AuthModule)
+    loadChildren: () => import('./pages/auth/auth.module').then( m => m.AuthModule),
+    canActivate:[NoLoggedInGuard]
   },
   {
     path:'',
     pathMatch:'full',
     redirectTo:'auth'
-  },  {
-    path: 'modal',
-    loadChildren: () => import('./modal/modal/modal.module').then( m => m.ModalPageModule)
-  },
-  {
-    path: 'modal',
-    loadChildren: () => import('./modal/modal/modal.module').then( m => m.ModalPageModule)
   }
 
 

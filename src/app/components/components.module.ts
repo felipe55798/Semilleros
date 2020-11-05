@@ -6,6 +6,8 @@ import { IonicModule } from '@ionic/angular';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { DepartmentComponent } from './common/department/department.component';
 import { GroupComponent } from './common/group/group.component';
+import { PublicationComponent } from './common/publication/publication.component';
+import { EmptyComponent } from './common/shared/empty/empty.component';
 import { SeedlingComponent } from './common/seedling/seedling.component';
 
 
@@ -16,6 +18,8 @@ import { SeedlingComponent } from './common/seedling/seedling.component';
     RegisterComponent,
     DepartmentComponent,
     GroupComponent,
+    PublicationComponent,
+    EmptyComponent,
     SeedlingComponent
   ],
   imports: [
@@ -29,6 +33,8 @@ import { SeedlingComponent } from './common/seedling/seedling.component';
     RegisterComponent,
     DepartmentComponent,
     GroupComponent,
+    PublicationComponent,
+    EmptyComponent,
     SeedlingComponent
   ]
 })
