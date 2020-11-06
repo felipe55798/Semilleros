@@ -80,4 +80,11 @@ export class Tab1Page {
     this.seedlings = response.seedlings;
   }
 
+  loadPublications(event){
+    setTimeout(() => {
+      event.target.complete()
+      event.target.disabled = true;
+    }, 1000);
+  }
+
 }

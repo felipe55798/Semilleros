@@ -1,3 +1,21 @@
 ion-card-content{
-    background: url();
+    background: linear-gradient(rgba(255, 255, 255, 0) 30%, #2d2d2d 82%), url('https://static.guiainfantil.com/uploads/ocio/ninos-juegan-aire-libre-p.jpg');
+    padding-top: 100px;
+
+    p{
+        text-transform: uppercase;
+        color: white;
+        text-align: justify;
+    }
+    .link{
+        display: block;
+        margin-bottom: 5px;
+        color: #ffc935;
+        font-size: 16px;
+        text-decoration: underline;
+    }
+
+    .date{
+        color: #ffc935;
+    }
 }

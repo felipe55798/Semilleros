@@ -54,16 +54,23 @@
     <span > <h3>Publicaciones recientes</h3></span>
   </div>
   <ion-grid fixed class="ion-no-margin ion-no-padding">
-    <ion-row *ngIf="publications.length>0" >
+    <ion-row *ngIf="publications.length==0" >
+      <app-publication ></app-publication>
       <ion-col size="12" *ngFor="let publication of publications" >
         <app-publication [publication]="publication"></app-publication>
       </ion-col>
     </ion-row>
-    <ion-row *ngIf="publications.length === 0" >
+    <!-- <ion-row *ngIf="publications.length === 0" >
       <ion-col size="12">
         <app-empty [title_message]="'Sin publicaciones aún'" ></app-empty>
       </ion-col>
-    </ion-row>
+    </ion-row> -->
+    <ion-infinite-scroll threshold="100px" (ionInfinite)="loadPublications($event)">
+      <ion-infinite-scroll-content
+        loadingSpinner="crescent"
+        loadingText="Cargando publicaciones...">
+      </ion-infinite-scroll-content>
+    </ion-infinite-scroll>
   </ion-grid>
   <!-- <ion-card class="ion-margin">
     <ion-item (click)="showContentCard()">
