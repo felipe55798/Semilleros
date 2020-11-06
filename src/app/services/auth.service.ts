@@ -85,7 +85,8 @@ export class AuthService {
 
     return new Promise(resolve=>{
       this.http.get(`${url}/me`).subscribe(
-        (res)=>{
+        (res:any)=>{
+          this.user = res.user;
           return resolve(true);
         }
       )
@@ -99,6 +100,34 @@ export class AuthService {
       return false;
     }else{
       return true;
+    }
+  }
+
+  async getUser() {
+    console.log("El usuario: " + this.user);
+    
+    return this.loadUser();
+    console.log("El usuario 2: " + this.user);
+  }
+
+  async loadUser(){
+    console.log("El token: " + this.token);
+    await this.loadToken();
+    console.log("El token 2: " + this.token);
+    if (this.token) {
+      if (!this.user) {
+        console.log("El token: 3 " + this.token);
+        return this.http.get(`${url}/me`).subscribe(
+          (res:any)=>{
+            this.user = res.user;
+            console.log("El Usuario cargado es: " + this.user);
+          }
+        )
+      }else{
+        return this.user;
+      }
+    }else{
+      this.checkToken();
     }
   }
 }

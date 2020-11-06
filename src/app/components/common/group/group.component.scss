@@ -1,7 +1,22 @@
-.group_desc{
-    text-align: justify;
-}
-
 ion-card{
-    height: 220px;
+    height: 280px;
+    max-height: 280px;
+    ion-card-content{
+        height: 100%;
+        ion-card-title{
+            text-align: left !important;
+            margin: 10px;
+        }
+        .group_desc{
+            text-align: left;
+            margin-right: 15px;
+            margin-left: 10px;
+            margin-bottom: 10px;
+        }
+        .container_img{
+            max-height: 60%;
+            width: 100%;
+            overflow-y: hidden;
+        }
+    }
 }

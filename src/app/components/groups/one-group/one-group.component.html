@@ -1,9 +1,10 @@
-<ion-card>
+<ion-card mode='ios'>
   <img src="assets/images/fondo-3.jpg"/>
-  <ion-item>
-    <ion-label>{{ group.name }}</ion-label>
+  <ion-item class="sep_bk">
+    <h5>{{ group.name }}</h5>
   </ion-item>
   <ion-card-content>
-    {{ group.description }}
+    <p>{{ group.description }}</p>
+    <small>{{ group.created_at|date }}</small>
   </ion-card-content>
 </ion-card>

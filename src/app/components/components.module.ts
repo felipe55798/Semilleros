@@ -10,6 +10,10 @@ import { PublicationComponent } from './common/publication/publication.component
 import { EmptyComponent } from './common/shared/empty/empty.component';
 import { SeedlingComponent } from './common/seedling/seedling.component';
 import { OneGroupComponent } from './groups/one-group/one-group.component';
+import { HomeGroupComponent } from './groups/home-group/home-group.component';
+import { RouterModule } from '@angular/router';
+import { HomeSeedlingComponent } from './seedlings/home-seedling/home-seedling.component';
+import { HomePublicationComponent } from './publications/home-publication/home-publication.component';
 
 
 
@@ -22,22 +26,24 @@ import { OneGroupComponent } from './groups/one-group/one-group.component';
     PublicationComponent,
     EmptyComponent,
     SeedlingComponent,
-    OneGroupComponent
+    OneGroupComponent,
+    HomeGroupComponent,
+    HomeSeedlingComponent,
+    HomePublicationComponent
   ],
   imports: [
     CommonModule,
     IonicModule,
     ReactiveFormsModule,
-    FormsModule
+    FormsModule,
+    RouterModule
   ],
   exports:[
     LoginComponent,
     RegisterComponent,
-    DepartmentComponent,
-    GroupComponent,
-    PublicationComponent,
-    EmptyComponent,
-    SeedlingComponent,
+    HomeGroupComponent,
+    HomeSeedlingComponent,
+    HomePublicationComponent,
     OneGroupComponent
   ]
 })
