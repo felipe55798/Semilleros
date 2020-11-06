@@ -13,7 +13,7 @@ const routes: Routes = [
     canActivate:[NoLoggedInGuard]
   },
   {
-    path: 'groups',
+    path: 'home',
     loadChildren: () => import('./pages/pages.module').then( m => m.PagesModule)
   },
   {
