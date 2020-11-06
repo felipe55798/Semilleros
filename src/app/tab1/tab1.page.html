@@ -14,7 +14,7 @@
   </ion-header>
   <div class="cat_title">
     <h3>Grupos de Investigación</h3>
-    <a href="">Ver Todos</a>
+    <a [routerLink]="['/groups']">Ver Todos</a>
   </div>
   <ion-slides pager="false" [options]="slidesOpts" *ngIf="groups && groups.length >0">
     <ion-slide *ngFor="let group of groups">
