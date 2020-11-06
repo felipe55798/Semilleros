@@ -7,5 +7,6 @@ export interface User {
     email?:string,
     password?:string,
     password_confirmation?:string,
-    roles?:Role[]
+    roles?:Role[],
+    program_id?:number
 }
