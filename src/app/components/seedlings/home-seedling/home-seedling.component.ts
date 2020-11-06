@@ -17,12 +17,19 @@ export class HomeSeedlingComponent implements OnInit {
     spaceBetween:-10
   };
 
+  admin:boolean = false;
+
   loading:boolean = false;
   @Input() user:User = null;
   constructor(private seedlingService:SeedlingsService) { }
 
   ngOnInit() {
     this.getSeedlings();
+    if (this.user) {
+      if (this.user.roles[0].id === 1) {
+        this.admin = true;
+      }
+    } 
   }
 
   getSeedlings() {

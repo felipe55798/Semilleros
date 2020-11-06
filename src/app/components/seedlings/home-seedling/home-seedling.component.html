@@ -14,6 +14,11 @@
 <ion-row *ngIf="seedlings.length === 0 && !loading" >
   <ion-col size="12">
     <app-empty [title_message]="'Sin semilleros de investigación'" ></app-empty>
+    <div class="container_add_button">
+      <a href="" *ngIf="admin"  class="add_group_link ion-text-center">
+        Crear semillero
+      </a>
+    </div>
   </ion-col>
 </ion-row>
 
