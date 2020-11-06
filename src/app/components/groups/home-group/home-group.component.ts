@@ -15,36 +15,30 @@ export class HomeGroupComponent implements OnInit {
     spaceBetween:-10
   };
   groups:Group[] = [];
-  constructor(private groupService:GroupsService,
-              private loadingController: LoadingController) { }
+
+  loading:boolean = false;
+
+  constructor(private groupService:GroupsService) { }
 
   ngOnInit() {
     this.getGroups()
   }
 
-  async getGroups() {
-    const loading = await this.loadingController.create({
-      cssClass: 'my-custom-class',
-      message: 'Please wait...',
-      duration: 2000
-    });
-    await loading.present();
-
+  getGroups() {
+    this.loading = true;
     this.groupService.getGroupsList().subscribe(
-      async response => {
-        const { role, data } = await loading.onDidDismiss();
-        this.handleResponse(response)
-      }, 
+      response =>this.handleResponse(response), 
       err => this.handleError(err)
-      );
+    );
   }
   handleResponse(response) {
-    console.log(response.groups);
     this.groups = response.groups;
+    this.loading = false;
   }
   
   handleError(error: any) {
     console.error(error);
+    this.loading = false;
   }
 
 }

@@ -39,7 +39,10 @@
   <ion-row>
     <ion-col size="12">
       <ion-button type="submit" [disabled]="data.invalid" expand="block" class="ion-no-margin" fill="solid">
-        Iniciar sesión
+        <span *ngIf="!sending" >
+          Iniciar sesión
+        </span>
+        <ion-spinner *ngIf="sending"  name="lines-small"></ion-spinner>
       </ion-button>
   
       <a href="" class="already">¿Olvidó la contraseña?</a>

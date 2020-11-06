@@ -31,6 +31,9 @@ export class LoginComponent implements OnInit {
     password: new FormControl('',Validators.required)
   })
 
+  sending:boolean = false;
+
+
   constructor(private authService:AuthService,
               private navCtrl:NavController,
               public toastController: ToastController) { }
@@ -38,6 +41,10 @@ export class LoginComponent implements OnInit {
   ngOnInit() {}
 
   login(){
+    if (this.sending) {
+      return;
+    }
+    this.sending = true;
     this.authService.login(this.data.value).subscribe(
       res=>this.handleResponse(res),
       err=>this.handleError(err)
@@ -45,6 +52,7 @@ export class LoginComponent implements OnInit {
   }
 
   handleResponse(data){
+    this.sending = false;
     this.navCtrl.navigateRoot('/tabs/tab1',{
       animated:true,
       animationDirection:'forward',
@@ -52,6 +60,7 @@ export class LoginComponent implements OnInit {
   }
 
   handleError(err){
+    this.sending = false;
     if (err.status === 422) {
       this.error_unprocesable = err.error.errors;
     }else{

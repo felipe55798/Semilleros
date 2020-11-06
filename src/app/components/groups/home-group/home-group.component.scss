@@ -33,3 +33,16 @@
 ion-slides{
     height: 300px;
 }
+
+.loading_box{
+    width: 100%;
+    height: 300px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background-color: rgba(0, 0, 0, 0.1);
+
+    ion-spinner {
+        transform: scale(2);
+    }
+}
