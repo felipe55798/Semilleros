@@ -6,16 +6,23 @@
     <ion-col size="12" *ngFor="let publication of publications" >
       <app-publication [publication]="publication"></app-publication>
     </ion-col>
+    <ion-infinite-scroll threshold="100px" (ionInfinite)="loadPublications($event)">
+      <ion-infinite-scroll-content
+        loadingSpinner="crescent"
+        loadingText="Cargando publicaciones...">
+      </ion-infinite-scroll-content>
+    </ion-infinite-scroll>
   </ion-row>
-  <ion-row *ngIf="publications.length === 0" >
+  <ion-row *ngIf="publications.length === 0 && !loading" >
     <ion-col size="12">
       <app-empty [title_message]="'Sin publicaciones aún'" ></app-empty>
     </ion-col>
   </ion-row>
-  <ion-infinite-scroll threshold="100px" (ionInfinite)="loadPublications($event)">
-    <ion-infinite-scroll-content
-      loadingSpinner="crescent"
-      loadingText="Cargando publicaciones...">
-    </ion-infinite-scroll-content>
-  </ion-infinite-scroll>
 </ion-grid>
+
+<div class="loading_box" *ngIf="loading"> 
+  <div class="loading_box__container">
+    <ion-spinner color="primary"   name="crescent" class="ion-margin-end"></ion-spinner>
+    Cargando...
+  </div>
+</div>

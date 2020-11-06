@@ -56,6 +56,8 @@ export class RegisterComponent implements OnInit {
 
   error:User = {};
 
+  sending:boolean = false;
+
   constructor(private authService:AuthService,
               private navCtrl:NavController,
               public toastController: ToastController) { }
@@ -63,6 +65,7 @@ export class RegisterComponent implements OnInit {
   ngOnInit() {}
 
   register(){
+    this.sending = true;
     this.authService.register(this.user.value).subscribe(
       res=>this.handleResponse(res),
       err=>this.handleError(err)
@@ -70,10 +73,12 @@ export class RegisterComponent implements OnInit {
   }
 
   handleResponse(data){
+    this.sending = false;
     this.navCtrl.navigateRoot('/tabs/tab1');
   }
 
   handleError(err){
+    this.sending = false;
     if (err.status === 422) {
       this.error = err.error.errors;
     }else{

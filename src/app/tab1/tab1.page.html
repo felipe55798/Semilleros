@@ -9,8 +9,50 @@
   </ion-toolbar>
 </ion-header>
 
-<ion-content [fullscreen]="true">
-  <app-home-group></app-home-group>
-  <app-home-seedling></app-home-seedling>
-  <app-home-publication></app-home-publication>
+<ion-content >
+  <div *ngIf="!loading" >
+    <app-home-group [user]="loggedUser"  ></app-home-group>
+    <app-home-seedling [user]="loggedUser" ></app-home-seedling>
+    <app-home-publication [user]="loggedUser" ></app-home-publication>
+  </div>
+  <div *ngIf="loading" >
+    <div >
+      <div class="ion-no-padding custom-skeleton">
+        <h1 class="title_skeleton ion-margin-start" >
+          <ion-skeleton-text animated style="width: 70%"></ion-skeleton-text>
+        </h1>
+        <ion-card class="ion-no-padding skeleton_card">
+          <ion-card-content class="ion-no-padding">
+            <ion-slide class="slide_skeleton">
+              <ion-skeleton-text animated style="width: 100%"></ion-skeleton-text>
+            </ion-slide>
+            <h3 class="title_slide">
+              <ion-skeleton-text animated style="width: 70%"></ion-skeleton-text>
+            </h3>
+            <p>
+              <ion-skeleton-text animated style="width: 80%"></ion-skeleton-text>
+              <ion-skeleton-text animated style="width: 80%"></ion-skeleton-text>
+            </p>
+          </ion-card-content>
+        </ion-card>
+        <h1 class="title_skeleton ion-margin-start" >
+          <ion-skeleton-text animated style="width: 70%"></ion-skeleton-text>
+        </h1>
+        <ion-card class="ion-no-padding skeleton_card">
+          <ion-card-content class="ion-no-padding">
+            <ion-slide class="slide_skeleton">
+              <ion-skeleton-text animated style="width: 100%"></ion-skeleton-text>
+            </ion-slide>
+            <h3 class="title_slide">
+              <ion-skeleton-text animated style="width: 70%"></ion-skeleton-text>
+            </h3>
+            <p>
+              <ion-skeleton-text animated style="width: 80%"></ion-skeleton-text>
+              <ion-skeleton-text animated style="width: 80%"></ion-skeleton-text>
+            </p>
+          </ion-card-content>
+        </ion-card>
+      </div>
+    </div>
+  </div>
 </ion-content>

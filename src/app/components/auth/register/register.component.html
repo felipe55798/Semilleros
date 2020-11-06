@@ -110,7 +110,10 @@
   <ion-row>
     <ion-col size="12">
       <ion-button type="submit" [disabled]="user.invalid" expand="block" class="ion-no-margin" fill="solid">
-        Registrarse
+        <span *ngIf="!sending" >
+          Registrarse
+        </span>
+        <ion-spinner *ngIf="sending"  name="lines-small"></ion-spinner>
       </ion-button>
 
       <span class="ion-text-center ion-margin-top"  style="display: block;">¿Ya tiene cuenta?</span>
