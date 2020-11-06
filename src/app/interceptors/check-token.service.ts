@@ -19,8 +19,9 @@ export class CheckTokenService implements HttpInterceptor{
     return next.handle(requ).pipe(
       catchError((err)=>{
         const error = (typeof err.error !== 'object') ? JSON.parse(err.error) : err;
-
-        if (error.status === 401 && error.code === "token_expired") {
+        if (error.status === 401 && error.error.code === "token_expired") {
+          console.log('Error expirado');
+          
           if (!this.refreshTokenInProgress) {
             this.refreshTokenInProgress = true;
             this.refreshTokenSubject.next(null);
@@ -48,7 +49,7 @@ export class CheckTokenService implements HttpInterceptor{
               })
             )
           }else{
-            this.refreshTokenSubject.pipe(
+            return this.refreshTokenSubject.pipe(
               filter(result => result !== null),
               take(1),
               switchMap((res)=>{

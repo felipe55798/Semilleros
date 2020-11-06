@@ -1,5 +1,5 @@
 import { HttpClient } from '@angular/common/http';
-import { Injectable } from '@angular/core';
+import { EventEmitter, Injectable } from '@angular/core';
 import { environment } from 'src/environments/environment';
 
 import { map } from "rxjs/operators";
@@ -15,9 +15,11 @@ const url = `${environment.url}/auth`;
   providedIn: 'root'
 })
 export class AuthService {
-
   token:string = null;
   user:User = null;
+
+  logoutEvent = new EventEmitter<boolean>();
+  loginEvent = new EventEmitter<boolean>();
 
   constructor(private http:HttpClient,
               private storage:Storage,
@@ -31,6 +33,7 @@ export class AuthService {
         this.token = info.access_token;
         this.user = info.user;
 
+        this.loginEvent.emit(true)
         return data;
       })
     )
@@ -45,6 +48,7 @@ export class AuthService {
         this.token = info.access_token;
         this.user = info.user;
 
+        this.loginEvent.emit(true)
         return data;
       })
     )
@@ -63,6 +67,8 @@ export class AuthService {
     this.user = null;
     this.token = null;
     await this.storage.clear()
+
+    this.logoutEvent.emit(true);
 
     this.navCtrl.navigateRoot('/tabs/tab1');
   }
@@ -104,30 +110,11 @@ export class AuthService {
   }
 
   async getUser() {
-    console.log("El usuario: " + this.user);
-    
-    return this.loadUser();
-    console.log("El usuario 2: " + this.user);
-  }
-
-  async loadUser(){
-    console.log("El token: " + this.token);
-    await this.loadToken();
-    console.log("El token 2: " + this.token);
-    if (this.token) {
-      if (!this.user) {
-        console.log("El token: 3 " + this.token);
-        return this.http.get(`${url}/me`).subscribe(
-          (res:any)=>{
-            this.user = res.user;
-            console.log("El Usuario cargado es: " + this.user);
-          }
-        )
-      }else{
-        return this.user;
-      }
+    const logged = await this.checkToken();
+    if (logged) {
+      return this.user
     }else{
-      this.checkToken();
+      return null;
     }
   }
 }

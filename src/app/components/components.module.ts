@@ -14,6 +14,7 @@ import { HomeGroupComponent } from './groups/home-group/home-group.component';
 import { RouterModule } from '@angular/router';
 import { HomeSeedlingComponent } from './seedlings/home-seedling/home-seedling.component';
 import { HomePublicationComponent } from './publications/home-publication/home-publication.component';
+import { HeaderActionComponent } from './common/shared/header-action/header-action.component';
 
 
 
@@ -29,7 +30,8 @@ import { HomePublicationComponent } from './publications/home-publication/home-p
     OneGroupComponent,
     HomeGroupComponent,
     HomeSeedlingComponent,
-    HomePublicationComponent
+    HomePublicationComponent,
+    HeaderActionComponent
   ],
   imports: [
     CommonModule,
@@ -44,7 +46,9 @@ import { HomePublicationComponent } from './publications/home-publication/home-p
     HomeGroupComponent,
     HomeSeedlingComponent,
     HomePublicationComponent,
-    OneGroupComponent
+    OneGroupComponent,
+    DepartmentComponent,
+    HeaderActionComponent
   ]
 })
 export class ComponentsModule { }

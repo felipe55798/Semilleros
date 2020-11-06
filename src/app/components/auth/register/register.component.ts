@@ -64,8 +64,8 @@ export class RegisterComponent implements OnInit {
 
   register(){
     this.authService.register(this.user.value).subscribe(
-      res=>console.log(res),
-      err=>console.log(err)
+      res=>this.handleResponse(res),
+      err=>this.handleError(err)
     )
   }
 

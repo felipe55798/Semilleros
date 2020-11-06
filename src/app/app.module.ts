@@ -13,6 +13,7 @@ import { HttpClientModule, HTTP_INTERCEPTORS } from '@angular/common/http';
 
 import { IonicStorageModule } from '@ionic/storage';
 import { TokenInjectionService } from './interceptors/token-injection.service';
+import { CheckTokenService } from './interceptors/check-token.service';
 
 @NgModule({
   declarations: [AppComponent],
@@ -32,6 +33,11 @@ import { TokenInjectionService } from './interceptors/token-injection.service';
     {
       provide:HTTP_INTERCEPTORS,
       useClass: TokenInjectionService,
+      multi:true
+    },
+    {
+      provide:HTTP_INTERCEPTORS,
+      useClass: CheckTokenService,
       multi:true
     }
   ],

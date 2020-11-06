@@ -14,3 +14,10 @@
     color:  #0069a3;
 }
 
+ion-toolbar{
+    display: flex;
+
+    .action{
+        margin-left: auto;
+    }
+}

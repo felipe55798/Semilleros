@@ -1,0 +1,10 @@
+<ion-spinner *ngIf="loading" class="ion-margin-end"  name="dots"></ion-spinner>
+
+<div *ngIf="!loading" >
+  <a routerLink="/auth" *ngIf="!loggedIn" >
+    Iniciar sesión
+  </a>
+  <ion-button *ngIf="loggedIn"  (click)="logout()" expand="block" fill="clear" shape="round">
+    <ion-icon slot="icon-only" color="danger" name="log-out-outline"></ion-icon>
+  </ion-button>
+</div>

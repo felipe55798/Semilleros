@@ -20,5 +20,17 @@ export class TabsPage implements OnInit{
     }).catch(err =>{
       this.authService.checkToken();
     })
+
+    this.authService.logoutEvent.subscribe(res=>{
+      if (res) {
+        this.userLoggedIn = false;
+      }
+    })
+
+    this.authService.loginEvent.subscribe(res=>{
+      if (res) {
+        this.userLoggedIn = true;
+      }
+    })
   }
 }

@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { LoadingController } from '@ionic/angular';
 import { Group } from 'src/app/interfaces/group';
 import { GroupsService } from 'src/app/services/groups.service';
 
@@ -14,15 +15,26 @@ export class HomeGroupComponent implements OnInit {
     spaceBetween:-10
   };
   groups:Group[] = [];
-  constructor(private groupService:GroupsService) { }
+  constructor(private groupService:GroupsService,
+              private loadingController: LoadingController) { }
 
   ngOnInit() {
     this.getGroups()
   }
 
-  getGroups() {
+  async getGroups() {
+    const loading = await this.loadingController.create({
+      cssClass: 'my-custom-class',
+      message: 'Please wait...',
+      duration: 2000
+    });
+    await loading.present();
+
     this.groupService.getGroupsList().subscribe(
-      response => this.handleResponse(response), 
+      async response => {
+        const { role, data } = await loading.onDidDismiss();
+        this.handleResponse(response)
+      }, 
       err => this.handleError(err)
       );
   }

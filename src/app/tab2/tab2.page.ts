@@ -1,6 +1,7 @@
 import { Component } from '@angular/core';
 import { error } from 'protractor';
 import { Department } from '../interfaces/department';
+import { AuthService } from '../services/auth.service';
 import { DepartmentService } from '../services/departments.service';
 
 @Component({
@@ -11,18 +12,17 @@ import { DepartmentService } from '../services/departments.service';
 export class Tab2Page {
 
   departments: Department[]=[];
-  constructor(public apiService: DepartmentService) {}
+  constructor(private apiService: DepartmentService) {}
 
   ngOnInit() {
     this.getDepartments();
   }
 
   getDepartments() {
-    //Get saved list of students
     this.apiService.getDepartmentsList().subscribe(
       response => this.handleResponse(response), 
       err => this.handleError(err)
-      );
+    );
   }
 
   handleError(error: any) {
@@ -30,7 +30,6 @@ export class Tab2Page {
   }
 
   handleResponse(response) {
-    console.log(response);
     this.departments = response.departments;
   }
 }
