@@ -1,4 +1,5 @@
-import { Component, OnInit } from '@angular/core';
+import { Component,Input, OnInit } from '@angular/core';
+import { Group } from 'src/app/interfaces/group';
 
 @Component({
   selector: 'app-one-group',
@@ -7,8 +8,10 @@ import { Component, OnInit } from '@angular/core';
 })
 export class OneGroupComponent implements OnInit {
 
+  @Input() group:Group = {};
   constructor() { }
 
-  ngOnInit() {}
-
+  ngOnInit() {
+    console.log('propiedad1 ' + this.group);
+  }
 }
