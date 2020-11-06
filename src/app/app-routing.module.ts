@@ -13,10 +13,15 @@ const routes: Routes = [
     canActivate:[NoLoggedInGuard]
   },
   {
+    path: 'groups',
+    loadChildren: () => import('./pages/pages.module').then( m => m.PagesModule)
+  },
+  {
     path:'',
     pathMatch:'full',
     redirectTo:'auth'
   }
+
 
 
 ];
