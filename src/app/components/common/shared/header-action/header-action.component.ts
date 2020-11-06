@@ -23,12 +23,14 @@ export class HeaderActionComponent implements OnInit {
     this.authService.loginEvent.subscribe(res=>{
       if (res) {
         this.loggedIn = true;
+        this.loading = false;
       }
     })
 
     this.authService.logoutEvent.subscribe(res=>{
       if (res) {
         this.loggedIn = false;
+        this.loading = false;
       }
     })
   }
