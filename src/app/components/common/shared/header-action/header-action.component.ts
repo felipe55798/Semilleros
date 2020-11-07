@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnDestroy, OnInit } from '@angular/core';
 import { AuthService } from 'src/app/services/auth.service';
 
 @Component({
@@ -14,12 +14,11 @@ export class HeaderActionComponent implements OnInit {
 
   ngOnInit() {
     this.authService.getUser().then(user=>{
-      if (user && user.name) {
+      this.loading = false;
+      if (user) {
         this.loggedIn = true;
-        this.loading = false;
       }
     })
-
     this.authService.loginEvent.subscribe(res=>{
       if (res) {
         this.loggedIn = true;
@@ -39,5 +38,8 @@ export class HeaderActionComponent implements OnInit {
     this.authService.logout()
   }
 
-  
+  ionViewWillLeave(){
+    console.log('Will leave');
+    
+  }
 }

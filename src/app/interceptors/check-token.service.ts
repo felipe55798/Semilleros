@@ -1,7 +1,7 @@
 import { HttpEvent, HttpHandler, HttpInterceptor, HttpRequest } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Storage } from '@ionic/storage';
-import { BehaviorSubject, from, Observable, Subject } from 'rxjs';
+import { BehaviorSubject, from, Observable, Subject, throwError } from 'rxjs';
 import { catchError, filter, map, mergeMap, switchMap, take } from 'rxjs/operators';
 import { AuthService } from '../services/auth.service';
 
@@ -68,6 +68,8 @@ export class CheckTokenService implements HttpInterceptor{
             }
           }
         }
+
+        return throwError(err)
       })
     )
   }

@@ -64,6 +64,8 @@ export class AuthService {
   }
 
   async logout(){
+    console.log('Llamado');
+    
     this.user = null;
     this.token = null;
     await this.storage.clear()
@@ -81,7 +83,6 @@ export class AuthService {
     await this.loadToken()
 
     if (!this.token) {
-      await this.logout()
       return Promise.resolve(false);
     }
 
@@ -94,6 +95,9 @@ export class AuthService {
         (res:any)=>{
           this.user = res.user;
           return resolve(true);
+        },
+        (err)=>{
+          this.logout()
         }
       )
     })
@@ -109,12 +113,18 @@ export class AuthService {
     }
   }
 
-  async getUser() {
-    const logged = await this.checkToken();
-    if (logged) {
-      return this.user
-    }else{
-      return null;
+  getUser():Promise<User>{
+    if (this.user) {
+      return Promise.resolve(this.user);
     }
+
+    return this.checkToken().then(logged=>{
+      if (logged) {
+        return this.user
+      }else{
+        return null;
+      }
+    })
+    
   }
 }

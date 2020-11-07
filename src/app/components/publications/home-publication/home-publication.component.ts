@@ -1,5 +1,6 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, Input, OnInit } from '@angular/core';
 import { Publication } from 'src/app/interfaces/publication';
+import { User } from 'src/app/interfaces/user';
 import { PublicationService } from 'src/app/services/publication.service';
 
 @Component({
@@ -16,11 +17,17 @@ export class HomePublicationComponent implements OnInit {
     spaceBetween:-10
   };
 
+  loading:boolean = false;
+  @Input() user:User = null;
+  
   constructor(private publicationService:PublicationService) { }
 
-  ngOnInit() {}
+  ngOnInit() {
+    this.getPublications()
+  }
 
   getPublications(){
+    this.loading = true;
     this.publicationService.getPublications().subscribe(
       res=>this.handleResponsePublication(res),
       err=>this.handleErrorPublications(err)
@@ -29,10 +36,12 @@ export class HomePublicationComponent implements OnInit {
 
   handleResponsePublication(res){
     this.publications = res.publications;
+    this.loading= false;
   }
 
   handleErrorPublications(err){
     console.log(err);
+    this.loading= false;
   }
 
   loadPublications(event){

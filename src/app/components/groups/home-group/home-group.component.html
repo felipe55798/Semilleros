@@ -14,10 +14,18 @@
 <ion-row *ngIf="groups.length === 0 && !loading" >
   <ion-col size="12">
     <app-empty [title_message]="'No hay grupos de investigación'" ></app-empty>
+    <div class="container_add_button">
+      <a href="" *ngIf="admin"  class="add_group_link ion-text-center">
+        Crear grupo
+      </a>
+    </div>
   </ion-col>
 </ion-row>
 
 <div class="loading_box" *ngIf="loading"> 
-  <ion-spinner  name="bubbles"></ion-spinner>
+  <div class="loading_box__container">
+    <ion-spinner color="primary"   name="crescent" class="ion-margin-end"></ion-spinner>
+    Cargando...
+  </div>
 </div>
 

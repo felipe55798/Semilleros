@@ -1,4 +1,7 @@
 import { Component } from '@angular/core';
+import { LoadingController } from '@ionic/angular';
+import { User } from '../interfaces/user';
+import { AuthService } from '../services/auth.service';
 
 @Component({
   selector: 'app-tab1',
@@ -7,9 +10,17 @@ import { Component } from '@angular/core';
 })
 export class Tab1Page {
   show = false;
-  constructor() {}
+  loggedUser:User = null;
+  loading:boolean = true;
 
-  ngOnInit() {
+  constructor(private authService:AuthService,
+              private loadingController: LoadingController) {}
+
+  async ngOnInit() {
+    this.authService.getUser().then(async user=>{
+      this.loggedUser = user;      
+      this.loading = false;
+    })
   }
 
   showContentCard(){

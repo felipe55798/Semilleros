@@ -13,12 +13,9 @@ export class TabsPage implements OnInit{
 
   ngOnInit() {
     this.authService.getUser().then(user => {
-      console.log("El usuario es: " + user);
-      if (user.name) {
+      if (user) {
         this.userLoggedIn = true;
       }
-    }).catch(err =>{
-      this.authService.checkToken();
     })
 
     this.authService.logoutEvent.subscribe(res=>{

@@ -1,8 +1,10 @@
 import { Component, OnInit } from '@angular/core';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { NavController, ToastController } from '@ionic/angular';
+import { Program } from 'src/app/interfaces/program';
 import { User } from 'src/app/interfaces/user';
 import { AuthService } from 'src/app/services/auth.service';
+import { ProgramService } from 'src/app/services/program.service';
 
 @Component({
   selector: 'app-register',
@@ -32,6 +34,9 @@ export class RegisterComponent implements OnInit {
     'cellphone':[
       { type: 'required', message: 'El número de celular es obligatorio.' },
       { type: 'pattern', message: 'Formato incorrecto.' }
+    ],
+    'program_id':[
+      { type: 'required', message: 'El programa acádemico es obligatorio.' },
     ]
   }
 
@@ -51,18 +56,37 @@ export class RegisterComponent implements OnInit {
       Validators.required,
       Validators.pattern("[0-9 ]{10}")
     ])),
-    program_id: new FormControl(1)
+    program_id: new FormControl('',Validators.required)
   })
 
   error:User = {};
 
+  sending:boolean = false;
+
+  programs:Program[] = [];
+
   constructor(private authService:AuthService,
               private navCtrl:NavController,
-              public toastController: ToastController) { }
+              private toastController: ToastController,
+              private programService: ProgramService) { }
 
-  ngOnInit() {}
+  ngOnInit() {
+    this.programService.getPrograms().subscribe(
+      (res:any)=>{
+        this.programs = res.programs;
+      },
+      (err)=>{
+        console.log(err);
+      }
+    )
+  }
 
   register(){
+    console.log(this.user.value);
+
+    return;
+    
+    this.sending = true;
     this.authService.register(this.user.value).subscribe(
       res=>this.handleResponse(res),
       err=>this.handleError(err)
@@ -70,10 +94,12 @@ export class RegisterComponent implements OnInit {
   }
 
   handleResponse(data){
+    this.sending = false;
     this.navCtrl.navigateRoot('/tabs/tab1');
   }
 
   handleError(err){
+    this.sending = false;
     if (err.status === 422) {
       this.error = err.error.errors;
     }else{

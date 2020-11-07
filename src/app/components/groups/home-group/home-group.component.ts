@@ -1,6 +1,7 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, Input, OnInit } from '@angular/core';
 import { LoadingController } from '@ionic/angular';
 import { Group } from 'src/app/interfaces/group';
+import { User } from 'src/app/interfaces/user';
 import { GroupsService } from 'src/app/services/groups.service';
 
 @Component({
@@ -17,10 +18,19 @@ export class HomeGroupComponent implements OnInit {
   groups:Group[] = [];
 
   loading:boolean = false;
+  admin:boolean = false;
+
+  @Input() user:User = null;
 
   constructor(private groupService:GroupsService) { }
 
   ngOnInit() {
+    if (this.user) {
+      if (this.user.roles[0].id === 1) {
+        this.admin = true;
+      }
+    }  
+    
     this.getGroups()
   }
 

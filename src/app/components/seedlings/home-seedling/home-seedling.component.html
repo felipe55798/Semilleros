@@ -2,7 +2,7 @@
   <span ><h3>Semilleros de Investigación</h3></span>
   <a *ngIf="seedlings.length"  [routerLink]="['/home/seedlings']">Ver Todos</a>
 </div>
-<ion-slides pager="false" [options]="slidesOpts" *ngIf="seedlings?.length > 0" >
+<ion-slides pager="false" [options]="slidesOpts" *ngIf="seedlings.length > 0" >
   <ion-slide *ngFor="let seedling of seedlings">
     <ion-row>
       <ion-col size="12" > 
@@ -11,8 +11,20 @@
     </ion-row>
   </ion-slide>
 </ion-slides>
-<ion-row *ngIf="seedlings.length === 0" >
+<ion-row *ngIf="seedlings.length === 0 && !loading" >
   <ion-col size="12">
     <app-empty [title_message]="'Sin semilleros de investigación'" ></app-empty>
+    <div class="container_add_button">
+      <a href="" *ngIf="admin"  class="add_group_link ion-text-center">
+        Crear semillero
+      </a>
+    </div>
   </ion-col>
 </ion-row>
+
+<div class="loading_box" *ngIf="loading"> 
+  <div class="loading_box__container">
+    <ion-spinner color="primary"   name="crescent" class="ion-margin-end"></ion-spinner>
+    Cargando...
+  </div>
+</div>
