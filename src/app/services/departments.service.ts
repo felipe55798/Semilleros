@@ -19,4 +19,11 @@ export class DepartmentService {
       retry(2)
     );
   }
+
+  getDepartment(id) {
+    return this.http.get(`${url}/${id}}`)
+    .pipe(
+      retry(2)
+    );
+  }
 }

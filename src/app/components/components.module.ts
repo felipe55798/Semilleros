@@ -15,6 +15,7 @@ import { RouterModule } from '@angular/router';
 import { HomeSeedlingComponent } from './seedlings/home-seedling/home-seedling.component';
 import { HomePublicationComponent } from './publications/home-publication/home-publication.component';
 import { HeaderActionComponent } from './common/shared/header-action/header-action.component';
+import { OneSeedlingComponent } from './seedlings/one-seedling/one-seedling.component';
 
 
 
@@ -28,6 +29,7 @@ import { HeaderActionComponent } from './common/shared/header-action/header-acti
     EmptyComponent,
     SeedlingComponent,
     OneGroupComponent,
+    OneSeedlingComponent,
     HomeGroupComponent,
     HomeSeedlingComponent,
     HomePublicationComponent,
@@ -47,6 +49,7 @@ import { HeaderActionComponent } from './common/shared/header-action/header-acti
     HomeSeedlingComponent,
     HomePublicationComponent,
     OneGroupComponent,
+    OneSeedlingComponent,
     DepartmentComponent,
     HeaderActionComponent
   ]

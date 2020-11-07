@@ -1,5 +1,6 @@
 import { Component, Input, OnInit } from '@angular/core';
 import { Department } from 'src/app/interfaces/department';
+import { ActivatedRoute, Params } from '@angular/router';
 
 @Component({
   selector: 'app-department',

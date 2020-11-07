@@ -1,5 +1,6 @@
 <ion-card class="{{value%2 == 0 ? 'dpt_font_2' : 'dpt_font'}}">
   <ion-card-header>
+    <a routerLink='/home/single-department/{{ department.id }}'>Ver Más</a>
     <ion-card-subtitle class="{{value%2 == 0 ? 'dpt_w_2' : 'dpt_w'}}">{{ department.description }}</ion-card-subtitle>
     <ion-card-title>
       <h1 class="{{value%2 == 0 ? 'dpt_w_2' : 'dpt_w'}}">

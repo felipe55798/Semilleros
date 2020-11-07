@@ -1,0 +1,20 @@
+<ion-header>
+  <ion-toolbar>
+    <ion-title>Departamento</ion-title>
+    <ion-buttons slot="start">
+      <ion-back-button [defaultHref]="'/tabs'" ></ion-back-button>
+    </ion-buttons>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content>
+  <ion-card mode='ios'>
+    <img src="assets/images/fondo-3.jpg"/>
+    <ion-item class="sep_bk">
+      <h5>{{ department.name }}</h5>
+    </ion-item>
+    <ion-card-content>
+      <p>{{ department.description }}</p>
+    </ion-card-content>
+  </ion-card>
+</ion-content>
