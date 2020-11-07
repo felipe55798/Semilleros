@@ -7,8 +7,21 @@ const routes: Routes = [
     path: '',
     children:[
       {
+        path:'',
+        redirectTo:'groups'
+      },
+      {
         path:'groups',
-        loadChildren: ()=>import('./groups/groups-list/groups-list.module').then(m=>m.GroupsListPageModule)
+        children:[
+          {
+            path:'',
+            loadChildren: ()=>import('./groups/groups-list/groups-list.module').then(m=>m.GroupsListPageModule)
+          },
+          {
+            path:'add',
+            loadChildren: () => import('./admin/groups/add-group/add-group.module').then( m => m.AddGroupPageModule)
+          }
+        ]
       }
     ]
   }
