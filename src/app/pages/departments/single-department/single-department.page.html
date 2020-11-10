@@ -8,13 +8,17 @@
 </ion-header>
 
 <ion-content>
-  <ion-card mode='ios'>
-    <img src="assets/images/fondo-3.jpg"/>
-    <ion-item class="sep_bk">
-      <h5>{{ department.name }}</h5>
-    </ion-item>
-    <ion-card-content>
-      <p>{{ department.description }}</p>
-    </ion-card-content>
-  </ion-card>
+  <img src="assets/images/fondo-3.jpg"/>
+  <div class="container_single">
+    <h3>{{ department.name }}</h3>
+    <p>{{ department.description }}</p>
+  </div>
+  <div class="separator"></div>
+  <div class="container_single">
+    <h2>Programas Asociados</h2>
+    <app-one-program *ngFor="let program of department.programs" [program]="program" [imgVisible]=false></app-one-program>
+  </div>
+  <div class="separator"></div>
+  <h2>Grupos Asociados</h2>
+  <app-one-group *ngFor="let group of department.groups" [group]="group" [imgVisible]=false></app-one-group> 
 </ion-content>

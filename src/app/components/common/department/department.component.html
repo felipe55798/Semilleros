@@ -1,11 +1,12 @@
-<ion-card class="{{value%2 == 0 ? 'dpt_font_2' : 'dpt_font'}}">
-  <ion-card-header>
-    <a routerLink='/home/single-department/{{ department.id }}'>Ver Más</a>
-    <ion-card-subtitle class="{{value%2 == 0 ? 'dpt_w_2' : 'dpt_w'}}">{{ department.description }}</ion-card-subtitle>
-    <ion-card-title>
-      <h1 class="{{value%2 == 0 ? 'dpt_w_2' : 'dpt_w'}}">
-        {{ department.name }}
-      </h1> 
-    </ion-card-title>
-  </ion-card-header>
-</ion-card>
+<a routerLink='/home/single-department/{{ department.id }}' class="a_dep_container">
+  <ion-card class="{{value%2 == 0 ? 'dpt_font_2' : 'dpt_font'}}">
+    <ion-card-header>
+      <ion-card-subtitle class="{{value%2 == 0 ? 'dpt_w_2' : 'dpt_w'}}">{{ department.description }}</ion-card-subtitle>
+      <ion-card-title>
+        <h1 class="{{value%2 == 0 ? 'dpt_w_2' : 'dpt_w'}}">
+          {{ department.name }}
+        </h1> 
+      </ion-card-title>
+    </ion-card-header>
+  </ion-card>
+</a>

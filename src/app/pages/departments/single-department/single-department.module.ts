@@ -7,9 +7,11 @@ import { IonicModule } from '@ionic/angular';
 import { SingleDepartmentPageRoutingModule } from './single-department-routing.module';
 
 import { SingleDepartmentPage } from './single-department.page';
+import { ComponentsModule } from 'src/app/components/components.module';
 
 @NgModule({
   imports: [
+    ComponentsModule,
     CommonModule,
     FormsModule,
     IonicModule,
