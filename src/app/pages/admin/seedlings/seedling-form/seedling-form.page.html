@@ -1,10 +1,10 @@
 <ion-header>
   <ion-toolbar>
     <ion-buttons slot="start">
-      <ion-back-button [defaultHref]="'/tabs'"></ion-back-button>
+      <ion-back-button [defaultHref]="'/'"></ion-back-button>
     </ion-buttons>
     <ion-title class="ion-text-center">
-      Agregar grupo
+      Agregar semillero
     </ion-title>
   </ion-toolbar>
 </ion-header>
@@ -12,7 +12,7 @@
 <ion-content>
   <ion-grid fixed>
     <div class="img_container">
-      <img src="assets/images/add-file.svg" class="img_add" alt="">
+      <img src="assets/images/grupo.svg" class="img_add" alt="">
     </div>
     <ion-row>
       <ion-col size="12">
@@ -22,9 +22,9 @@
           <ion-input type="text" ></ion-input>
         </ion-item>
         <ion-item>
-          <ion-label>Departamento</ion-label>
-          <ion-select [value]="departments[0]?.id" placeholder="Departamento">
-            <ion-select-option *ngFor="let department of departments"  [value]="department.id">{{ department.name }}</ion-select-option>
+          <ion-label>Grupo</ion-label>
+          <ion-select [value]="groups[0]?.id" placeholder="Grupo de investigación">
+            <ion-select-option *ngFor="let group of groups"  [value]="group.id">{{ group.name }}</ion-select-option>
           </ion-select>
         </ion-item>
         <ion-item>
@@ -34,7 +34,7 @@
         </ion-item>
       </ion-col>
       <ion-col size="12">
-        <ion-button (click)="addDepartment()" expand="block" >
+        <ion-button (click)="addSeedling()" expand="block" >
           Click me
         </ion-button>
       </ion-col>

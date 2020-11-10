@@ -13,3 +13,18 @@
 .skeleton_card{
     height: 280px;
 }
+
+ion-fab{
+    margin-bottom: 1.9em;
+}
+ion-label {
+    position: absolute;
+    margin-top: 15px;
+    right: 65px;
+
+    color: white;
+    background-color: rgba(0,0,0,0.9);
+    line-height: 24px;
+    padding: 4px 8px;
+    border-radius: 4px;
+}

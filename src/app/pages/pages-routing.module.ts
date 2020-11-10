@@ -22,9 +22,19 @@ const routes: Routes = [
             loadChildren: () => import('./admin/groups/add-group/add-group.module').then( m => m.AddGroupPageModule)
           }
         ]
+      },
+      {
+        path: 'seedlings',
+        children:[
+          {
+            path:'add',
+            loadChildren: () => import('./admin/seedlings/seedling-form/seedling-form.module').then( m => m.SeedlingFormPageModule)
+          }
+        ]
       }
     ]
   }
+
 ];
 
 @NgModule({
