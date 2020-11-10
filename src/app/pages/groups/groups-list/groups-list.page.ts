@@ -21,7 +21,7 @@ export class GroupsListPage implements OnInit {
     this.apiService.getGroupsList().subscribe(
       response => this.handleResponse(response), 
       err => this.handleError(err)
-      );
+    );
   }
 
   handleResponse(response) {

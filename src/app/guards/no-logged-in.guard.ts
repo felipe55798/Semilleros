@@ -13,5 +13,4 @@ export class NoLoggedInGuard implements CanActivate {
     state: RouterStateSnapshot):Promise<boolean> | boolean{
     return this.authService.noLoggedIn();
   }
-  
 }

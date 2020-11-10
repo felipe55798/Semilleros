@@ -27,14 +27,26 @@ const routes: Routes = [
         path: 'seedlings',
         children:[
           {
+            path:'',
+            loadChildren: ()=>import('./seedlings/seedlings-list/seedlings-list.module').then(m=>m.SeedlingsListPageModule)
+          },
+          {
             path:'add',
             loadChildren: () => import('./admin/seedlings/seedling-form/seedling-form.module').then( m => m.SeedlingFormPageModule)
+          }
+        ]
+      },
+      {
+        path:'departments',
+        children:[
+          {
+            path: ':id',
+            loadChildren: () => import('./departments/single-department/single-department.module').then( m => m.SingleDepartmentPageModule)
           }
         ]
       }
     ]
   }
-
 ];
 
 @NgModule({

@@ -9,6 +9,7 @@ import { Group } from 'src/app/interfaces/group';
 export class OneGroupComponent implements OnInit {
 
   @Input() group:Group = {};
+  @Input() imgVisible:boolean = true;
   constructor() { }
 
   ngOnInit() {

@@ -1,6 +1,6 @@
 <div class="cat_title">
   <span ><h3>Semilleros de Investigación</h3></span>
-  <a *ngIf="seedlings.length"  href="">Ver Todos</a>
+  <a *ngIf="seedlings.length"  [routerLink]="['/home/seedlings']">Ver Todos</a>
 </div>
 <ion-slides pager="false" [options]="slidesOpts" *ngIf="seedlings.length > 0" >
   <ion-slide *ngFor="let seedling of seedlings">
