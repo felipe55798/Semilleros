@@ -64,7 +64,8 @@ const routes: Routes = [
     path:'',
     pathMatch: 'full',
     redirectTo:'groups'
-  },  {
+  },
+  {
     path: 'programs-list',
     loadChildren: () => import('./programs/programs-list/programs-list.module').then( m => m.ProgramsListPageModule)
   }

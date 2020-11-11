@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { from } from 'rxjs';
 import { AuthService } from '../services/auth.service';
 
 @Component({
@@ -12,11 +13,13 @@ export class TabsPage implements OnInit{
   constructor(private authService:AuthService) {}
 
   ngOnInit() {
-    this.authService.getUser().then(user => {
-      if (user) {
-        this.userLoggedIn = true;
+    this.authService.getUser().subscribe(
+      res=> {
+        if (res) {
+          this.userLoggedIn = true
+        }
       }
-    })
+    )
 
     this.authService.logoutEvent.subscribe(res=>{
       if (res) {

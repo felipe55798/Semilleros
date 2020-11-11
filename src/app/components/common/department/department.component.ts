@@ -1,6 +1,6 @@
 import { Component, Input, OnInit } from '@angular/core';
 import { Department } from 'src/app/interfaces/department';
-import { ActivatedRoute, Params } from '@angular/router';
+import { Params } from '@angular/router';
 
 @Component({
   selector: 'app-department',
@@ -14,7 +14,6 @@ export class DepartmentComponent implements OnInit {
   constructor() { }
 
   ngOnInit() {
-    console.log('p1 ' + this.department + ' p2 ' + this.value);
   }
 
 }

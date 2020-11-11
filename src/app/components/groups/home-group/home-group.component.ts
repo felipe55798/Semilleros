@@ -2,6 +2,7 @@ import { Component, Input, OnInit } from '@angular/core';
 import { LoadingController } from '@ionic/angular';
 import { Group } from 'src/app/interfaces/group';
 import { User } from 'src/app/interfaces/user';
+import { AuthService } from 'src/app/services/auth.service';
 import { GroupsService } from 'src/app/services/groups.service';
 
 @Component({
@@ -22,16 +23,36 @@ export class HomeGroupComponent implements OnInit {
 
   @Input() user:User = null;
 
-  constructor(private groupService:GroupsService) { }
+  constructor(private groupService:GroupsService,
+              private authService:AuthService) { }
 
   ngOnInit() {
+    this.validRole()
+    this.authService.loginEvent.subscribe(res=>{
+      if (res) {
+        this.authService.getUser().subscribe(user=>{
+          this.user = user;
+          this.validRole()
+        })
+      }
+    })
+
+    this.authService.logoutEvent.subscribe(res=>{
+      if (res) {
+        this.user = null;
+        this.admin = false;
+      }
+    })
+
+    this.getGroups()
+  }
+
+  validRole(){
     if (this.user) {
       if (this.user.roles[0].id === 1) {
         this.admin = true;
       }
-    }  
-    
-    this.getGroups()
+    }
   }
 
   getGroups() {

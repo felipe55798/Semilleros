@@ -10,39 +10,38 @@
 </ion-header>
 
 <ion-content >
-  <ion-fab vertical="bottom" horizontal="end" edge slot="fixed">
+  <ion-fab *ngIf="!loading && loggedUser?.roles[0].id === 1"  vertical="bottom" horizontal="end" edge slot="fixed">
     <ion-label *ngIf="visibleButtonList"  >Agregar</ion-label>
     <ion-fab-button (click)="visibleButtonList = !visibleButtonList">
       <ion-icon name="add"></ion-icon>
     </ion-fab-button>
     <ion-fab-list side="top">
-      <div>
+      <div class="ion-margin-bottom">
         <ion-label>Grupo</ion-label>
-        <ion-fab-button>
+        <ion-fab-button (click)="navigate('/home/groups/add')" color="primary">
           <ion-icon name="people"></ion-icon>
         </ion-fab-button>
       </div>
-      <div> 
+      <div class="ion-margin-bottom">  
         <ion-label>Semillero</ion-label>
-        <ion-fab-button>
+        <ion-fab-button (click)="navigate('/home/seedlings/add')" color="primary">
           <ion-icon name="server"></ion-icon>
         </ion-fab-button>
       </div>
-      <div>
+      <div class="ion-margin-bottom">
         <ion-label>Departamento</ion-label>
-        <ion-fab-button>
+        <ion-fab-button (click)="navigate('/home/departments/add')" color="primary">
           <ion-icon name="grid"></ion-icon>
         </ion-fab-button>
       </div>
-      <div>
+      <div class="ion-margin-bottom">
         <ion-label>Programa</ion-label>
-        <ion-fab-button>
+        <ion-fab-button (click)="navigate('/home/programs/add')" color="primary">
           <ion-icon name="book"></ion-icon>
         </ion-fab-button>
       </div>
     </ion-fab-list>
   </ion-fab>
-
   <div *ngIf="!loading" >
     <app-home-group [user]="loggedUser"  ></app-home-group>
     <app-home-seedling [user]="loggedUser" ></app-home-seedling>

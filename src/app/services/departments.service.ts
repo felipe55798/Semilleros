@@ -16,14 +16,20 @@ export class DepartmentService {
   getDepartmentsList() {
     return this.http.get(url)
     .pipe(
-      retry(2)
+      retry(1)
     );
   }
 
   getDepartment(id) {
     return this.http.get(`${url}/${id}`)
     .pipe(
-      retry(2)
+      retry(1)
     );
+  }
+
+  createDepartment(department){
+    return this.http.post(`${url}`,department).pipe(
+      retry(1)
+    )
   }
 }

@@ -1,8 +1,7 @@
 import { Component } from '@angular/core';
+import { ActivatedRoute, Router } from '@angular/router';
 import { LoadingController } from '@ionic/angular';
-import { error } from 'protractor';
 import { Department } from '../interfaces/department';
-import { AuthService } from '../services/auth.service';
 import { DepartmentService } from '../services/departments.service';
 
 @Component({
@@ -15,7 +14,8 @@ export class Tab2Page {
 
   departments: Department[]=[];
   constructor(private apiService: DepartmentService,
-              private loadingController: LoadingController) {}
+              private loadingController: LoadingController,
+              private route:ActivatedRoute) {}
 
   ngOnInit() {
     this.getDepartments();
@@ -48,5 +48,15 @@ export class Tab2Page {
   handleResponse(response) {
     this.departments = response.departments;
     this.loading = false;
+  }
+
+  ionViewWillEnter(){
+    let refresh: boolean = false;
+    this.route.queryParams.subscribe(params => {
+      refresh = params["refresh"];
+      if (refresh) {
+        this.getDepartments()
+      }
+    });
   }
 }

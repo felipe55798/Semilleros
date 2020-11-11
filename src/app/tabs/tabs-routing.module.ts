@@ -22,17 +22,12 @@ const routes: Routes = [
         canActivate:[CheckTokenGuard]
       },
       {
-        path: '',
-        redirectTo: '/tabs/tab1',
-        pathMatch: 'full'
+        path:'',
+        redirectTo:'tab1',
+        pathMatch:'full'
       }
     ]
-  },
-  /**{
-    path: '',
-    redirectTo: '/tabs/tab1',
-    pathMatch: 'full'
-  }*/
+  }
 ];
 
 @NgModule({
