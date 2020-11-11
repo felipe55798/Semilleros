@@ -18,4 +18,11 @@ export class SeedlingsService {
       retry(2)
     );
   }
+
+  getSeedling(id) {
+    return this.http.get(`${url}/${id}`)
+    .pipe(
+      retry(2)
+    );
+  }
 }

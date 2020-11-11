@@ -1,0 +1,25 @@
+<ion-header>
+  <ion-toolbar>
+    <ion-title>Group</ion-title>
+    <ion-buttons slot="start">
+      <ion-back-button [defaultHref]="'/tabs'" ></ion-back-button>
+    </ion-buttons>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content>
+  <img src="assets/images/fondo-3.jpg"/>
+  <div class="container_single">
+    <ion-text color="primary">
+      <h2>{{ group.name }}</h2>
+    </ion-text>
+    <p>{{ group.description }}</p>
+  </div>
+  <div class="separator"></div>
+  <div class="container_single">
+    <ion-text color="primary">
+      <h2>Semilleros Asociados</h2>
+    </ion-text>
+    <app-one-seedling *ngFor="let seedling of group.seedlings" [seedling]="seedling" [imgVisible]=false></app-one-seedling>
+  </div>
+</ion-content>

@@ -1,0 +1,23 @@
+h2{
+    text-align: center;
+}
+
+h3, p, h5{
+    padding-left: 15px;
+}
+
+.container_single{
+    // border-bottom: 2px #0069a3 solid;
+    padding-bottom: 5px;
+    padding-top: 5px;
+    // -webkit-box-shadow: 0px 4px 5px 0px rgba(0,0,0.2);
+    // -moz-box-shadow: 0px 4px 5px 0px rgba(0,0,0.2);
+    // box-shadow: 0px 4px 5px 0px rgba(0,0,0,0.2);
+}
+
+.separator{
+    width: 90%;
+    height: 2px;
+    background-color: rgb(175, 175, 175);
+    margin: 0 1em;
+}

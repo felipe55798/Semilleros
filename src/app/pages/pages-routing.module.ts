@@ -17,6 +17,14 @@ const routes: Routes = [
       {
         path: 'single-department/:id',
         loadChildren: () => import('./departments/single-department/single-department.module').then( m => m.SingleDepartmentPageModule)
+      },
+      {
+        path: 'single-group/:id',
+        loadChildren: () => import('./groups/single-group/single-group.module').then( m => m.SingleGroupPageModule)
+      },
+      {
+        path: 'single-seedling/:id',
+        loadChildren: () => import('./seedlings/single-seedling/single-seedling.module').then( m => m.SingleSeedlingPageModule)
       }
     ]
   },
