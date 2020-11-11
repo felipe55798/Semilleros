@@ -2,7 +2,7 @@
   <img src="assets/images/fondo-3.jpg" *ngIf="imgVisible"/>
   <ion-card-content>
     <h3>{{ program.name }}</h3>
-    <p>{{ program.description }}</p>
+    <p>{{ program.description.length > 80 ? program.description.substr(0, 80) + "..." : program.description }}</p>
     <small>{{ program.created_at|date }}</small>
   </ion-card-content>
 </ion-card>

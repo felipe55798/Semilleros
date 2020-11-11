@@ -4,9 +4,9 @@
       <ion-back-button [defaultHref]="'/tabs'" ></ion-back-button>
     </ion-buttons>
 
-    <ion-title>Grupos de Investigación UAM</ion-title>
+    <ion-title>Líneas de Investigación UAM</ion-title>
   </ion-toolbar>
 </ion-header>
 <ion-content>
-  <app-one-group *ngFor="let group of groups" [group]=group></app-one-group>
+  <app-one-line *ngFor="let line of lines" [line]=line></app-one-line>
 </ion-content>

@@ -1,12 +1,16 @@
 <ion-header>
   <ion-toolbar color="warning">
+    <ion-title>{{ line.name }}</ion-title>
     <ion-buttons slot="start">
       <ion-back-button [defaultHref]="'/tabs'" ></ion-back-button>
     </ion-buttons>
-
-    <ion-title>Grupos de Investigación UAM</ion-title>
   </ion-toolbar>
 </ion-header>
+
 <ion-content>
-  <app-one-group *ngFor="let group of groups" [group]=group></app-one-group>
+  <div class="container_single">
+    <ion-text color="primary">
+    </ion-text>
+    <p>{{ line.description }}</p>
+  </div>
 </ion-content>
