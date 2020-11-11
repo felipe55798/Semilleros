@@ -7,10 +7,12 @@ import { Publication } from 'src/app/interfaces/publication';
   styleUrls: ['./publication.component.scss'],
 })
 export class PublicationComponent implements OnInit {
-  @Input() publication:Publication;
   
+  @Input() publication:Publication;
   constructor() { }
 
-  ngOnInit() {}
+  ngOnInit() {
+    console.log('propiedad Seedling: ' + this.publication);
+  }
 
 }

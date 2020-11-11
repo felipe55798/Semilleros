@@ -18,4 +18,11 @@ export class GroupsService {
       retry(2)
     );
   }
+
+  getGroup(id){
+    return this.http.get(`${url}/${id}`)
+    .pipe(
+      retry(2)
+    );
+  }
 }

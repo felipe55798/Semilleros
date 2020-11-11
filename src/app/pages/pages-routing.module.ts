@@ -40,6 +40,18 @@ const routes: Routes = [
         ]
       },
       {
+<<<<<<< HEAD
+        path: 'single-department/:id',
+        loadChildren: () => import('./departments/single-department/single-department.module').then( m => m.SingleDepartmentPageModule)
+      },
+      {
+        path: 'single-group/:id',
+        loadChildren: () => import('./groups/single-group/single-group.module').then( m => m.SingleGroupPageModule)
+      },
+      {
+        path: 'single-seedling/:id',
+        loadChildren: () => import('./seedlings/single-seedling/single-seedling.module').then( m => m.SingleSeedlingPageModule)
+=======
         path:'departments',
         children:[
           {
@@ -52,6 +64,7 @@ const routes: Routes = [
             loadChildren: () => import('./departments/single-department/single-department.module').then( m => m.SingleDepartmentPageModule)
           }
         ]
+<<<<<<< HEAD
       },
       {
         path:'programs',
@@ -62,6 +75,9 @@ const routes: Routes = [
             loadChildren: () => import('./admin/programs/form-program/form-program.module').then( m => m.FormProgramPageModule)
           }       
         ]
+=======
+>>>>>>> 76ca865cc044277b5aba38518ad823802df382bb
+>>>>>>> 7fc350f087d69ddb13d5cb0eb04257ab129815d5
       }
     ]
   }

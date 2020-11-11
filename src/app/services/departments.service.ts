@@ -21,7 +21,7 @@ export class DepartmentService {
   }
 
   getDepartment(id) {
-    return this.http.get(`${url}/${id}}`)
+    return this.http.get(`${url}/${id}`)
     .pipe(
       retry(1)
     );

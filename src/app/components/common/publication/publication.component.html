@@ -1,7 +1,7 @@
 <ion-card>
   <ion-card-content >
-    <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Neque dolorum dolorem.</p>
-    <span class="link">https://www.autonoma.edu.co/</span>
-    <span class="date">2020/12/10</span>
+    <p>{{ publication.references }}</p>
+    <span class="link">{{ publication.link }}</span>
+    <span class="date">{{ publication.created_at|date }}</span>
   </ion-card-content>
 </ion-card>
