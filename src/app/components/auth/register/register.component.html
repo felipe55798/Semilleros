@@ -54,7 +54,7 @@
   </div>
   <ion-item>
     <ion-label>Programa acádemico</ion-label>
-    <ion-select formControlName="program_id" [value]="programs[0]?.id"  placeholder="Seleccione">
+    <ion-select [cancelText]="'Cancelar'" formControlName="program_id" [value]="programs[0]?.id"  placeholder="Seleccione">
       <ion-select-option *ngFor="let program of programs"  [value]="program.id">{{ program.name }}</ion-select-option>
     </ion-select>
   </ion-item>

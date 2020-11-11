@@ -13,6 +13,8 @@ export class Tab1Page {
   loggedUser:User = null;
   loading:boolean = true;
 
+  visibleButtonList:boolean = false;
+  
   constructor(private authService:AuthService,
               private loadingController: LoadingController) {}
 

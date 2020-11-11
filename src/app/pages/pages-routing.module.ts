@@ -7,14 +7,37 @@ const routes: Routes = [
     path: '',
     children:[
       {
+        path:'',
+        redirectTo:'groups'
+      },
+      {
         path:'groups',
-        loadChildren: ()=>import('./groups/groups-list/groups-list.module').then(m=>m.GroupsListPageModule)
+        children:[
+          {
+            path:'',
+            loadChildren: ()=>import('./groups/groups-list/groups-list.module').then(m=>m.GroupsListPageModule)
+          },
+          {
+            path:'add',
+            loadChildren: () => import('./admin/groups/add-group/add-group.module').then( m => m.AddGroupPageModule)
+          }
+        ]
       },
       {
-        path:'seedlings',
-        loadChildren: ()=>import('./seedlings/seedlings-list/seedlings-list.module').then(m=>m.SeedlingsListPageModule)
+        path: 'seedlings',
+        children:[
+          {
+            path:'',
+            loadChildren: ()=>import('./seedlings/seedlings-list/seedlings-list.module').then(m=>m.SeedlingsListPageModule)
+          },
+          {
+            path:'add',
+            loadChildren: () => import('./admin/seedlings/seedling-form/seedling-form.module').then( m => m.SeedlingFormPageModule)
+          }
+        ]
       },
       {
+<<<<<<< HEAD
         path: 'single-department/:id',
         loadChildren: () => import('./departments/single-department/single-department.module').then( m => m.SingleDepartmentPageModule)
       },
@@ -25,10 +48,18 @@ const routes: Routes = [
       {
         path: 'single-seedling/:id',
         loadChildren: () => import('./seedlings/single-seedling/single-seedling.module').then( m => m.SingleSeedlingPageModule)
+=======
+        path:'departments',
+        children:[
+          {
+            path: ':id',
+            loadChildren: () => import('./departments/single-department/single-department.module').then( m => m.SingleDepartmentPageModule)
+          }
+        ]
+>>>>>>> 76ca865cc044277b5aba38518ad823802df382bb
       }
     ]
-  },
-
+  }
 ];
 
 @NgModule({
