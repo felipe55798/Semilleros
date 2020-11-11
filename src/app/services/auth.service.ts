@@ -2,10 +2,11 @@ import { HttpClient } from '@angular/common/http';
 import { EventEmitter, Injectable } from '@angular/core';
 import { environment } from 'src/environments/environment';
 
-import { map } from "rxjs/operators";
+import { map, switchMap } from "rxjs/operators";
 import { Storage } from '@ionic/storage';
 import { User } from '../interfaces/user';
-import { NavController } from '@ionic/angular';
+import { NavController, ToastController } from '@ionic/angular';
+import { from, Observable } from 'rxjs';
 
 
 const url = `${environment.url}/auth`;
@@ -23,16 +24,16 @@ export class AuthService {
 
   constructor(private http:HttpClient,
               private storage:Storage,
-              private navCtrl:NavController) { }
+              private navCtrl:NavController,
+              private toastCtrl:ToastController) { }
 
   login(data){
     return this.http.post(`${url}/login`,data).pipe(
       map(async(data:any)=>{
         const info = data.authaccess;
-        await this.setToken(info.access_token,info.refresh_token)
         this.token = info.access_token;
-        this.user = info.user;
-
+        this.user = data.user;
+        await this.setToken(info.access_token,info.refresh_token)
         this.loginEvent.emit(true)
         return data;
       })
@@ -63,26 +64,44 @@ export class AuthService {
     await this.storage.set('refresh_token',refresh_token)
   }
 
-  async logout(){
-    console.log('Llamado');
-    
+  async logout(interceptor?:string){
     this.user = null;
     this.token = null;
     await this.storage.clear()
-
     this.logoutEvent.emit(true);
+
+    if (interceptor) {
+      let message:string = "";
+
+      switch (interceptor) {
+        case 'expired':
+          message: 'Su sesión ha expirado, por favor vuelve a iniciar sesión'    
+          break;
+        default:
+          message: 'Algo ha salido mal con su sesión actual, por favor vuelva a iniciar sesión'    
+          break;
+      }
+      const toast = await this.toastCtrl.create({
+        message,
+        duration: 2000,
+        color:'danger',
+        position:'top'
+      });
+      toast.present();
+    }
 
     this.navCtrl.navigateRoot('/tabs/tab1');
   }
 
   async loadToken(){
-    this.token = await this.storage.get('token') || null;
+    return this.token = await this.storage.get('token') || null;
   }
 
   async checkToken():Promise<boolean>{
     await this.loadToken()
 
     if (!this.token) {
+      this.navCtrl.navigateRoot('/tabs')
       return Promise.resolve(false);
     }
 
@@ -113,18 +132,36 @@ export class AuthService {
     }
   }
 
-  getUser():Promise<User>{
+
+  getUser():Observable<User>{
     if (this.user) {
-      return Promise.resolve(this.user);
+      return new Observable(obs=>obs.next(this.user))
     }
 
-    return this.checkToken().then(logged=>{
-      if (logged) {
-        return this.user
-      }else{
-        return null;
-      }
-    })
-    
+    if (this.token) {
+      return this.http.get(`${url}/me`).pipe(
+        map(user=>{
+          this.user = user['user']
+          return user['user']
+        })
+      )
+    }
+
+    return from(this.loadToken()).pipe(
+      switchMap(res=>{
+        if (!res) {
+          return new Observable((observer)=>{
+            return observer.next(null)
+          })  
+        }else{
+          return this.http.get(`${url}/me`).pipe(
+            map(user=>{
+              this.user = user['user']
+              return user['user']
+            })
+          )
+        }
+      })
+    )
   }
 }

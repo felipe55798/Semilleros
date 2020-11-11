@@ -13,12 +13,15 @@ export class HeaderActionComponent implements OnInit {
   constructor(private authService: AuthService) { }
 
   ngOnInit() {
-    this.authService.getUser().then(user=>{
-      this.loading = false;
-      if (user) {
-        this.loggedIn = true;
+    this.authService.getUser().subscribe(
+      user=>{
+        this.loading = false;
+        if (user) {
+          this.loggedIn = true;
+        }
       }
-    })
+    )
+
     this.authService.loginEvent.subscribe(res=>{
       if (res) {
         this.loggedIn = true;
@@ -38,8 +41,4 @@ export class HeaderActionComponent implements OnInit {
     this.authService.logout()
   }
 
-  ionViewWillLeave(){
-    console.log('Will leave');
-    
-  }
 }

@@ -13,4 +13,8 @@ export class ProgramService {
   getPrograms(){
     return this.http.get(`${url}`);
   }
+
+  createService(program){
+    return this.http.post(`${url}`,program);
+  }
 }

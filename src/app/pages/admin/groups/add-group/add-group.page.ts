@@ -25,8 +25,8 @@ export class AddGroupPage implements OnInit {
   }
 
   handleResponse(res){
-    console.log(res);
-    this.departments = res.deparments;
+    // console.log(res);
+    this.departments = res.departments;
 
   }
   handleError(err){

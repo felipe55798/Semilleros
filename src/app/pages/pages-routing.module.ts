@@ -1,5 +1,6 @@
 import { NgModule } from '@angular/core';
 import { Routes, RouterModule } from '@angular/router';
+import { CheckTokenGuard } from '../guards/check-token.guard';
 
 
 const routes: Routes = [
@@ -19,6 +20,7 @@ const routes: Routes = [
           },
           {
             path:'add',
+            canActivate:[CheckTokenGuard],
             loadChildren: () => import('./admin/groups/add-group/add-group.module').then( m => m.AddGroupPageModule)
           }
         ]
@@ -32,6 +34,7 @@ const routes: Routes = [
           },
           {
             path:'add',
+            canActivate:[CheckTokenGuard],
             loadChildren: () => import('./admin/seedlings/seedling-form/seedling-form.module').then( m => m.SeedlingFormPageModule)
           }
         ]
@@ -40,13 +43,29 @@ const routes: Routes = [
         path:'departments',
         children:[
           {
+            path: 'add',
+            canActivate:[CheckTokenGuard],
+            loadChildren: () => import('./admin/departments/form-department/form-department.module').then( m => m.FormDepartmentPageModule)
+          },
+          {
             path: ':id',
             loadChildren: () => import('./departments/single-department/single-department.module').then( m => m.SingleDepartmentPageModule)
           }
         ]
+      },
+      {
+        path:'programs',
+        children:[
+          {
+            path: 'add',
+            canActivate:[CheckTokenGuard],
+            loadChildren: () => import('./admin/programs/form-program/form-program.module').then( m => m.FormProgramPageModule)
+          }       
+        ]
       }
     ]
   }
+
 ];
 
 @NgModule({

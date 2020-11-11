@@ -20,7 +20,6 @@ export class CheckTokenService implements HttpInterceptor{
       catchError((err)=>{
         const error = (typeof err.error !== 'object') ? JSON.parse(err.error) : err;
         if (error.status === 401 && error.error.code === "token_expired") {
-          console.log('Error expirado');
           
           if (!this.refreshTokenInProgress) {
             this.refreshTokenInProgress = true;
@@ -39,7 +38,7 @@ export class CheckTokenService implements HttpInterceptor{
                   }),
                   catchError(err=>{
                     this.refreshTokenInProgress = false;
-                    this.authService.logout();
+                    this.authService.logout('expired');
 
                     return next.handle(this.injectToken(requ))
                   })
@@ -58,12 +57,12 @@ export class CheckTokenService implements HttpInterceptor{
             )
           }
         }else{
-          if (error.status === 401 && error.code === "invalid_token") {
-            this.authService.logout()
+          if (error.status === 401 && error.error.code === "invalid_token") {
+            this.authService.logout('invalid')
             return next.handle(this.injectToken(requ))
           }else{
             if (err.status === 404 && error.error.err === 'token_not_found') {
-              this.authService.logout();
+              this.authService.logout('notfound');
               return next.handle(this.injectToken(requ))
             }
           }

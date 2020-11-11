@@ -1,0 +1,80 @@
+<ion-header>
+  <ion-toolbar>
+    <ion-buttons slot="start">
+      <ion-back-button [defaultHref]="'/'"></ion-back-button>
+    </ion-buttons>
+    <ion-title>Agregar programa</ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content>
+  <ion-grid fixed>
+    <div class="img_container">
+      <img src="assets/images/feature.svg" class="img_add" alt="">
+    </div>
+    <ion-row>
+      <ion-col size="12">
+        <form [formGroup]="program" (ngSubmit)="addProgram()" >
+          <ion-item>
+            <ion-icon slot="end" class="ion-align-self-center" name="pricetag"></ion-icon>
+            <ion-label position="floating">Nombre</ion-label>
+            <ion-input formControlName="name" type="text" ></ion-input>
+          </ion-item>
+          <div class="error-message error_custom" *ngIf="error_unprocesable.name" >
+            <ion-icon slot="start" name="information-circle-outline"></ion-icon>
+            {{ error_unprocesable.name[0] }}
+          </div>
+          <div class="validation-errors">
+            <ng-container *ngFor="let validation of validation_messages.name">
+              <div class="error-message" *ngIf="program.get('name').hasError(validation.type) && (program.get('name').dirty || program.get('name').touched)">
+                <ion-icon slot="start" name="information-circle-outline"></ion-icon>
+                {{ validation.message }}
+              </div>
+            </ng-container>
+          </div>
+          <ion-item>
+            <ion-label>Departamento</ion-label>
+            <ion-select formControlName="department_id" [value]="departments[0]?.id" placeholder="Departamento">
+              <ion-select-option *ngFor="let department of departments"  [value]="department.id">{{ department.name }}</ion-select-option>
+            </ion-select>
+          </ion-item>
+          <div class="error-message error_custom" *ngIf="error_unprocesable.department_id" >
+            <ion-icon slot="start" name="information-circle-outline"></ion-icon>
+            {{ error_unprocesable.department_id[0] }}
+          </div>
+          <div class="validation-errors">
+            <ng-container *ngFor="let validation of validation_messages.department_id">
+              <div class="error-message" *ngIf="program.get('department_id').hasError(validation.type) && (program.get('department_id').dirty || program.get('department_id').touched)">
+                <ion-icon slot="start" name="information-circle-outline"></ion-icon>
+                {{ validation.message }}
+              </div>
+            </ng-container>
+          </div>
+          <ion-item>
+            <ion-icon slot="end" class="ion-align-self-center" name="reader"></ion-icon>
+            <ion-label position="floating">Descripción</ion-label>
+            <ion-textarea formControlName="description" [rows]="5"></ion-textarea>
+          </ion-item>
+          <div class="error-message error_custom" *ngIf="error_unprocesable.description" >
+            <ion-icon slot="start" name="information-circle-outline"></ion-icon>
+            {{ error_unprocesable.description[0] }}
+          </div>
+          <div class="validation-errors">
+            <ng-container *ngFor="let validation of validation_messages.description">
+              <div class="error-message" *ngIf="program.get('description').hasError(validation.type) && (program.get('description').dirty || program.get('description').touched)">
+                <ion-icon slot="start" name="information-circle-outline"></ion-icon>
+                {{ validation.message }}
+              </div>
+            </ng-container>
+          </div>
+          <ion-button type="submit" [disabled]="program.invalid" expand="block" >
+            <span *ngIf="!sending" >
+              Crear programa acádemico
+            </span>
+            <ion-spinner *ngIf="sending"  name="lines-small"></ion-spinner>
+          </ion-button>
+        </form>
+      </ion-col>
+    </ion-row>
+  </ion-grid>
+</ion-content>

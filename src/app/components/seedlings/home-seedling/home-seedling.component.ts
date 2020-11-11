@@ -1,6 +1,7 @@
 import { Component, Input, OnInit } from '@angular/core';
 import { Seedling } from 'src/app/interfaces/seedling';
 import { User } from 'src/app/interfaces/user';
+import { AuthService } from 'src/app/services/auth.service';
 import { SeedlingsService } from 'src/app/services/seedlings.service';
 
 @Component({
@@ -21,15 +22,35 @@ export class HomeSeedlingComponent implements OnInit {
 
   loading:boolean = false;
   @Input() user:User = null;
-  constructor(private seedlingService:SeedlingsService) { }
+  constructor(private seedlingService:SeedlingsService,
+              private authService:AuthService) { }
 
   ngOnInit() {
-    this.getSeedlings();
+    this.validRole()
+    this.authService.loginEvent.subscribe(res=>{
+      if (res) {
+        this.authService.getUser().subscribe(user=>{
+          this.user = user;
+          this.validRole()
+        })
+      }
+    })
+
+    this.authService.logoutEvent.subscribe(res=>{
+      if (res) {
+        this.user = null;
+        this.admin = false;
+      }
+    })
+    this.getSeedlings(); 
+  }
+
+  validRole(){
     if (this.user) {
       if (this.user.roles[0].id === 1) {
         this.admin = true;
       }
-    } 
+    }
   }
 
   getSeedlings() {
