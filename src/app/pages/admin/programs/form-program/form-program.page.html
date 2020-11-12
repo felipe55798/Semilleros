@@ -51,6 +51,16 @@
             </ng-container>
           </div>
           <ion-item>
+            <ion-label>Coordinador</ion-label>
+            <ion-select formControlName="coordinator_id" placeholder="Coordinador de programa">
+              <ion-select-option *ngFor="let teacher of teachers"  [value]="teacher.id">{{ teacher.name }}</ion-select-option>
+            </ion-select>
+          </ion-item>
+          <div class="error-message error_custom" *ngIf="error_unprocesable.coordinator_id" >
+            <ion-icon slot="start" name="information-circle-outline"></ion-icon>
+            {{ error_unprocesable.coordinator_id[0] }}
+          </div>
+          <ion-item>
             <ion-icon slot="end" class="ion-align-self-center" name="reader"></ion-icon>
             <ion-label position="floating">Descripción</ion-label>
             <ion-textarea formControlName="description" [rows]="5"></ion-textarea>

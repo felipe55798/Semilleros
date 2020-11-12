@@ -1,6 +1,6 @@
 <ion-header>
-  <ion-toolbar>
-    <ion-title>Departamento</ion-title>
+  <ion-toolbar color="warning">
+    <ion-title>{{ department.name }}</ion-title>
     <ion-buttons slot="start">
       <ion-back-button [defaultHref]="'/tabs'" ></ion-back-button>
     </ion-buttons>
@@ -10,7 +10,6 @@
 <ion-content>
   <img src="assets/images/fondo-3.jpg"/>
   <div class="container_single">
-    <h3>{{ department.name }}</h3>
     <p>{{ department.description }}</p>
   </div>
   <div class="separator"></div>

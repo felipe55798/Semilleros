@@ -9,6 +9,7 @@ import { Seedling } from 'src/app/interfaces/seedling';
 export class SeedlingComponent implements OnInit {
 
   @Input() seedling:Seedling = {};
+  
   constructor() { }
 
   ngOnInit() {

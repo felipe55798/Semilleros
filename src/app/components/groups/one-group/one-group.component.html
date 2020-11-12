@@ -1,9 +1,9 @@
-<a routerLink='/home/single-group/{{ group.id }}' class="a_dep_container">
+<a routerLink='/home/groups/{{ group.id }}' class="a_dep_container">
   <ion-card mode='ios'>
     <img src="assets/images/fondo-3.jpg" *ngIf="imgVisible"/>
     <ion-card-content>
-      <h3>{{ group.name }}</h3>
-      <p>{{ group.description }}</p>
+      <h3>{{ group.name.length > 27 ? group.name.substr(0, 27) + "..." : group.name }}</h3>
+      <p>{{ group.description.length > 50 ? group.description.substr(0, 50) + "..." : group.description }}</p>
       <small>{{ group.created_at|date }}</small>
     </ion-card-content>
   </ion-card>

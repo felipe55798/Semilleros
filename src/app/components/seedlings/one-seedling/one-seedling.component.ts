@@ -10,6 +10,7 @@ export class OneSeedlingComponent implements OnInit {
 
   @Input() seedling:Seedling = {};
   @Input() imgVisible:boolean = true;
+  @Input() value:number = 0;
   constructor() { }
 
   ngOnInit() {

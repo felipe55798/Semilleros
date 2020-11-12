@@ -40,6 +40,12 @@
           <ion-icon name="book"></ion-icon>
         </ion-fab-button>
       </div>
+      <div class="ion-margin-bottom">
+        <ion-label>Usuario</ion-label>
+        <ion-fab-button (click)="navigate('/home/users/add')" color="primary">
+          <ion-icon name="person-add"></ion-icon>
+        </ion-fab-button>
+      </div>
     </ion-fab-list>
   </ion-fab>
   <div *ngIf="!loading" >

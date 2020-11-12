@@ -3,8 +3,10 @@ import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { NavController, ToastController } from '@ionic/angular';
 import { Department } from 'src/app/interfaces/department';
 import { Program } from 'src/app/interfaces/program';
+import { User } from 'src/app/interfaces/user';
 import { DepartmentService } from 'src/app/services/departments.service';
 import { ProgramService } from 'src/app/services/program.service';
+import { UserService } from 'src/app/services/user.service';
 
 @Component({
   selector: 'app-form-program',
@@ -15,7 +17,11 @@ export class FormProgramPage implements OnInit {
   sending:boolean = false;
 
   departments:Department[] = [];
+
+  teachers:User[] = [];
+
   error_unprocesable:Program = {};
+
   validation_messages = {
     'name': [
         { type: 'required', message: 'El nombre del programa es obligatorio.' },
@@ -30,16 +36,19 @@ export class FormProgramPage implements OnInit {
   program = new FormGroup({
     name: new FormControl('',Validators.required),
     description: new FormControl('',Validators.required),
-    department_id: new FormControl('',Validators.required)
+    department_id: new FormControl('',Validators.required),
+    coordinator_id: new FormControl('') 
   })
 
   constructor(private departmentService:DepartmentService,
               private programService:ProgramService,
               private toastCtrl:ToastController,
-              private navCtrl: NavController) { }
+              private navCtrl: NavController,
+              private userService:UserService) { }
 
   ngOnInit() {
-    this.getDepartments()
+    this.getDepartments();
+    this.getTeachers();
   }
 
   getDepartments(){
@@ -54,6 +63,21 @@ export class FormProgramPage implements OnInit {
 
   }
   handleError(err){
+    console.log(err);
+  }
+
+  getTeachers(){
+    this.userService.getTeachers().subscribe(
+      res=>this.handleResponseTeachers(res),
+      err=>this.handleErrorTeachers(err)
+    )
+  }
+
+  handleResponseTeachers(res){
+    this.teachers = res.teachers;
+  }
+
+  handleErrorTeachers(err){
     console.log(err);
   }
 
@@ -77,10 +101,18 @@ export class FormProgramPage implements OnInit {
     this.navCtrl.navigateForward('/tabs/tab1');
   }
 
-  handleErrorCreate(err){
+  async handleErrorCreate(err){
     this.sending = false;
     if (err.status === 422) {
       this.error_unprocesable = err.error.errors;
+    }else{
+      const toast = await this.toastCtrl.create({
+        message: err.message,
+        duration: 2000,
+        color:'danger',
+        position:'top'
+      });
+      toast.present();
     }
   }
 
