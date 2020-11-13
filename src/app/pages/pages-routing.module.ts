@@ -78,11 +78,23 @@ const routes: Routes = [
     ]
   },
   {
+    path:'users',
+    children:[
+      {
+        path: '',
+        loadChildren: () => import('./users/users-list/users-list.module').then( m => m.UsersListPageModule)
+      },
+      {
+        path: ':id',
+        loadChildren: () => import('./users/single-user/single-user.module').then( m => m.SingleUserPageModule)
+      },
+    ]
+  },
+  {
     path:'',
     pathMatch: 'full',
     redirectTo:'groups'
-  },
-
+  }
 ];
 
 @NgModule({
