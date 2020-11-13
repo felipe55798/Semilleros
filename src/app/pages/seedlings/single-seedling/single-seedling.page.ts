@@ -17,8 +17,9 @@ export class SingleSeedlingPage implements OnInit {
   teachers:User[] = [];
   students:User[] = [];
   constructor(private route: ActivatedRoute,
-    private apiService: SeedlingsService,
-    private authService: AuthService) { }
+              private apiService: SeedlingsService,
+              private authService: AuthService
+  ) { }
 
   ngOnInit() {
     this.id = this.route.snapshot.paramMap.get('id');
@@ -37,6 +38,14 @@ export class SingleSeedlingPage implements OnInit {
     this.seedling = response.seedling;
     this.teachers = response.teachers;
     this.students = response.students;
+
+    this.authService.getUser().subscribe(
+      res=>{
+        if (res) {
+          console.log(res);
+        }
+      }
+    )
     
   }
   

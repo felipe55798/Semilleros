@@ -5,5 +5,6 @@ export interface Seedling {
     description?:string,
     updated_at?: Date,
     created_at?: Date,
-    users?:[]
+    users?:[],
+    teacher_id?:number
 }

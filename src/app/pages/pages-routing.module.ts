@@ -78,10 +78,20 @@ const routes: Routes = [
     ]
   },
   {
+    path:'users',
+    children:[
+      {
+        path: 'add',
+        loadChildren: () => import('./admin/users/users-form/users-form.module').then( m => m.UsersFormPageModule)
+      },
+    ]
+  },
+  {
     path:'',
     pathMatch: 'full',
     redirectTo:'groups'
   },
+
 
 ];
 

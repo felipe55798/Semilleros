@@ -15,7 +15,7 @@
   <ion-col size="12">
     <app-empty [title_message]="'Sin semilleros de investigación'" ></app-empty>
     <div class="container_add_button">
-      <a href="" *ngIf="admin"  class="add_group_link ion-text-center">
+      <a routerLink="/home/seedlings/add" *ngIf="admin"  class="add_group_link ion-text-center">
         Crear semillero
       </a>
     </div>
