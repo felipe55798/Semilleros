@@ -18,6 +18,7 @@ import { HeaderActionComponent } from './common/shared/header-action/header-acti
 import { OneSeedlingComponent } from './seedlings/one-seedling/one-seedling.component';
 import { OneProgramComponent } from './programs/one-program/one-program.component';
 import { OneLineComponent } from './lines/one-line/one-line.component';
+import { UserComponent } from './common/user/user.component';
 
 
 
@@ -34,6 +35,7 @@ import { OneLineComponent } from './lines/one-line/one-line.component';
     OneSeedlingComponent,
     OneProgramComponent,
     OneLineComponent,
+    UserComponent,
     HomeGroupComponent,
     HomeSeedlingComponent,
     HomePublicationComponent,
@@ -56,6 +58,7 @@ import { OneLineComponent } from './lines/one-line/one-line.component';
     OneSeedlingComponent,
     OneProgramComponent,
     OneLineComponent,
+    UserComponent,
     DepartmentComponent,
     HeaderActionComponent
   ]
