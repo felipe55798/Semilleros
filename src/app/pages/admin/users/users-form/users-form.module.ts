@@ -4,18 +4,18 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 
 import { IonicModule } from '@ionic/angular';
 
-import { SeedlingFormPageRoutingModule } from './seedling-form-routing.module';
+import { UsersFormPageRoutingModule } from './users-form-routing.module';
 
-import { SeedlingFormPage } from './seedling-form.page';
+import { UsersFormPage } from './users-form.page';
 
 @NgModule({
   imports: [
     CommonModule,
     FormsModule,
     IonicModule,
-    SeedlingFormPageRoutingModule,
+    UsersFormPageRoutingModule,
     ReactiveFormsModule
   ],
-  declarations: [SeedlingFormPage]
+  declarations: [UsersFormPage]
 })
-export class SeedlingFormPageModule {}
+export class UsersFormPageModule {}

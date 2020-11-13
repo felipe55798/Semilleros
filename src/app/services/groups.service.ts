@@ -25,4 +25,12 @@ export class GroupsService {
       retry(2)
     );
   }
+
+  createGroup(group){
+    return this.http.post(`${url}`,group);
+  }
+  
+  
+
+
 }

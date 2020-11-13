@@ -49,15 +49,13 @@
               </div>
             </ng-container>
           </div>
+          <ion-button type="submit" [disabled]="department.invalid" expand="block" >
+            <span *ngIf="!sending" >
+              Crear departamento
+            </span>
+            <ion-spinner *ngIf="sending"  name="lines-small"></ion-spinner>
+          </ion-button>
         </form>
-      </ion-col>
-      <ion-col size="12">
-        <ion-button type="submit" [disabled]="department.invalid" expand="block" >
-          <span *ngIf="!sending" >
-            Crear departamento
-          </span>
-          <ion-spinner *ngIf="sending"  name="lines-small"></ion-spinner>
-        </ion-button>
       </ion-col>
     </ion-row>
   </ion-grid>

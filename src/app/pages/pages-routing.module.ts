@@ -88,6 +88,10 @@ const routes: Routes = [
         path: ':id',
         loadChildren: () => import('./users/single-user/single-user.module').then( m => m.SingleUserPageModule)
       },
+      {
+        path: 'add',
+        loadChildren: () => import('./admin/users/users-form/users-form.module').then( m => m.UsersFormPageModule)
+      }
     ]
   },
   {

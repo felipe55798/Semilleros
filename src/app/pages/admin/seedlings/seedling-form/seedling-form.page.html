@@ -16,27 +16,87 @@
     </div>
     <ion-row>
       <ion-col size="12">
-        <ion-item>
-          <ion-icon slot="end" class="ion-align-self-center" name="pricetag"></ion-icon>
-          <ion-label position="floating">Nombre</ion-label>
-          <ion-input type="text" ></ion-input>
-        </ion-item>
-        <ion-item>
-          <ion-label>Grupo</ion-label>
-          <ion-select [value]="groups[0]?.id" placeholder="Grupo de investigación">
-            <ion-select-option *ngFor="let group of groups"  [value]="group.id">{{ group.name }}</ion-select-option>
-          </ion-select>
-        </ion-item>
-        <ion-item>
-          <ion-icon slot="end" class="ion-align-self-center" name="reader"></ion-icon>
-          <ion-label position="floating">Descripción</ion-label>
-          <ion-textarea [rows]="5"></ion-textarea>
-        </ion-item>
-      </ion-col>
-      <ion-col size="12">
-        <ion-button (click)="addSeedling()" expand="block" >
-          Click me
-        </ion-button>
+        <form [formGroup]="seedling" (ngSubmit)="addSeedling()" >
+          <ion-item>
+            <ion-icon slot="end" class="ion-align-self-center" name="pricetag"></ion-icon>
+            <ion-label position="floating">Nombre</ion-label>
+            <ion-input formControlName="name" type="text" ></ion-input>
+          </ion-item>
+          <div class="error-message error_custom" *ngIf="error_unprocesable.name" >
+            <ion-icon slot="start" name="information-circle-outline"></ion-icon>
+            {{ error_unprocesable.name[0] }}
+          </div>
+          <div class="validation-errors">
+            <ng-container *ngFor="let validation of validation_messages.name">
+              <div class="error-message" *ngIf="seedling.get('name').hasError(validation.type) && (seedling.get('name').dirty || seedling.get('name').touched)">
+                <ion-icon slot="start" name="information-circle-outline"></ion-icon>
+                {{ validation.message }}
+              </div>
+            </ng-container>
+          </div>
+          <ion-item>
+            <ion-label>Grupo</ion-label>
+            <ion-select formControlName="group_id" [value]="groups[0]?.id" placeholder="Grupo de investigación">
+              <ion-select-option *ngFor="let group of groups"  [value]="group.id">{{ group.name }}</ion-select-option>
+            </ion-select>
+          </ion-item>
+          <div class="error-message error_custom" *ngIf="error_unprocesable.group_id" >
+            <ion-icon slot="start" name="information-circle-outline"></ion-icon>
+            {{ error_unprocesable.group_id[0] }}
+          </div>
+          <div class="validation-errors">
+            <ng-container *ngFor="let validation of validation_messages.description">
+              <div class="error-message" *ngIf="seedling.get('description').hasError(validation.type) && (seedling.get('description').dirty || seedling.get('description').touched)">
+                <ion-icon slot="start" name="information-circle-outline"></ion-icon>
+                {{ validation.message }}
+              </div>
+            </ng-container>
+          </div>
+
+          <ion-item>
+            <ion-label>Encargado</ion-label>
+            <ion-select formControlName="teacher_id" [value]="teachers[0]?.id" placeholder="Encargado del semillero">
+              <ion-select-option *ngFor="let teacher of teachers"  [value]="teacher.id">{{ teacher.name }}</ion-select-option>
+            </ion-select>
+          </ion-item>
+          <div class="error-message error_custom" *ngIf="error_unprocesable.teacher_id" >
+            <ion-icon slot="start" name="information-circle-outline"></ion-icon>
+            {{ error_unprocesable.teacher_id[0] }}
+          </div>
+          <div class="validation-errors">
+            <ng-container *ngFor="let validation of validation_messages.teacher_id">
+              <div class="error-message" *ngIf="seedling.get('teacher_id').hasError(validation.type) && (seedling.get('teacher_id').dirty || seedling.get('teacher_id').touched)">
+                <ion-icon slot="start" name="information-circle-outline"></ion-icon>
+                {{ validation.message }}
+              </div>
+            </ng-container>
+          </div>
+
+          <ion-item>
+            <ion-icon slot="end" class="ion-align-self-center" name="reader"></ion-icon>
+            <ion-label position="floating">Descripción</ion-label>
+            <ion-textarea formControlName="description" [rows]="5"></ion-textarea>
+          </ion-item>
+          <div class="error-message error_custom" *ngIf="error_unprocesable.description" >
+            <ion-icon slot="start" name="information-circle-outline"></ion-icon>
+            {{ error_unprocesable.description[0] }}
+          </div>
+          <div class="validation-errors">
+            <ng-container *ngFor="let validation of validation_messages.description">
+              <div class="error-message" *ngIf="seedling.get('description').hasError(validation.type) && (seedling.get('description').dirty || seedling.get('description').touched)">
+                <ion-icon slot="start" name="information-circle-outline"></ion-icon>
+                {{ validation.message }}
+              </div>
+            </ng-container>
+          </div>
+
+          <ion-button type="submit" [disabled]="seedling.invalid" expand="block" >
+            <span *ngIf="!sending" >
+              Crear semillero
+            </span>
+            <ion-spinner *ngIf="sending"  name="lines-small"></ion-spinner>
+          </ion-button>
+        </form>
       </ion-col>
     </ion-row>
   </ion-grid>

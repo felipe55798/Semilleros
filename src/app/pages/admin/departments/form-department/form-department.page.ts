@@ -37,6 +37,8 @@ export class FormDepartmentPage implements OnInit {
   }
 
   addDepartment(){
+    console.log('Hello world');
+    
     this.sending = true;
     this.departmentService.createDepartment(this.department.value).subscribe(
       res=>this.handleResponse(res),

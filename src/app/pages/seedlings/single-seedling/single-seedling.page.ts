@@ -16,9 +16,12 @@ export class SingleSeedlingPage implements OnInit {
   seedling:Seedling = {};
   teachers:User[] = [];
   students:User[] = [];
+  pertenece:number = -1;
+  loading:boolean = true;
   constructor(private route: ActivatedRoute,
-    private apiService: SeedlingsService,
-    private authService: AuthService) { }
+              private apiService: SeedlingsService,
+              private authService: AuthService
+  ) { }
 
   ngOnInit() {
     this.id = this.route.snapshot.paramMap.get('id');
@@ -37,7 +40,24 @@ export class SingleSeedlingPage implements OnInit {
     this.seedling = response.seedling;
     this.teachers = response.teachers;
     this.students = response.students;
-    
+
+    this.authService.getUser().subscribe(
+      res=>{
+        if (res) {
+          if (res.roles[0].id === 4) {
+            let seedl =res.seedlings.find(seedling=>{
+              return seedling.id === this.seedling.id;
+            })
+            console.log(seedl);
+            if (seedl) {
+              this.pertenece = seedl['pivot'].status;
+              console.log('Pertenecerá? ' + this.pertenece);
+            }
+            this.loading = false;
+          }
+        }
+      }
+    )
   }
   
   handleError(error: any) {
