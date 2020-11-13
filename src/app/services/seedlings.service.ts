@@ -25,4 +25,8 @@ export class SeedlingsService {
       retry(2)
     );
   }
+
+  createSeedling(seedling){
+    return this.http.post(`${url}`,seedling);
+  }
 }
