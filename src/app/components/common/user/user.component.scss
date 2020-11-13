@@ -1,0 +1,26 @@
+ion-card{
+    ion-card-content{
+        height: 100%;
+        ion-card-title{
+            text-align: left !important;
+            margin: 10px;
+        }
+        .group_desc{
+            text-align: left;
+            margin-right: 15px;
+            margin-left: 10px;
+            margin-bottom: 10px;
+        }
+    }
+}
+
+.a_dep_container{
+    text-decoration: none;
+}
+
+ion-avatar {     
+    width:100% !important;  
+    height : 100% !important;  
+    max-width: 50px !important;  
+    max-height: 50px !important; 
+    }

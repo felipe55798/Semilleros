@@ -1,3 +1,4 @@
+import { Program } from './program';
 import { Role } from './role';
 
 export interface User {
@@ -9,5 +10,6 @@ export interface User {
     password?:string,
     password_confirmation?:string,
     roles?:Role[],
+    program?:Program,
     program_id?:number
 }

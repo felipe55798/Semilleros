@@ -47,7 +47,7 @@ export class AuthService {
         this.storage.set('token',info.access_token);
         this.storage.set('refresh_token',info.refresh_token)
         this.token = info.access_token;
-        this.user = info.user;
+        this.user = data.user;
 
         this.loginEvent.emit(true)
         return data;

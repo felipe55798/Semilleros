@@ -4,5 +4,6 @@ export interface Seedling {
     name?:string,
     description?:string,
     updated_at?: Date,
-    created_at?: Date
+    created_at?: Date,
+    users?:[]
 }
