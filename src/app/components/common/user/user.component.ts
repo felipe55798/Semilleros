@@ -14,5 +14,5 @@ export class UserComponent implements OnInit {
 
   ngOnInit() {
     console.log('Los datos que llegaron son: ' + this.user);
-  }
+  } 
 }

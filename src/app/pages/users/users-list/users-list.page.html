@@ -5,5 +5,16 @@
 </ion-header>
 
 <ion-content>
-
+  <div class="container_single">
+    <ion-text color="primary">
+      <h2>Encargados</h2>
+    </ion-text>
+    <app-user *ngFor="let teacher of teachers" [user]="teacher"></app-user>
+  </div>
+  <div class="container_single">
+    <ion-text color="primary">
+      <h2>Estudiantes</h2>
+    </ion-text>
+    <app-user *ngFor="let student of students" [user]="student"></app-user>
+  </div>
 </ion-content>
