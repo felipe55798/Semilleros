@@ -1,27 +1,37 @@
 <ion-header>
   <ion-toolbar>
     <ion-title>Usuario</ion-title>
+    <ion-buttons slot="start">
+      <ion-back-button [defaultHref]="'/tabs'" ></ion-back-button>
+    </ion-buttons>
   </ion-toolbar>
 </ion-header>
 
 <ion-content>
-  <img src="assets/images/user.svg">
   <div class="container_single">
-    <ion-text color="primary">
-      <h2 class="ion-text-left ion-padding-start">{{ user.name }} {{ user.lastname}}</h2>
-    </ion-text>
-    <ion-text>
-      <h3>Correo Elcetrónico</h3>
-      <h4>{{ user.email }}</h4>
-    </ion-text>
-    <ion-text>
-      <h3>Teléfono Celular</h3>
-      <h4>{{ user.email }}</h4>
-    </ion-text>
-    <ion-text>
-      <h3></h3>
-      <h4>{{ user.email }}</h4>
-    </ion-text>
+    <ion-avatar class="container_logo">
+      <img src="assets/images/user.svg" class="container_logo_user">
+    </ion-avatar>
+    <ion-card>
+      <ion-text color="primary">
+        <h2 class="ion-text-left ion-padding-start">{{ user.name }} {{ user.lastname}}</h2>
+      </ion-text>
+      <ion-text color="warning">
+        <h3>Correo Electrónico</h3>
+      </ion-text>
+        <h4>{{ user.email }}</h4>
+      <ion-text>
+        <ion-text color="warning">
+          <h3>Numero de Celular</h3>
+        </ion-text>
+        <h4>{{ user.cellphone }}</h4>
+      </ion-text>
+      <ion-text>
+        <ion-text color="warning">
+          <h3>Programa académico</h3>
+        </ion-text>
+        <h4>{{ user.program?.name }}</h4>
+      </ion-text>
+    </ion-card>
   </div>
-
 </ion-content>

@@ -1,6 +1,17 @@
-ion-avatar {     
-    width:100% !important;  
-    height : 100% !important;  
-    max-width: 50px !important;  
-    max-height: 50px !important; 
+.container_logo{
+    width:  110px;
+    height: 110px;
+    margin-top: 10px;
+    margin-left: auto;
+    margin-right: auto;
+    &_user{
+        width: 100%;
+        height: 100%;
+    }
+}
+h2{
+    text-align: center;
+}
+h3, h4{
+    padding-left: 20px;
 }

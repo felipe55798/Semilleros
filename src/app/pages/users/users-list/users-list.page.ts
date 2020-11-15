@@ -1,4 +1,7 @@
 import { Component, OnInit } from '@angular/core';
+import { ActivatedRoute } from '@angular/router';
+import { User } from 'src/app/interfaces/user';
+import { AuthService } from 'src/app/services/auth.service';
 
 @Component({
   selector: 'app-users-list',
@@ -7,9 +10,16 @@ import { Component, OnInit } from '@angular/core';
 })
 export class UsersListPage implements OnInit {
 
-  constructor() { }
+  teachers:User[] = [];
+  constructor(private route: ActivatedRoute,
+    private authService: AuthService) { }
 
   ngOnInit() {
+    this.getTeachersList();
+  }
+
+  getTeachersList(){
+    
   }
 
 }
