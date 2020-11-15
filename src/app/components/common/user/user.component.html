@@ -1,16 +1,18 @@
-<ion-card>
-  <ion-card-content class="ion-no-padding">
-    <ion-item>
-      <ion-avatar slot="start">
-        <img src="assets/images/user.svg">
-      </ion-avatar>
-      <div>
-        <ion-card-title>{{ user.name }} {{user.lastname}}</ion-card-title>
-        <div class="group_desc">
-          <h4>{{ user.program.name }}</h4>
-          {{ user.email }}
+<a routerLink='/home/users/{{ user.id }}' class="a_dep_container">
+  <ion-card>
+    <ion-card-content class="ion-no-padding">
+      <ion-item>
+        <ion-avatar slot="start">
+          <img src="assets/images/user.svg">
+        </ion-avatar>
+        <div>
+          <ion-card-title>{{ user.name }} {{user.lastname}}</ion-card-title>
+          <div class="group_desc">
+            <h4>{{ user.program.name }}</h4>
+            {{ user.email }}
+          </div>
         </div>
-      </div>
-    </ion-item>
-  </ion-card-content>
-</ion-card>
+      </ion-item>
+    </ion-card-content>
+  </ion-card>
+</a>

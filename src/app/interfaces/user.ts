@@ -1,5 +1,6 @@
 import { Program } from './program';
 import { Role } from './role';
+import { Seedling } from './seedling';
 
 export interface User {
     id?:number,
@@ -10,6 +11,7 @@ export interface User {
     password?:string,
     password_confirmation?:string,
     roles?:Role[],
+    seedlings?:Seedling[],
     program?:Program,
     program_id?:number,
     role_id?:number

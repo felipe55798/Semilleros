@@ -84,15 +84,21 @@ const routes: Routes = [
         path: 'add',
         loadChildren: () => import('./admin/users/users-form/users-form.module').then( m => m.UsersFormPageModule)
       },
+      {
+        path: ':id',
+        loadChildren: () => import('./users/single-user/single-user.module').then( m => m.SingleUserPageModule)
+      },
+      {
+        path: '',
+        loadChildren: () => import('./users/users-list/users-list.module').then( m => m.UsersListPageModule)
+      },
     ]
   },
   {
     path:'',
     pathMatch: 'full',
     redirectTo:'groups'
-  },
-
-
+  }
 ];
 
 @NgModule({

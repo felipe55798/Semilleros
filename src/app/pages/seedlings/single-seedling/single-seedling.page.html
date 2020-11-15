@@ -16,7 +16,13 @@
     <p>{{ seedling.description }}</p>
   </div>
 
-  <ion-button expand="block" class="ion-margin" *ngIf>
+  <ion-spinner name="lines-small" class="ion-margin spinner_button" *ngIf="loading"></ion-spinner>
+  <div *ngIf="pertenece === 0" class="alert_message">
+    <span>
+      Tu solicitud está siendo revisada
+    </span>
+  </div>
+  <ion-button expand="block" class="ion-margin" *ngIf="pertenece === -1 && !loading">
     Participar
   </ion-button>
 

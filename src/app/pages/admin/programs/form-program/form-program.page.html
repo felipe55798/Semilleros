@@ -52,7 +52,7 @@
           </div>
           <ion-item>
             <ion-label>Coordinador</ion-label>
-            <ion-select formControlName="coordinator_id" placeholder="Coordinador de programa">
+            <ion-select [value]="teachers[0]?.id" formControlName="coordinator_id" placeholder="Coordinador de programa">
               <ion-select-option *ngFor="let teacher of teachers"  [value]="teacher.id">{{ teacher.name }}</ion-select-option>
             </ion-select>
           </ion-item>
