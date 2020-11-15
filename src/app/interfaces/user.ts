@@ -11,5 +11,6 @@ export interface User {
     password_confirmation?:string,
     roles?:Role[],
     program?:Program,
-    program_id?:number
+    program_id?:number,
+    role_id?:number
 }
