@@ -55,6 +55,8 @@ export class SingleSeedlingPage implements OnInit {
             }
             this.loading = false;
           }
+        }else{
+          this.loading = false;
         }
       }
     )

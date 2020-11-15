@@ -1,5 +1,6 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
+import { retry } from 'rxjs/operators';
 import { environment } from 'src/environments/environment';
 
 const url = `${environment.url}/v1`
@@ -13,5 +14,12 @@ export class UserService {
 
   getTeachers(){
     return this.http.get(`${url}/teachers`);
+  }
+
+  getUser(id){
+    return this.http.get(`${url}/users/${id}`)
+    .pipe(
+      retry(2)
+    );
   }
 }

@@ -59,7 +59,7 @@ export class CheckTokenService implements HttpInterceptor{
         }else{
           if (error.status === 401 && error.error.code === "invalid_token") {
             this.authService.logout('invalid')
-            return next.handle(this.injectToken(requ))
+            return throwError(err)
           }else{
             if (err.status === 404 && error.error.err === 'token_not_found') {
               this.authService.logout('notfound');
