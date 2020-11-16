@@ -3,9 +3,7 @@
     <ion-buttons slot="start">
       <ion-back-button [defaultHref]="'/tabs'"></ion-back-button>
     </ion-buttons>
-    <ion-title class="ion-text-center">
-      {{ toEdit ? 'Editar ' : 'Agregar' }} grupo
-    </ion-title>
+    <ion-title>Agregar Linea de investigación</ion-title>
   </ion-toolbar>
 </ion-header>
 
@@ -16,8 +14,7 @@
     </div>
     <ion-row>
       <ion-col size="12">
-        <form [formGroup]="group" (ngSubmit)="createGroup()" >
-
+        <form [formGroup]="line" (ngSubmit)="createLine()" >
           <ion-item>
             <ion-icon slot="end" class="ion-align-self-center" name="pricetag"></ion-icon>
             <ion-label position="floating">Nombre</ion-label>
@@ -29,7 +26,7 @@
           </div>
           <div class="validation-errors">
             <ng-container *ngFor="let validation of validation_messages.name">
-              <div class="error-message" *ngIf="group.get('name').hasError(validation.type) && (group.get('name').dirty || group.get('name').touched)">
+              <div class="error-message" *ngIf="line.get('name').hasError(validation.type) && (line.get('name').dirty || line.get('name').touched)">
                 <ion-icon slot="start" name="information-circle-outline"></ion-icon>
                 {{ validation.message }}
               </div>
@@ -37,18 +34,18 @@
           </div>
   
           <ion-item>
-            <ion-label>Departamento</ion-label>
-            <ion-select formControlName="department_id"  [value]="toEdit ? group.get('department_id').value : departments[0]?.id" placeholder="Departamento">
-              <ion-select-option *ngFor="let department of departments"  [value]="department.id">{{ department.name }}</ion-select-option>
+            <ion-label>Grupo</ion-label>
+            <ion-select formControlName="group_id"  [value]="groups[0]?.id" placeholder="Grupo de investigación">
+              <ion-select-option *ngFor="let group of groups"  [value]="group.id">{{ group.name }}</ion-select-option>
             </ion-select>
           </ion-item>
-          <div class="error-message error_custom" *ngIf="error_unprocesable.department_id" >
+          <div class="error-message error_custom" *ngIf="error_unprocesable.group_id" >
             <ion-icon slot="start" name="information-circle-outline"></ion-icon>
-            {{ error_unprocesable.department_id[0] }}
+            {{ error_unprocesable.group_id[0] }}
           </div>
           <div class="validation-errors">
-            <ng-container *ngFor="let validation of validation_messages.department_id">
-              <div class="error-message" *ngIf="group.get('department_id').hasError(validation.type) && (group.get('department_id').dirty || group.get('department_id').touched)">
+            <ng-container *ngFor="let validation of validation_messages.group_id">
+              <div class="error-message" *ngIf="line.get('group_id').hasError(validation.type) && (line.get('group_id').dirty || line.get('group_id').touched)">
                 <ion-icon slot="start" name="information-circle-outline"></ion-icon>
                 {{ validation.message }}
               </div>
@@ -65,15 +62,15 @@
           </div>
           <div class="validation-errors">
             <ng-container *ngFor="let validation of validation_messages.description">
-              <div class="error-message" *ngIf="group.get('description').hasError(validation.type) && (group.get('description').dirty || group.get('description').touched)">
+              <div class="error-message" *ngIf="line.get('description').hasError(validation.type) && (line.get('description').dirty || line.get('description').touched)">
                 <ion-icon slot="start" name="information-circle-outline"></ion-icon>
                 {{ validation.message }}
               </div>
             </ng-container>
           </div>
-          <ion-button type="submit" [disabled]="group.invalid" expand="block" >
+          <ion-button type="submit" [disabled]="line.invalid" expand="block" >
             <span *ngIf="!sending" >
-              {{ toEdit ? 'Editar ': 'Crear ' }} grupo de investigación
+              Crear linea de investigación
             </span>
             <ion-spinner *ngIf="sending"  name="lines-small"></ion-spinner>
           </ion-button>

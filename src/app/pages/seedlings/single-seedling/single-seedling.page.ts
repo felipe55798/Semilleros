@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
+import { AlertController, NavController } from '@ionic/angular';
 import { Seedling } from 'src/app/interfaces/seedling';
 import { User } from 'src/app/interfaces/user';
 import { AuthService } from 'src/app/services/auth.service';
@@ -20,7 +21,9 @@ export class SingleSeedlingPage implements OnInit {
   loading:boolean = true;
   constructor(private route: ActivatedRoute,
               private apiService: SeedlingsService,
-              private authService: AuthService
+              private authService: AuthService,
+              private alertController: AlertController,
+              private navController:NavController
   ) { }
 
   ngOnInit() {
@@ -48,12 +51,13 @@ export class SingleSeedlingPage implements OnInit {
             let seedl =res.seedlings.find(seedling=>{
               return seedling.id === this.seedling.id;
             })
-            console.log(seedl);
             if (seedl) {
               this.pertenece = seedl['pivot'].status;
-              console.log('Pertenecerá? ' + this.pertenece);
             }
             this.loading = false;
+          }else{
+            this.loading = false;
+            this.pertenece = -2;
           }
         }else{
           this.loading = false;
@@ -64,6 +68,57 @@ export class SingleSeedlingPage implements OnInit {
   
   handleError(error: any) {
     console.error(error);
+  }
+
+  participar(){
+    this.authService.getUser().subscribe(
+      async res=>{
+        if (res) {
+          const alert = await this.alertController.create({
+            cssClass: 'my-custom-class',
+            header: 'Confirm!',
+            message: 'Message <strong>text</strong>!!!',
+            buttons: [
+              {
+                text: 'Cancel',
+                role: 'cancel',
+                cssClass: 'secondary',
+                handler: (blah) => {
+                  console.log('Confirm Cancel: blah');
+                }
+              }, {
+                text: 'Okay',
+                handler: () => {
+                  
+                }
+              }
+            ]
+          });
+      
+          await alert.present();
+        }else{
+          const alert = await this.alertController.create({
+            cssClass: 'my-custom-class',
+            header: 'Acción requerida',
+            message: 'Debes inciar sesión para poder enviar tu solicitud',
+            buttons: [
+              {
+                text: 'Cancelar',
+                role: 'cancel',
+                cssClass: 'secondary'
+              }, {
+                text: 'Aceptar',
+                handler: () => {
+                  this.navController.navigateForward('/auth');
+                }
+              }
+            ]
+          });
+      
+          await alert.present();
+        }
+      }
+    )
   }
 
 }

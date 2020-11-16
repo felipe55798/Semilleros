@@ -26,4 +26,8 @@ export class LinesService {
       retry(2)
     );
   }
+
+  createLine(line){
+    return this.http.post(`${url}`,line);
+  }
 }

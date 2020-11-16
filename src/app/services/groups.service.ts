@@ -30,7 +30,12 @@ export class GroupsService {
     return this.http.post(`${url}`,group);
   }
   
+  destroy(group){
+    return this.http.delete(`${url}/${group}`)
+  }
   
-
+  update(group,data){
+    return this.http.put(`${url}/${group}`,data)
+  }
 
 }

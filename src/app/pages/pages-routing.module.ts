@@ -18,6 +18,10 @@ const routes: Routes = [
       {
         path: ':id',
         loadChildren: () => import('./groups/single-group/single-group.module').then( m => m.SingleGroupPageModule)
+      },
+      {
+        path:'edit/:id',
+        loadChildren: () => import('./admin/groups/add-group/add-group.module').then( m => m.AddGroupPageModule)
       }
     ]
   },
@@ -54,6 +58,10 @@ const routes: Routes = [
   {
     path:'lines',
     children:[
+      {
+        path: 'add',
+        loadChildren: () => import('./admin/lines/line-form/line-form.module').then( m => m.LineFormPageModule)
+      },
       {
         path: '',
         loadChildren: () => import('./lines/lines-list/lines-list.module').then( m => m.LinesListPageModule)
@@ -99,6 +107,7 @@ const routes: Routes = [
     pathMatch: 'full',
     redirectTo:'groups'
   }
+
 ];
 
 @NgModule({
