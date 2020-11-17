@@ -1,4 +1,5 @@
 import { Line } from './line';
+import { Publication } from './publication';
 import { Seedling } from './seedling';
 
 export interface Group {
@@ -9,5 +10,6 @@ export interface Group {
     updated_at?: Date,
     created_at?: Date,
     seedlings?:Seedling[],
+    publications?:Publication,
     lines?:Line[]
 }

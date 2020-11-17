@@ -1,14 +1,14 @@
 <a routerLink='/home/seedlings/{{ seedling.id }}' class="a_dep_container">
-  <ion-card mode='ios' class="{{value%2 == 0 ? 'dpt_font_2' : 'dpt_font'}}">
+  <ion-card mode='ios'>
     <img src="assets/images/fondo-3.jpg" *ngIf="imgVisible"/>
     <ion-card-content>
       <ion-card-title>
-        <h1 class="{{value%2 == 0 ? 'dpt_w_2' : 'dpt_w'}}">
+        <h1>
           {{ seedling.name.length > 27 ? seedling.name.substr(0, 27) + "..." : seedling.name }}
         </h1>
       </ion-card-title>
-      <p class="{{value%2 == 0 ? 'dpt_w_2' : 'dpt_w'}}">{{ seedling.description.length > 50 ? seedling.description.substr(0, 50) + "..." : seedling.description }}</p>
-      <small class="{{value%2 == 0 ? 'dpt_w_2' : 'dpt_w'}}">{{ seedling.created_at|date }}</small>
+      <p>{{ seedling.description.length > 50 ? seedling.description.substr(0, 50) + "..." : seedling.description }}</p>
+      <small>{{ seedling.created_at|date }}</small>
     </ion-card-content>
   </ion-card> 
 </a>

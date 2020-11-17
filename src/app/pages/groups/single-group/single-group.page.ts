@@ -59,6 +59,8 @@ export class SingleGroupPage implements OnInit {
   handleError(error: any) {
     console.error(error);
   }
+<<<<<<< HEAD
+=======
 
   async presentActionSheet() {
     const actionSheet = await this.actionSheetController.create({
@@ -128,4 +130,5 @@ export class SingleGroupPage implements OnInit {
   async handleErrorDelete(err){
     console.log(err);
   }
+>>>>>>> 83dcf710f69d2ea72381c1668ee036a418189def
 }

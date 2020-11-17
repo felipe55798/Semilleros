@@ -11,7 +11,7 @@ import { UserService } from 'src/app/services/user.service';
 export class SingleUserPage implements OnInit {
 
   id: string;
-  user:User = {};
+  user:User = null;
   constructor(private route: ActivatedRoute,
     public apiService: UserService) { }
 
@@ -28,9 +28,9 @@ export class SingleUserPage implements OnInit {
   }
 
   handleResponse(response) {
-    console.log(response.user.program.name);
+    console.log(response.user);
     this.user = response.user;
-    console.log('The USER name is: ' + this.user.program.name);
+    console.log('The USER name is: ' + this.user);
   }
   
   handleError(error: any) {

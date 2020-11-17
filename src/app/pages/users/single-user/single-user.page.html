@@ -8,7 +8,7 @@
 </ion-header>
 
 <ion-content>
-  <div class="container_single">
+  <div class="container_single" *ngIf=" user ">
     <ion-avatar class="container_logo">
       <img src="assets/images/user.svg" class="container_logo_user">
     </ion-avatar>
@@ -28,9 +28,9 @@
       </ion-text>
       <ion-text>
         <ion-text color="warning">
-          <h3>Programa académico</h3>
+          <h3>{{ user.program ? 'Programa académico' : 'Departamento Académico'}}</h3>
         </ion-text>
-        <h4>{{ user.program?.name }}</h4>
+        <h4>{{ user.program ? user.program.name : user.department.name }}</h4>
       </ion-text>
     </ion-card>
   </div>

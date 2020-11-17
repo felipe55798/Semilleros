@@ -103,6 +103,15 @@ const routes: Routes = [
     ]
   },
   {
+    path: 'publications',
+    children:[
+      {
+        path: ':id',
+        loadChildren: () => import('./publications/single-publication/single-publication.module').then( m => m.SinglePublicationPageModule)
+      }
+    ]
+  },
+  {
     path:'',
     pathMatch: 'full',
     redirectTo:'groups'

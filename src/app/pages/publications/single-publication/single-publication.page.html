@@ -1,0 +1,21 @@
+<ion-header>
+  <ion-toolbar color="warning">
+    <ion-title>Publicación</ion-title>
+    <ion-buttons slot="start">
+      <ion-back-button [defaultHref]="'/tabs'" ></ion-back-button>
+    </ion-buttons>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content>
+  <img src="assets/images/fondo-3.jpg"/>
+  <div class="container_single">
+    <ion-text>
+      <h5 class="ion-text-left ion-padding-start">{{ publication.references }}</h5>
+    </ion-text>
+    <a routerLink='{{ publication.link }}' class="a_dep_container">{{ publication.link }}</a>
+    <ion-text>
+      <h5>{{ publication.created_at|date }}</h5>
+    </ion-text>
+  </div>
+</ion-content>

@@ -12,7 +12,7 @@ export class PublicationComponent implements OnInit {
   constructor() { }
 
   ngOnInit() {
-    console.log('propiedad Seedling: ' + this.publication);
+    console.log('Propiedad Publication: ' + this.publication);
   }
 
 }

@@ -1,7 +1,8 @@
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
+import { from } from 'rxjs';
 import { User } from 'src/app/interfaces/user';
-import { AuthService } from 'src/app/services/auth.service';
+import { UserService } from 'src/app/services/user.service';
 
 @Component({
   selector: 'app-users-list',
@@ -12,14 +13,26 @@ export class UsersListPage implements OnInit {
 
   teachers:User[] = [];
   constructor(private route: ActivatedRoute,
-    private authService: AuthService) { }
+    private authService: UserService) { }
 
   ngOnInit() {
     this.getTeachersList();
   }
 
   getTeachersList(){
-    
+    return this.authService.getTeachers().subscribe(
+      res => this.handleResponse(res),
+      err => this.handleError(err)
+    );
+  }
+
+  handleResponse(response) {
+    console.log(response);
+    this.teachers = response;
+  }
+  
+  handleError(error: any) {
+    console.error(error);
   }
 
 }

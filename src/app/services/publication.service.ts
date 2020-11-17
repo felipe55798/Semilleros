@@ -14,4 +14,8 @@ export class PublicationService {
   getPublications(){
     return this.http.get(`${url}`);
   }
+
+  getPublication(id) {
+    return this.http.get(`${url}/${id}`);
+  }
 }
