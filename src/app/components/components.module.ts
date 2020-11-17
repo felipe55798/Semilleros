@@ -58,6 +58,7 @@ import { UserComponent } from './common/user/user.component';
     OneSeedlingComponent,
     OneProgramComponent,
     OneLineComponent,
+    PublicationComponent,
     UserComponent,
     DepartmentComponent,
     HeaderActionComponent

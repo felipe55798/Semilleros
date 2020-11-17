@@ -26,6 +26,13 @@
     <ion-text color="primary">
       <h2>Líneas de investigación</h2>
     </ion-text>
-    <app-one-line *ngFor="let line of group.lines ; let i = index" [line]="line" [value]= i></app-one-line>
+    <app-one-line *ngFor="let line of group.lines" [line]="line"></app-one-line>
+  </div>
+  <div class="separator"></div> 
+  <div class="container_single">
+    <ion-text color="primary">
+      <h2>Publicaciones</h2>
+    </ion-text>
+    <app-publication *ngFor="let publication of group.publications" [publication]="publication"></app-publication>
   </div>
 </ion-content>

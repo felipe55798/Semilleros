@@ -36,5 +36,4 @@ export class SingleGroupPage implements OnInit {
   handleError(error: any) {
     console.error(error);
   }
-
 }

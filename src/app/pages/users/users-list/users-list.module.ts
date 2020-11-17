@@ -7,9 +7,11 @@ import { IonicModule } from '@ionic/angular';
 import { UsersListPageRoutingModule } from './users-list-routing.module';
 
 import { UsersListPage } from './users-list.page';
+import { ComponentsModule } from 'src/app/components/components.module';
 
 @NgModule({
   imports: [
+    ComponentsModule,
     CommonModule,
     FormsModule,
     IonicModule,
