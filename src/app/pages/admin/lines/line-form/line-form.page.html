@@ -1,20 +1,20 @@
 <ion-header>
   <ion-toolbar>
     <ion-buttons slot="start">
-      <ion-back-button [defaultHref]="'/'"></ion-back-button>
+      <ion-back-button [defaultHref]="'/tabs'"></ion-back-button>
     </ion-buttons>
-    <ion-title>Agregar programa</ion-title>
+    <ion-title>Agregar Linea de investigación</ion-title>
   </ion-toolbar>
 </ion-header>
 
 <ion-content>
   <ion-grid fixed>
     <div class="img_container">
-      <img src="assets/images/feature.svg" class="img_add" alt="">
+      <img src="assets/images/add-file.svg" class="img_add" alt="">
     </div>
     <ion-row>
       <ion-col size="12">
-        <form [formGroup]="program" (ngSubmit)="addProgram()" >
+        <form [formGroup]="line" (ngSubmit)="createLine()" >
           <ion-item>
             <ion-icon slot="end" class="ion-align-self-center" name="pricetag"></ion-icon>
             <ion-label position="floating">Nombre</ion-label>
@@ -26,39 +26,30 @@
           </div>
           <div class="validation-errors">
             <ng-container *ngFor="let validation of validation_messages.name">
-              <div class="error-message" *ngIf="program.get('name').hasError(validation.type) && (program.get('name').dirty || program.get('name').touched)">
+              <div class="error-message" *ngIf="line.get('name').hasError(validation.type) && (line.get('name').dirty || line.get('name').touched)">
                 <ion-icon slot="start" name="information-circle-outline"></ion-icon>
                 {{ validation.message }}
               </div>
             </ng-container>
           </div>
+  
           <ion-item>
-            <ion-label>Departamento</ion-label>
-            <ion-select formControlName="department_id" [value]="departments[0]?.id" placeholder="Departamento">
-              <ion-select-option *ngFor="let department of departments"  [value]="department.id">{{ department.name }}</ion-select-option>
+            <ion-label>Grupo</ion-label>
+            <ion-select formControlName="group_id"  [value]="groups[0]?.id" placeholder="Grupo de investigación">
+              <ion-select-option *ngFor="let group of groups"  [value]="group.id">{{ group.name }}</ion-select-option>
             </ion-select>
           </ion-item>
-          <div class="error-message error_custom" *ngIf="error_unprocesable.department_id" >
+          <div class="error-message error_custom" *ngIf="error_unprocesable.group_id" >
             <ion-icon slot="start" name="information-circle-outline"></ion-icon>
-            {{ error_unprocesable.department_id[0] }}
+            {{ error_unprocesable.group_id[0] }}
           </div>
           <div class="validation-errors">
-            <ng-container *ngFor="let validation of validation_messages.department_id">
-              <div class="error-message" *ngIf="program.get('department_id').hasError(validation.type) && (program.get('department_id').dirty || program.get('department_id').touched)">
+            <ng-container *ngFor="let validation of validation_messages.group_id">
+              <div class="error-message" *ngIf="line.get('group_id').hasError(validation.type) && (line.get('group_id').dirty || line.get('group_id').touched)">
                 <ion-icon slot="start" name="information-circle-outline"></ion-icon>
                 {{ validation.message }}
               </div>
             </ng-container>
-          </div>
-          <ion-item>
-            <ion-label>Coordinador</ion-label>
-            <ion-select [value]="teachers[0]?.id" formControlName="coordinator_id" placeholder="Coordinador de programa">
-              <ion-select-option *ngFor="let teacher of teachers"  [value]="teacher.id">{{ teacher.name }}</ion-select-option>
-            </ion-select>
-          </ion-item>
-          <div class="error-message error_custom" *ngIf="error_unprocesable.coordinator_id" >
-            <ion-icon slot="start" name="information-circle-outline"></ion-icon>
-            {{ error_unprocesable.coordinator_id[0] }}
           </div>
           <ion-item>
             <ion-icon slot="end" class="ion-align-self-center" name="reader"></ion-icon>
@@ -71,15 +62,15 @@
           </div>
           <div class="validation-errors">
             <ng-container *ngFor="let validation of validation_messages.description">
-              <div class="error-message" *ngIf="program.get('description').hasError(validation.type) && (program.get('description').dirty || program.get('description').touched)">
+              <div class="error-message" *ngIf="line.get('description').hasError(validation.type) && (line.get('description').dirty || line.get('description').touched)">
                 <ion-icon slot="start" name="information-circle-outline"></ion-icon>
                 {{ validation.message }}
               </div>
             </ng-container>
           </div>
-          <ion-button type="submit" [disabled]="program.invalid" expand="block" >
+          <ion-button type="submit" [disabled]="line.invalid" expand="block" >
             <span *ngIf="!sending" >
-              Crear programa acádemico
+              Crear linea de investigación
             </span>
             <ion-spinner *ngIf="sending"  name="lines-small"></ion-spinner>
           </ion-button>

@@ -22,7 +22,7 @@
       Tu solicitud está siendo revisada
     </span>
   </div>
-  <ion-button expand="block" class="ion-margin" *ngIf="pertenece === -1 && !loading">
+  <ion-button (click)="participar()" expand="block" class="ion-margin" *ngIf="pertenece === -1 && !loading">
     Participar
   </ion-button>
 
@@ -37,6 +37,11 @@
     <ion-text color="primary">
       <h2>Estudiantes</h2>
     </ion-text>
-    <app-user *ngFor="let student of students" [user]="student"></app-user>
+    <div *ngIf="students.length > 0">
+      <app-user *ngFor="let student of students" [user]="student"></app-user>
+    </div>
+    <p *ngIf="students.length === 0" class="ion-text-center empty_alert">
+      No hay estudiantes relacionados con el semillero
+    </p>
   </div>
 </ion-content>

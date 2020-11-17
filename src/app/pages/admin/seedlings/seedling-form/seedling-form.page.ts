@@ -52,7 +52,8 @@ export class SeedlingFormPage implements OnInit {
               private userService: UserService) { }
 
   ngOnInit() {
-    this.getGroups()
+    this.getGroups();
+    this.getTeachers()
   }
 
   getTeachers(){

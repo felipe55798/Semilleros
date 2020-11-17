@@ -1,6 +1,10 @@
 import { Component, OnInit } from '@angular/core';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
+import { NavController, ToastController } from '@ionic/angular';
+import { Role } from 'src/app/interfaces/role';
 import { User } from 'src/app/interfaces/user';
+import { RoleService } from 'src/app/services/role.service';
+import { UserService } from 'src/app/services/user.service';
 
 @Component({
   selector: 'app-users-form',
@@ -29,11 +33,7 @@ export class UsersFormPage implements OnInit {
     'password_confirmation': [
       { type: 'required', message: 'Confirme la contraseña.' }
     ],
-    'cellphone':[
-      { type: 'required', message: 'El número de celular es obligatorio.' },
-      { type: 'pattern', message: 'Formato incorrecto.' }
-    ],
-    'program_id':[
+    'role_id':[
       { type: 'required', message: 'El programa acádemico es obligatorio.' },
     ]
   }
@@ -50,20 +50,71 @@ export class UsersFormPage implements OnInit {
       Validators.minLength(8)
     ])),
     password_confirmation: new FormControl('',Validators.required),
-    cellphone: new FormControl('',Validators.compose([
-      Validators.required,
-      Validators.pattern("[0-9 ]{10}")
-    ])),
-    program_id: new FormControl('',Validators.required)
+    role_id: new FormControl('',Validators.required)
   })
 
-  constructor() { }
+  roles:Role[] = [];
 
-  createUser(){
+  sending:boolean = false;
 
-  }
+  constructor(private roleService:RoleService,
+              private userService:UserService,
+              private toastCtrl:ToastController,
+              private navCtrl:NavController
+  ) { }
 
   ngOnInit() {
+    this.getRoles();
   }
 
+  getRoles(){
+    this.sending = true;
+    this.roleService.index().subscribe(
+      res=>this.handleResponse(res),
+      err=>this.handleError(err)
+    )
+  }
+  handleResponse(res){
+    this.sending = false;
+    this.roles = res.roles;
+  }
+
+  handleError(err){
+    this.sending = false;
+    console.log(err);
+  }
+
+  createUser(){
+    this.sending = true;
+    this.userService.createUser(this.user.value).subscribe(
+      res=>this.handleResponseCreate(res),
+      err=>this.handleErrorCreate(err)
+    )
+  }
+
+  async handleResponseCreate(res){
+    this.sending = false;
+    const toast = await this.toastCtrl.create({
+      message: res.message,
+      duration: 2000,
+      color:'success',
+      position:'top'
+    });
+    toast.present();
+    this.navCtrl.navigateForward('/tabs/tab1');
+  }
+
+  async handleErrorCreate(err){
+    this.sending = false;
+    if (err.status === 422) {
+      this.error = err.error.errors;
+    }else{
+      const toast = await this.toastCtrl.create({
+        message: err.message,
+        duration: 3000,
+        color:'danger'
+      });
+      toast.present();
+    }
+  }
 }

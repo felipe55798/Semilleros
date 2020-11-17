@@ -16,6 +16,10 @@ export class UserService {
     return this.http.get(`${url}/teachers`);
   }
 
+  createUser(user){
+    return this.http.post(`${url}/users`,user);
+  }
+  
   getUser(id){
     return this.http.get(`${url}/users/${id}`)
     .pipe(

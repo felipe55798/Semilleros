@@ -15,5 +15,6 @@ export interface User {
     seedlings?:Seedling[],
     department?:Department,
     program?:Program,
-    program_id?:number
+    program_id?:number,
+    role_id?:number
 }

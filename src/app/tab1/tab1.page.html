@@ -17,6 +17,12 @@
     </ion-fab-button>
     <ion-fab-list side="top">
       <div class="ion-margin-bottom">
+        <ion-label>Linea</ion-label>
+        <ion-fab-button (click)="navigate('/home/lines/add')" color="primary">
+          <ion-icon name="git-compare"></ion-icon>
+        </ion-fab-button>
+      </div>
+      <div class="ion-margin-bottom">
         <ion-label>Grupo</ion-label>
         <ion-fab-button (click)="navigate('/home/groups/add')" color="primary">
           <ion-icon name="people"></ion-icon>

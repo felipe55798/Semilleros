@@ -71,41 +71,24 @@
             </ng-container>
           </div>
           <ion-item>
-            <ion-label>Programa acádemico</ion-label>
-            <ion-select [cancelText]="'Cancelar'" formControlName="program_id" [value]="programs[0]?.id"  placeholder="Seleccione">
-              <ion-select-option *ngFor="let program of programs"  [value]="program.id">{{ program.name }}</ion-select-option>
+            <ion-label>Rol</ion-label>
+            <ion-select [cancelText]="'Cancelar'" formControlName="role_id" [value]="roles[0]?.id"  placeholder="Seleccione">
+              <ion-select-option *ngFor="let role of roles"  [value]="role.id">{{ role.name }}</ion-select-option>
             </ion-select>
           </ion-item>
-          <div class="error-message error_custom" *ngIf="error.program_id" >
+          <div class="error-message error_custom" *ngIf="error.role_id" >
             <ion-icon slot="start" name="information-circle-outline"></ion-icon>
-            {{ error.program_id[0] }}
+            {{ error.role_id[0] }}
           </div>
           <div class="validation-errors">
-            <ng-container *ngFor="let validation of validation_messages.program_id">
-              <div class="error-message" *ngIf="user.get('program_id').hasError(validation.type) && (user.get('program_id').dirty || user.get('program_id').touched)">
+            <ng-container *ngFor="let validation of validation_messages.role_id">
+              <div class="error-message" *ngIf="user.get('role_id').hasError(validation.type) && (user.get('role_id').dirty || user.get('role_id').touched)">
                 <ion-icon slot="start" name="information-circle-outline"></ion-icon>
                 {{ validation.message }}
               </div>
             </ng-container>
           </div>
-        
-          <ion-item>
-            <ion-icon name="call" slot="end" position="floating" class="ion-align-self-center"></ion-icon>
-            <ion-label position="floating">Cellphone</ion-label>
-            <ion-input formControlName="cellphone" type="text"></ion-input>
-          </ion-item>
-          <div class="error-message error_custom" *ngIf="error.cellphone" >
-            <ion-icon slot="start" name="information-circle-outline"></ion-icon>
-            {{ error.cellphone[0] }}
-          </div>
-          <div class="validation-errors">
-            <ng-container *ngFor="let validation of validation_messages.cellphone">
-              <div class="error-message" *ngIf="user.get('cellphone').hasError(validation.type) && (user.get('cellphone').dirty || user.get('cellphone').touched)">
-                <ion-icon slot="start" name="information-circle-outline"></ion-icon>
-                {{ validation.message }}
-              </div>
-            </ng-container>
-          </div>
+          
           
           <ion-item>
             <ion-icon name="eye" slot="end" position="floating" class="ion-align-self-center"></ion-icon>
@@ -147,7 +130,7 @@
             <ion-col size="12">
               <ion-button type="submit" [disabled]="user.invalid" expand="block" class="ion-no-margin" fill="solid">
                 <span *ngIf="!sending" >
-                  Registrarse
+                  Crear usuario
                 </span>
                 <ion-spinner *ngIf="sending"  name="lines-small"></ion-spinner>
               </ion-button>

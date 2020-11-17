@@ -4,7 +4,7 @@
       <ion-back-button [defaultHref]="'/tabs'"></ion-back-button>
     </ion-buttons>
     <ion-title class="ion-text-center">
-      Agregar grupo
+      {{ toEdit ? 'Editar ' : 'Agregar' }} grupo
     </ion-title>
   </ion-toolbar>
 </ion-header>
@@ -38,7 +38,7 @@
   
           <ion-item>
             <ion-label>Departamento</ion-label>
-            <ion-select formControlName="department_id"  [value]="departments[0]?.id" placeholder="Departamento">
+            <ion-select formControlName="department_id"  [value]="toEdit ? group.get('department_id').value : departments[0]?.id" placeholder="Departamento">
               <ion-select-option *ngFor="let department of departments"  [value]="department.id">{{ department.name }}</ion-select-option>
             </ion-select>
           </ion-item>
@@ -73,7 +73,7 @@
           </div>
           <ion-button type="submit" [disabled]="group.invalid" expand="block" >
             <span *ngIf="!sending" >
-              Crear grupo de investigación
+              {{ toEdit ? 'Editar ': 'Crear ' }} grupo de investigación
             </span>
             <ion-spinner *ngIf="sending"  name="lines-small"></ion-spinner>
           </ion-button>

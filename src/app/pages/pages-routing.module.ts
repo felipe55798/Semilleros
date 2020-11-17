@@ -18,6 +18,10 @@ const routes: Routes = [
       {
         path: ':id',
         loadChildren: () => import('./groups/single-group/single-group.module').then( m => m.SingleGroupPageModule)
+      },
+      {
+        path:'edit/:id',
+        loadChildren: () => import('./admin/groups/add-group/add-group.module').then( m => m.AddGroupPageModule)
       }
     ]
   },
@@ -55,6 +59,10 @@ const routes: Routes = [
     path:'lines',
     children:[
       {
+        path: 'add',
+        loadChildren: () => import('./admin/lines/line-form/line-form.module').then( m => m.LineFormPageModule)
+      },
+      {
         path: '',
         loadChildren: () => import('./lines/lines-list/lines-list.module').then( m => m.LinesListPageModule)
       },
@@ -81,17 +89,17 @@ const routes: Routes = [
     path:'users',
     children:[
       {
-        path: '',
-        loadChildren: () => import('./users/users-list/users-list.module').then( m => m.UsersListPageModule)
+        path: 'add',
+        loadChildren: () => import('./admin/users/users-form/users-form.module').then( m => m.UsersFormPageModule)
       },
       {
         path: ':id',
         loadChildren: () => import('./users/single-user/single-user.module').then( m => m.SingleUserPageModule)
       },
       {
-        path: 'add',
-        loadChildren: () => import('./admin/users/users-form/users-form.module').then( m => m.UsersFormPageModule)
-      }
+        path: '',
+        loadChildren: () => import('./users/users-list/users-list.module').then( m => m.UsersListPageModule)
+      },
     ]
   },
   {
