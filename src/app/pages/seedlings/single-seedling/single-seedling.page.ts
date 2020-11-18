@@ -1,9 +1,10 @@
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
-import { AlertController, NavController } from '@ionic/angular';
+import { AlertController, NavController, ToastController } from '@ionic/angular';
 import { Seedling } from 'src/app/interfaces/seedling';
 import { User } from 'src/app/interfaces/user';
 import { AuthService } from 'src/app/services/auth.service';
+import { SeedlingUserService } from 'src/app/services/seedling-user.service';
 import { SeedlingsService } from 'src/app/services/seedlings.service';
 
 @Component({
@@ -19,16 +20,20 @@ export class SingleSeedlingPage implements OnInit {
   students:User[] = [];
   pertenece:number = -1;
   loading:boolean = true;
+  sending: boolean = false;
   constructor(private route: ActivatedRoute,
               private apiService: SeedlingsService,
               private authService: AuthService,
               private alertController: AlertController,
-              private navController:NavController
+              private navController:NavController,
+              private seelingUserService: SeedlingUserService,
+              private toastController : ToastController
   ) { }
 
   ngOnInit() {
     this.id = this.route.snapshot.paramMap.get('id');
     this.getSeedling();
+    console.log('Hola entré al componente');
   }
 
   getSeedling(){
@@ -39,7 +44,6 @@ export class SingleSeedlingPage implements OnInit {
   }
 
   handleResponse(response) {
-    console.log(response);
     this.seedling = response.seedling;
     this.teachers = response.teachers;
     this.students = response.students;
@@ -48,6 +52,7 @@ export class SingleSeedlingPage implements OnInit {
       res=>{
         if (res) {
           if (res.roles[0].id === 4) {
+            console.log('Datos: ', this.seedling.id, 'seedlings', res.seedlings.length);
             let seedl =res.seedlings.find(seedling=>{
               return seedling.id === this.seedling.id;
             })
@@ -74,22 +79,29 @@ export class SingleSeedlingPage implements OnInit {
     this.authService.getUser().subscribe(
       async res=>{
         if (res) {
+          console.log('Entre aqui');
+          
           const alert = await this.alertController.create({
             cssClass: 'my-custom-class',
-            header: 'Confirm!',
-            message: 'Message <strong>text</strong>!!!',
+            header: 'Confirmar',
+            message: '¿Seguro que desea realizar ésta acción?',
             buttons: [
               {
-                text: 'Cancel',
+                text: 'Cancelar',
                 role: 'cancel',
                 cssClass: 'secondary',
-                handler: (blah) => {
-                  console.log('Confirm Cancel: blah');
-                }
               }, {
-                text: 'Okay',
+                text: 'Aceptar',
                 handler: () => {
-                  
+                  this.sending = true;
+                  const seedlingUser = {
+                    'user_id' : res.id,
+                    'seedling_id' : this.seedling.id
+                  }
+                  this.seelingUserService.createSeedlingUser(seedlingUser).subscribe(
+                    res => this.handleResponseParticipate(res),
+                    err => this.handleErrorParticipate(err)
+                  );
                 }
               }
             ]
@@ -119,6 +131,31 @@ export class SingleSeedlingPage implements OnInit {
         }
       }
     )
+  }
+
+  async handleResponseParticipate(res){
+    this.pertenece = 0;
+    this.sending = false;
+    const toast = await this.toastController.create({
+      header : 'Solicitud Enviada',
+      duration : 3000,
+      message : res.message,
+      color : 'success'
+    });
+    toast.present();
+    this.authService.refreshUser();
+  }
+
+  async handleErrorParticipate(error: any) {
+    this.sending = false;
+    console.log(error);
+    const toast = await this.toastController.create({
+      header : 'Error',
+      duration : 3000,
+      message : error.error.message,
+      color : 'danger'
+    });
+    toast.present();
   }
 
 }

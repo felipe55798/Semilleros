@@ -23,7 +23,8 @@
     </span>
   </div>
   <ion-button (click)="participar()" expand="block" class="ion-margin" *ngIf="pertenece === -1 && !loading">
-    Participar
+    <span *ngIf="!sending">Participar</span>
+    <ion-spinner name="lines-small" class="ion-text-center" *ngIf="sending"></ion-spinner>
   </ion-button>
 
   <div class="separator"></div>

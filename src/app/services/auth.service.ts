@@ -2,11 +2,11 @@ import { HttpClient } from '@angular/common/http';
 import { EventEmitter, Injectable } from '@angular/core';
 import { environment } from 'src/environments/environment';
 
-import { map, switchMap } from "rxjs/operators";
+import { catchError, map, switchMap } from "rxjs/operators";
 import { Storage } from '@ionic/storage';
 import { User } from '../interfaces/user';
 import { NavController, ToastController } from '@ionic/angular';
-import { from, Observable } from 'rxjs';
+import { from, Observable, throwError } from 'rxjs';
 
 
 const url = `${environment.url}/auth`;
@@ -161,6 +161,21 @@ export class AuthService {
             })
           )
         }
+      })
+    )
+  }
+
+  async refreshUser () {
+    if (!this.token) {
+      await this.loadToken();
+    }
+    this.http.get(`${url}/me`).subscribe(
+      (res => {
+        this.user = res['user'];
+      }),
+      (error => {
+        this.checkToken();
+        return throwError(error);
       })
     )
   }
