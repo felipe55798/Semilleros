@@ -3,6 +3,7 @@ import { ActivatedRoute, Router } from '@angular/router';
 import { LoadingController } from '@ionic/angular';
 import { Department } from '../interfaces/department';
 import { DepartmentService } from '../services/departments.service';
+import { RefreshService } from '../services/refresh.service';
 
 @Component({
   selector: 'app-tab2',
@@ -15,9 +16,17 @@ export class Tab2Page {
   departments: Department[]=[];
   constructor(private apiService: DepartmentService,
               private loadingController: LoadingController,
-              private route:ActivatedRoute) {}
+              private route:ActivatedRoute,
+              private refreshService: RefreshService) {}
 
   ngOnInit() {
+    this.refreshService.refresh.subscribe(
+      (res:any)=>{
+        if (res === "departments") {
+          this.getDepartments()
+        }
+      }
+    )
     this.getDepartments();
   }
 
@@ -58,5 +67,10 @@ export class Tab2Page {
         this.getDepartments()
       }
     });
+  }
+
+  async doRefresh(event){
+    await this.getDepartments()
+    event.target.complete()
   }
 }

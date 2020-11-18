@@ -7,6 +7,7 @@ import { Line } from 'src/app/interfaces/line';
 import { DepartmentService } from 'src/app/services/departments.service';
 import { LinesService } from 'src/app/services/lines.service';
 import { GroupsService } from 'src/app/services/groups.service';
+import { RefreshService } from 'src/app/services/refresh.service';
 
 @Component({
   selector: 'app-line-form',
@@ -43,7 +44,8 @@ export class LineFormPage implements OnInit {
   constructor(private groupService:GroupsService,
               private lineService:LinesService,
               private toastCtrl:ToastController,
-              private navCtrl:NavController) { }
+              private navCtrl:NavController,
+              private refreshService: RefreshService) { }
 
   ngOnInit() {
     this.getGroups()
@@ -82,12 +84,9 @@ export class LineFormPage implements OnInit {
       color:'success'
     });
     toast.present();
-    this.line.reset()
-    this.navCtrl.navigateForward('/home/lines',{
-      queryParams:{
-        refresh:true
-      }
-    })
+    this.line.reset();
+    this.refreshService.throwEvent('lines');
+    this.navCtrl.navigateRoot('/tabs/tab1');
   }
 
   async handleErrorCreate(err){

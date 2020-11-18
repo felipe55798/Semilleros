@@ -3,6 +3,7 @@ import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { NavController, ToastController } from '@ionic/angular';
 import { Role } from 'src/app/interfaces/role';
 import { User } from 'src/app/interfaces/user';
+import { RefreshService } from 'src/app/services/refresh.service';
 import { RoleService } from 'src/app/services/role.service';
 import { UserService } from 'src/app/services/user.service';
 
@@ -60,7 +61,8 @@ export class UsersFormPage implements OnInit {
   constructor(private roleService:RoleService,
               private userService:UserService,
               private toastCtrl:ToastController,
-              private navCtrl:NavController
+              private navCtrl:NavController,
+              private refreshService: RefreshService
   ) { }
 
   ngOnInit() {
@@ -101,7 +103,9 @@ export class UsersFormPage implements OnInit {
       position:'top'
     });
     toast.present();
-    this.navCtrl.navigateForward('/tabs/tab1');
+    this.user.reset();
+    this.refreshService.throwEvent('users');
+    this.navCtrl.navigateRoot('/tabs/tab1');
   }
 
   async handleErrorCreate(err){

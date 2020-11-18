@@ -2,6 +2,7 @@ import { Component, Input, OnInit } from '@angular/core';
 import { Seedling } from 'src/app/interfaces/seedling';
 import { User } from 'src/app/interfaces/user';
 import { AuthService } from 'src/app/services/auth.service';
+import { RefreshService } from 'src/app/services/refresh.service';
 import { SeedlingsService } from 'src/app/services/seedlings.service';
 
 @Component({
@@ -23,7 +24,8 @@ export class HomeSeedlingComponent implements OnInit {
   loading:boolean = false;
   @Input() user:User = null;
   constructor(private seedlingService:SeedlingsService,
-              private authService:AuthService) { }
+              private authService:AuthService,
+              private refreshService: RefreshService) { }
 
   ngOnInit() {
     this.validRole()
@@ -43,6 +45,14 @@ export class HomeSeedlingComponent implements OnInit {
       }
     })
     this.getSeedlings(); 
+
+    this.refreshService.refresh.subscribe(
+      (res:string)=>{
+        if (res === "seedlings") {
+          this.getSeedlings()
+        }
+      }
+    )
   }
 
   validRole(){

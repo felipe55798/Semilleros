@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { NavController, ToastController } from '@ionic/angular';
 import { DepartmentService } from 'src/app/services/departments.service';
+import { RefreshService } from 'src/app/services/refresh.service';
 
 @Component({
   selector: 'app-form-department',
@@ -31,7 +32,8 @@ export class FormDepartmentPage implements OnInit {
 
   constructor(private departmentService:DepartmentService,
               private navCtrl:NavController,
-              private toast:ToastController) { }
+              private toast:ToastController,
+              private refreshService: RefreshService) { }
 
   ngOnInit() {
   }
@@ -55,11 +57,9 @@ export class FormDepartmentPage implements OnInit {
       color:'success'
     });
     toast.present();
-    this.navCtrl.navigateForward('/tabs/tab2',{
-      queryParams:{
-        refresh:true
-      }
-    })
+    this.department.reset()
+    this.refreshService.throwEvent('departments');
+    this.navCtrl.navigateRoot('/tabs/tab2');
   }
 
   handleError(err){

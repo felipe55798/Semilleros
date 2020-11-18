@@ -6,6 +6,7 @@ import { Program } from 'src/app/interfaces/program';
 import { User } from 'src/app/interfaces/user';
 import { DepartmentService } from 'src/app/services/departments.service';
 import { ProgramService } from 'src/app/services/program.service';
+import { RefreshService } from 'src/app/services/refresh.service';
 import { UserService } from 'src/app/services/user.service';
 
 @Component({
@@ -44,7 +45,8 @@ export class FormProgramPage implements OnInit {
               private programService:ProgramService,
               private toastCtrl:ToastController,
               private navCtrl: NavController,
-              private userService:UserService) { }
+              private userService:UserService,
+              private refreshService: RefreshService) { }
 
   ngOnInit() {
     this.getDepartments();
@@ -98,7 +100,9 @@ export class FormProgramPage implements OnInit {
     });
     toast.present();
 
-    this.navCtrl.navigateForward('/tabs/tab1');
+    this.program.reset();
+    this.refreshService.throwEvent('programs');
+    this.navCtrl.navigateRoot('/tabs/tab1');
   }
 
   async handleErrorCreate(err){

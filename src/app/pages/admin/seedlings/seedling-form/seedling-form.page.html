@@ -45,8 +45,8 @@
             {{ error_unprocesable.group_id[0] }}
           </div>
           <div class="validation-errors">
-            <ng-container *ngFor="let validation of validation_messages.description">
-              <div class="error-message" *ngIf="seedling.get('description').hasError(validation.type) && (seedling.get('description').dirty || seedling.get('description').touched)">
+            <ng-container *ngFor="let validation of validation_messages.group_id">
+              <div class="error-message" *ngIf="seedling.get('group_id').hasError(validation.type) && (seedling.get('group_id').dirty || seedling.get('group_id').touched)">
                 <ion-icon slot="start" name="information-circle-outline"></ion-icon>
                 {{ validation.message }}
               </div>

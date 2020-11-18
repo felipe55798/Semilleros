@@ -1,11 +1,12 @@
 import { Component, OnInit } from '@angular/core';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { ActivatedRoute } from '@angular/router';
-import { NavController, ToastController } from '@ionic/angular';
+import { LoadingController, NavController, ToastController } from '@ionic/angular';
 import { Department } from 'src/app/interfaces/department';
 import { Group } from 'src/app/interfaces/group';
 import { DepartmentService } from 'src/app/services/departments.service';
 import { GroupsService } from 'src/app/services/groups.service';
+import { RefreshService } from 'src/app/services/refresh.service';
 
 @Component({
   selector: 'app-add-group',
@@ -45,14 +46,24 @@ export class AddGroupPage implements OnInit {
               private groupService: GroupsService,
               private toastCtrl: ToastController,
               private navCtrl: NavController,
-              private route: ActivatedRoute) { }
+              private route: ActivatedRoute,
+              private loadingController: LoadingController,
+              private refreshService: RefreshService) { }
 
-  ngOnInit() {
+  async ngOnInit() {
     this.getDepartments()
     let id = this.route.snapshot.paramMap.get('id');
     if (id) {
+      const loading = await this.loadingController.create({
+        cssClass: 'my-custom-class',
+        message: 'Cargando información...',
+        duration: 2000
+      });
+      await loading.present();
       this.groupService.getGroup(id).subscribe(
-        (res:any)=>{
+        async (res:any)=>{
+          const { role, data } = await loading.onDidDismiss();
+
           const { name,description,department_id } = res.group;
           const group = {
             name,
@@ -63,8 +74,19 @@ export class AddGroupPage implements OnInit {
           this.group.setValue(group);
           this.toEdit = true;
         },
-        err=>{
-          console.log(err);
+        async err=>{
+          const { role, data } = await loading.onDidDismiss();
+          if (err.status === 404) {
+            this.navCtrl.navigateForward('/home/groups');
+            const toast = await this.toastCtrl.create({
+              header:err.statusText,
+              message:'Registro no encontrado',
+              color:'danger',
+              position:'top',
+              duration:2000
+            })
+            toast.present()
+          }
         }
       )
     }
@@ -102,11 +124,9 @@ export class AddGroupPage implements OnInit {
       color:'success'
     });
     toast.present();
-    this.navCtrl.navigateForward('/home/groups',{
-      queryParams:{
-        refresh:true
-      }
-    })
+    this.group.reset();
+    this.refreshService.throwEvent('groups');
+    this.navCtrl.navigateRoot('/tabs/tab1');
   }
   
   async handleErrorCreate(err){

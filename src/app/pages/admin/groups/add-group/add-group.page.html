@@ -16,7 +16,7 @@
     </div>
     <ion-row>
       <ion-col size="12">
-        <form [formGroup]="group" (ngSubmit)="createGroup()" >
+        <form [formGroup]="group" (ngSubmit)="toEdit ? updateGroup() :createGroup()" >
 
           <ion-item>
             <ion-icon slot="end" class="ion-align-self-center" name="pricetag"></ion-icon>

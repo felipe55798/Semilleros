@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { Line } from 'src/app/interfaces/line';
 import { LinesService } from 'src/app/services/lines.service';
+import { RefreshService } from 'src/app/services/refresh.service';
 
 @Component({
   selector: 'app-lines-list',
@@ -10,9 +11,17 @@ import { LinesService } from 'src/app/services/lines.service';
 export class LinesListPage implements OnInit {
 
   lines:Line[] = [];
-  constructor(public apiService: LinesService) { }
+  constructor(private apiService: LinesService,
+              private refreshService: RefreshService) { }
 
    ngOnInit(){
+    this.refreshService.refresh.subscribe(
+      (res:string)=>{
+        if (res === "lines") {
+          this.getLines()     
+        }
+      }
+    )
     this.getLines();
   }
 

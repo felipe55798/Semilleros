@@ -5,6 +5,7 @@ import { Group } from 'src/app/interfaces/group';
 import { Seedling } from 'src/app/interfaces/seedling';
 import { User } from 'src/app/interfaces/user';
 import { GroupsService } from 'src/app/services/groups.service';
+import { RefreshService } from 'src/app/services/refresh.service';
 import { SeedlingsService } from 'src/app/services/seedlings.service';
 import { UserService } from 'src/app/services/user.service';
 
@@ -49,7 +50,8 @@ export class SeedlingFormPage implements OnInit {
               private seedLingService:SeedlingsService,
               private toastCtrl: ToastController,
               private navCtrl: NavController,
-              private userService: UserService) { }
+              private userService: UserService,
+              private refreshService: RefreshService) { }
 
   ngOnInit() {
     this.getGroups();
@@ -102,11 +104,9 @@ export class SeedlingFormPage implements OnInit {
       color:'success'
     });
     toast.present();
-    this.navCtrl.navigateForward('/home/seedlings',{
-      queryParams:{
-        refresh:true
-      }
-    })
+    this.seedling.reset();
+    this.refreshService.throwEvent('seedlings');
+    this.navCtrl.navigateRoot('/tabs/tab1');
   }
 
   async handleErrorCreate(err){

@@ -13,6 +13,6 @@ export class UserComponent implements OnInit {
   constructor() { }
 
   ngOnInit() {
-    console.log('Los datos que llegaron son: ' + this.user);
+    console.log(this.user);
   } 
 }

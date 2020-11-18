@@ -20,7 +20,6 @@ export class CheckTokenService implements HttpInterceptor{
       catchError((err)=>{
         const error = (typeof err.error !== 'object') ? JSON.parse(err.error) : err;
         if (error.status === 401 && error.error.code === "token_expired") {
-          
           if (!this.refreshTokenInProgress) {
             this.refreshTokenInProgress = true;
             this.refreshTokenSubject.next(null);
