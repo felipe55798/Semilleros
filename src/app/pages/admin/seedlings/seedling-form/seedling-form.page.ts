@@ -73,17 +73,18 @@ export class SeedlingFormPage implements OnInit {
         duration: 2000
       });
       await loading.present();
-      this.groupService.getGroup(id).subscribe(
+      this.seedLingService.getSeedling(id).subscribe(
         async (res:any)=>{
           const { role, data } = await loading.onDidDismiss();
 
           console.log(res);
           
-          const { name,description,department_id } = res.seedling;
+          const { name,description,group_id,teacher_id } = res.seedling;
           const seedling = {
             name,
             description,
-            department_id
+            group_id,
+            teacher_id
           }
           this.seedlingToEdit = res.seedling;
           this.seedling.setValue(seedling);
@@ -167,6 +168,43 @@ export class SeedlingFormPage implements OnInit {
         message: err.message,
         duration: 2000,
         color:'success'
+      });
+      toast.present();
+    }
+  }
+
+  updateSeedling(){
+    this.sending = true;
+    this.seedLingService.update(this.seedling.value,this.seedlingToEdit.id).subscribe(
+      res=>this.handleResponseUpdate(res),
+      err=>this.handleErrorUpdate(err)
+    )
+  }
+
+  async handleResponseUpdate(res){
+    this.sending = false;
+    const toast = await this.toastCtrl.create({
+      message: res.message,
+      duration: 2000,
+      color:'success'
+    });
+    toast.present();
+    this.navCtrl.navigateForward('/home/seedlings',{
+      queryParams:{
+        refresh:true
+      }
+    })
+  }
+
+  async handleErrorUpdate(err){
+    this.sending = false;
+    if (err.status === 422) {
+      this.error_unprocesable = err.error.errors;
+    }else{
+      const toast = await this.toastCtrl.create({
+        message: err.message,
+        duration: 2000,
+        color:'danger'
       });
       toast.present();
     }

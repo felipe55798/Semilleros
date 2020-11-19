@@ -16,5 +16,6 @@ export interface User {
     department?:Department,
     program?:Program,
     program_id?:number,
-    role_id?:number
+    role_id?:number,
+    department_id?:number
 }

@@ -33,4 +33,8 @@ export class SeedlingsService {
   destroy(seedling_id){
     return this.http.delete(`${url}/${seedling_id}`);
   }
+
+  update(seedling,id){
+    return this.http.put(`${url}/${id}`,seedling)
+  }
 }

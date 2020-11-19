@@ -39,7 +39,7 @@ export class SingleSeedlingPage implements OnInit {
   ngOnInit() {
     this.id = this.route.snapshot.paramMap.get('id');
     this.getSeedling();
-    console.log('Hola entré al componente');
+    this.checkRole();
   }
 
   checkRole(){
@@ -70,7 +70,7 @@ export class SingleSeedlingPage implements OnInit {
         text: 'Editar información',
         icon: 'create',
         handler: () => {
-          this.navCtrl.navigateForward(`/home/groups/edit/${this.seedling.id}`)
+          this.navCtrl.navigateForward(`/home/seedlings/edit/${this.seedling.id}`)
         }
       },{
         text: 'Cancelar',

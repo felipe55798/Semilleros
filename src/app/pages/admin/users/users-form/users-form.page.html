@@ -70,6 +70,18 @@
               </div>
             </ng-container>
           </div>
+
+          <ion-item>
+            <ion-label>Departamento</ion-label>
+            <ion-select [cancelText]="'Cancelar'" formControlName="department_id" [value]="departments[0]?.id"  placeholder="Seleccione un departamento">
+              <ion-select-option *ngFor="let department of departments"  [value]="department.id">{{ department.name }}</ion-select-option>
+            </ion-select>
+          </ion-item>
+          <div class="error-message error_custom" *ngIf="error.department_id" >
+            <ion-icon slot="start" name="information-circle-outline"></ion-icon>
+            {{ error.department_id[0] }}
+          </div>
+
           <ion-item>
             <ion-label>Rol</ion-label>
             <ion-select [cancelText]="'Cancelar'" formControlName="role_id" [value]="roles[0]?.id"  placeholder="Seleccione">
