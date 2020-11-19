@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
-import { AlertController, NavController, ToastController } from '@ionic/angular';
+import { ActionSheetController, AlertController, NavController, ToastController } from '@ionic/angular';
 import { Seedling } from 'src/app/interfaces/seedling';
 import { User } from 'src/app/interfaces/user';
 import { AuthService } from 'src/app/services/auth.service';
@@ -21,19 +21,105 @@ export class SingleSeedlingPage implements OnInit {
   pertenece:number = -1;
   loading:boolean = true;
   sending: boolean = false;
+  admin:boolean = false;
+
+
   constructor(private route: ActivatedRoute,
               private apiService: SeedlingsService,
               private authService: AuthService,
               private alertController: AlertController,
               private navController:NavController,
               private seelingUserService: SeedlingUserService,
-              private toastController : ToastController
+              private toastController : ToastController,
+              private actionSheetController: ActionSheetController,
+              private navCtrl:NavController,
+              private toastCtrl:ToastController
   ) { }
 
   ngOnInit() {
     this.id = this.route.snapshot.paramMap.get('id');
     this.getSeedling();
     console.log('Hola entré al componente');
+  }
+
+  checkRole(){
+    this.authService.getUser().subscribe(
+      res=>{
+        if (res) {
+          if (res.roles[0].id === 1) {
+            this.admin = true;
+          }
+        }
+      }
+    )
+  }
+
+  async presentActionSheet() {
+    const actionSheet = await this.actionSheetController.create({
+      header: 'Opciones',
+      mode:'ios',
+      cssClass: 'my-custom-class',
+      buttons: [{
+        text: 'Eliminar',
+        role: 'destructive',
+        icon: 'trash',
+        handler: () => {
+          this.delete()
+        }
+      }, {
+        text: 'Editar información',
+        icon: 'create',
+        handler: () => {
+          this.navCtrl.navigateForward(`/home/groups/edit/${this.seedling.id}`)
+        }
+      },{
+        text: 'Cancelar',
+        icon: 'close',
+        role: 'cancel'
+      }]
+    });
+    await actionSheet.present();
+  }
+
+  async delete(){
+    const alert = await this.alertController.create({
+      cssClass: 'my-custom-class',
+      header: 'Confirme su acción',
+      message: 'Esta acción no se puede deshacer, ¿Seguro que desea eliminar este semillero?',
+      buttons: [
+        {
+          text: 'Cancelar',
+          role: 'cancel',
+          cssClass: 'secondary',
+        }, {
+          text: 'Sí, eliminar',
+          cssClass:'danger_text',
+          handler: () => {
+            this.apiService.destroy(this.seedling.id).subscribe(
+              res=>this.handleResponseDelete(res),
+              err=>this.handleErrorDelete(err)
+            )
+          }
+        }
+      ]
+    });
+    await alert.present();
+  }
+
+  async handleResponseDelete(res){
+    const toast = await this.toastCtrl.create({
+      message:res.message,
+      color:'secondary',
+      position:'bottom',
+      duration:3000
+    })
+    toast.present()
+
+    this.navCtrl.navigateRoot('/home/seedlings')
+  }
+
+  async handleErrorDelete(err){
+    console.log(err);
   }
 
   getSeedling(){

@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
-import { NavController, ToastController } from '@ionic/angular';
+import { ActivatedRoute } from '@angular/router';
+import { LoadingController, NavController, ToastController } from '@ionic/angular';
 import { Group } from 'src/app/interfaces/group';
 import { Seedling } from 'src/app/interfaces/seedling';
 import { User } from 'src/app/interfaces/user';
@@ -37,6 +38,10 @@ export class SeedlingFormPage implements OnInit {
     ],
   } 
 
+  seedlingToEdit:Seedling = {};
+
+  toEdit:boolean = false;
+
   sending:boolean = false;
 
   seedling = new FormGroup({
@@ -51,11 +56,55 @@ export class SeedlingFormPage implements OnInit {
               private toastCtrl: ToastController,
               private navCtrl: NavController,
               private userService: UserService,
-              private refreshService: RefreshService) { }
+              private refreshService: RefreshService,
+              private route: ActivatedRoute,
+              private loadingController: LoadingController,
+  ) { }
 
-  ngOnInit() {
+  async ngOnInit() {
     this.getGroups();
-    this.getTeachers()
+    this.getTeachers();
+
+    let id = this.route.snapshot.paramMap.get('id');
+    if (id) {
+      const loading = await this.loadingController.create({
+        cssClass: 'my-custom-class',
+        message: 'Cargando información...',
+        duration: 2000
+      });
+      await loading.present();
+      this.groupService.getGroup(id).subscribe(
+        async (res:any)=>{
+          const { role, data } = await loading.onDidDismiss();
+
+          console.log(res);
+          
+          const { name,description,department_id } = res.seedling;
+          const seedling = {
+            name,
+            description,
+            department_id
+          }
+          this.seedlingToEdit = res.seedling;
+          this.seedling.setValue(seedling);
+          this.toEdit = true;
+        },
+        async err=>{
+          const { role, data } = await loading.onDidDismiss();
+          if (err.status === 404) {
+            this.navCtrl.navigateForward('/home/groups');
+            const toast = await this.toastCtrl.create({
+              header:err.statusText,
+              message:'Registro no encontrado',
+              color:'danger',
+              position:'top',
+              duration:2000
+            })
+            toast.present()
+          }
+        }
+      )
+    }
   }
 
   getTeachers(){

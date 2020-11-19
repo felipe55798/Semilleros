@@ -39,7 +39,11 @@ const routes: Routes = [
       {
         path: ':id',
         loadChildren: () => import('./seedlings/single-seedling/single-seedling.module').then( m => m.SingleSeedlingPageModule)
-      }
+      },
+      {
+        path:'edit/:id',
+        loadChildren: () => import('./admin/seedlings/seedling-form/seedling-form.module').then( m => m.SeedlingFormPageModule)
+      },
     ]
   },
   {

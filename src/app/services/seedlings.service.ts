@@ -29,4 +29,8 @@ export class SeedlingsService {
   createSeedling(seedling){
     return this.http.post(`${url}`,seedling);
   }
+
+  destroy(seedling_id){
+    return this.http.delete(`${url}/${seedling_id}`);
+  }
 }
