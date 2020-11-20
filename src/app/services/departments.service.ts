@@ -32,4 +32,12 @@ export class DepartmentService {
       retry(1)
     )
   }
+
+  destroy(id){
+    return this.http.delete(`${url}/${id}`);
+  }
+
+  update(id,department){
+    return this.http.put(`${url}/${id}`,department)
+  }
 }

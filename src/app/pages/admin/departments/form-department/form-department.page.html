@@ -3,7 +3,7 @@
     <ion-buttons slot="start">
       <ion-back-button [defaultHref]="'/'"></ion-back-button>
     </ion-buttons>
-    <ion-title>Agregar departamento</ion-title>
+    <ion-title>{{ toEdit ? 'Editar ' : 'Agregar' }} departamento</ion-title>
   </ion-toolbar>
 </ion-header>
 
@@ -14,7 +14,7 @@
     </div>
     <ion-row>
       <ion-col size="12">
-        <form [formGroup]="department" (ngSubmit)="addDepartment()" >
+        <form [formGroup]="department" (ngSubmit)="toEdit ? updateDepartment() : addDepartment()" >
           <ion-item>
             <ion-icon slot="end" class="ion-align-self-center" name="pricetag"></ion-icon>
             <ion-label position="floating">Nombre</ion-label>
@@ -51,7 +51,7 @@
           </div>
           <ion-button type="submit" [disabled]="department.invalid" expand="block" >
             <span *ngIf="!sending" >
-              Crear departamento
+              {{ toEdit ? 'Editar' : 'Crear' }} departamento
             </span>
             <ion-spinner *ngIf="sending"  name="lines-small"></ion-spinner>
           </ion-button>

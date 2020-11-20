@@ -4,6 +4,11 @@
     <ion-buttons slot="start">
       <ion-back-button [defaultHref]="'/tabs'" ></ion-back-button>
     </ion-buttons>
+    <ion-buttons slot="end" *ngIf="admin" >
+      <ion-button (click)="presentActionSheet()">
+        <ion-icon slot="icon-only" name="ellipsis-vertical"></ion-icon>
+      </ion-button>
+    </ion-buttons>
   </ion-toolbar>
 </ion-header>
 

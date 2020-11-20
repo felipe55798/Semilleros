@@ -48,7 +48,8 @@ export class SeedlingFormPage implements OnInit {
     name: new FormControl('',Validators.required),
     description: new FormControl('',Validators.required),
     group_id: new FormControl('',Validators.required),
-    teacher_id: new FormControl('',Validators.required)
+    teacher_id: new FormControl('',Validators.required),
+    id: new FormControl('')
   })
 
   constructor(private groupService:GroupsService,
@@ -79,12 +80,13 @@ export class SeedlingFormPage implements OnInit {
 
           console.log(res);
           
-          const { name,description,group_id,teacher_id } = res.seedling;
+          const { name,description,group_id,teacher_id, id } = res.seedling;
           const seedling = {
             name,
             description,
             group_id,
-            teacher_id
+            teacher_id,
+            id
           }
           this.seedlingToEdit = res.seedling;
           this.seedling.setValue(seedling);

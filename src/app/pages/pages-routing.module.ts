@@ -1,5 +1,6 @@
 import { NgModule } from '@angular/core';
 import { Routes, RouterModule } from '@angular/router';
+import { CheckTokenGuard } from '../guards/check-token.guard';
 
 
 const routes: Routes = [
@@ -13,7 +14,8 @@ const routes: Routes = [
       },
       {
         path:'add',
-        loadChildren: () => import('./admin/groups/add-group/add-group.module').then( m => m.AddGroupPageModule)
+        loadChildren: () => import('./admin/groups/add-group/add-group.module').then( m => m.AddGroupPageModule),
+        canActivate:[CheckTokenGuard]
       },
       {
         path: ':id',
@@ -21,7 +23,8 @@ const routes: Routes = [
       },
       {
         path:'edit/:id',
-        loadChildren: () => import('./admin/groups/add-group/add-group.module').then( m => m.AddGroupPageModule)
+        loadChildren: () => import('./admin/groups/add-group/add-group.module').then( m => m.AddGroupPageModule),
+        canActivate:[CheckTokenGuard]
       }
     ]
   },
@@ -34,7 +37,8 @@ const routes: Routes = [
       },
       {
         path:'add',
-        loadChildren: () => import('./admin/seedlings/seedling-form/seedling-form.module').then( m => m.SeedlingFormPageModule)
+        loadChildren: () => import('./admin/seedlings/seedling-form/seedling-form.module').then( m => m.SeedlingFormPageModule),
+        canActivate:[CheckTokenGuard]
       },
       {
         path: ':id',
@@ -42,7 +46,8 @@ const routes: Routes = [
       },
       {
         path:'edit/:id',
-        loadChildren: () => import('./admin/seedlings/seedling-form/seedling-form.module').then( m => m.SeedlingFormPageModule)
+        loadChildren: () => import('./admin/seedlings/seedling-form/seedling-form.module').then( m => m.SeedlingFormPageModule),
+        canActivate:[CheckTokenGuard]
       },
     ]
   },
@@ -51,11 +56,17 @@ const routes: Routes = [
     children:[
       {
         path:'add',
-        loadChildren:()=>import('./admin/departments/form-department/form-department.module').then(m => m.FormDepartmentPageModule)
+        loadChildren:()=>import('./admin/departments/form-department/form-department.module').then(m => m.FormDepartmentPageModule),
+        canActivate:[CheckTokenGuard]
       },
       {
         path: ':id',
         loadChildren: () => import('./departments/single-department/single-department.module').then( m => m.SingleDepartmentPageModule)
+      },
+      {
+        path:'edit/:id',
+        loadChildren:()=>import('./admin/departments/form-department/form-department.module').then(m => m.FormDepartmentPageModule),
+        canActivate:[CheckTokenGuard]
       }
     ]
   },
@@ -64,7 +75,8 @@ const routes: Routes = [
     children:[
       {
         path: 'add',
-        loadChildren: () => import('./admin/lines/line-form/line-form.module').then( m => m.LineFormPageModule)
+        loadChildren: () => import('./admin/lines/line-form/line-form.module').then( m => m.LineFormPageModule),
+        canActivate:[CheckTokenGuard]
       },
       {
         path: '',
@@ -81,11 +93,13 @@ const routes: Routes = [
     children:[
       {
         path:'add',
-        loadChildren: ()=>import('./admin/programs/form-program/form-program.module').then(m => m.FormProgramPageModule)
+        loadChildren: ()=>import('./admin/programs/form-program/form-program.module').then(m => m.FormProgramPageModule),
+        canActivate:[CheckTokenGuard]
       },
       {
         path:'',
-        loadChildren: () => import('./programs/programs-list/programs-list.module').then( m => m.ProgramsListPageModule)
+        loadChildren: () => import('./programs/programs-list/programs-list.module').then( m => m.ProgramsListPageModule),
+        canActivate:[CheckTokenGuard]
       }
     ]
   },
@@ -94,7 +108,8 @@ const routes: Routes = [
     children:[
       {
         path: 'add',
-        loadChildren: () => import('./admin/users/users-form/users-form.module').then( m => m.UsersFormPageModule)
+        loadChildren: () => import('./admin/users/users-form/users-form.module').then( m => m.UsersFormPageModule),
+        canActivate:[CheckTokenGuard]
       },
       {
         path: ':id',
@@ -102,7 +117,8 @@ const routes: Routes = [
       },
       {
         path: '',
-        loadChildren: () => import('./users/users-list/users-list.module').then( m => m.UsersListPageModule)
+        loadChildren: () => import('./users/users-list/users-list.module').then( m => m.UsersListPageModule),
+        canActivate:[CheckTokenGuard]
       },
     ]
   },

@@ -39,7 +39,8 @@ export class AddGroupPage implements OnInit {
   group = new FormGroup({
     name: new FormControl('', Validators.required),
     department_id: new FormControl('', Validators.required),
-    description: new FormControl('',Validators.required)
+    description: new FormControl('',Validators.required),
+    id: new FormControl('')
   })
 
   constructor(private DepartmentService:DepartmentService,
@@ -64,11 +65,12 @@ export class AddGroupPage implements OnInit {
         async (res:any)=>{
           const { role, data } = await loading.onDidDismiss();
 
-          const { name,description,department_id } = res.group;
+          const { name,description,department_id,id } = res.group;
           const group = {
             name,
             description,
-            department_id
+            department_id,
+            id
           }
           this.groupToEdit = res.group;
           this.group.setValue(group);
