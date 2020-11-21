@@ -12,6 +12,10 @@ export class GroupsService {
 
   constructor(private http: HttpClient) { }
 
+  getLatest(){
+    return this.http.get(`${url}/latest`);
+  }
+
   getGroupsList() {
     return this.http.get(url)
     .pipe(

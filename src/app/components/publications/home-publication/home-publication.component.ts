@@ -17,6 +17,8 @@ export class HomePublicationComponent implements OnInit {
     freeMode:true,
     spaceBetween:-10
   };
+  
+  current_page = 0;
 
   loading:boolean = false;
   @Input() user:User = null;
@@ -33,17 +35,28 @@ export class HomePublicationComponent implements OnInit {
     this.getPublications()
   }
 
-  getPublications(){
+  getPublications( event? ){
     this.loading = true;
-    this.publicationService.getPublications().subscribe(
-      res=>this.handleResponsePublication(res),
+    this.publicationService.getPublications(this.current_page).subscribe(
+      res=>this.handleResponsePublication(res,event ),
       err=>this.handleErrorPublications(err)
     )
   }
 
-  handleResponsePublication(res){
-    this.publications = res.publications;
+  handleResponsePublication(res, event?){
+    const { current_page, data } = res.publications;
+    
+    if (data.length == 0 && event) {
+      event.target.disabled = true;
+      event.target.complete();
+    }
+    this.current_page = current_page;
+    this.publications.push(...data);
     this.loading= false;
+
+    if (event) {
+      event.target.complete();
+    }
   }
 
   handleErrorPublications(err){

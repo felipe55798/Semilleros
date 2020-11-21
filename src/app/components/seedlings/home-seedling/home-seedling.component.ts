@@ -65,7 +65,7 @@ export class HomeSeedlingComponent implements OnInit {
 
   getSeedlings() {
     this.loading = true;
-    this.seedlingService.getSeedlingsList().subscribe(
+    this.seedlingService.getLatest().subscribe(
       response => this.handleResponse(response), 
       err => this.handleError(err)
     );

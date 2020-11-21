@@ -12,6 +12,10 @@ export class SeedlingsService {
 
   constructor(private http: HttpClient) { }
 
+  getLatest(){
+    return this.http.get(`${url}/latest`);
+  }
+
   getSeedlingsList() {
     return this.http.get(url)
     .pipe(

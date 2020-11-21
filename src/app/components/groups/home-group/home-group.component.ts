@@ -67,7 +67,7 @@ export class HomeGroupComponent implements OnInit {
 
   getGroups() {
     this.loading = true;
-    this.groupService.getGroupsList().subscribe(
+    this.groupService.getLatest().subscribe(
       response =>this.handleResponse(response), 
       err => this.handleError(err)
     );
