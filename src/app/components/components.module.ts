@@ -19,6 +19,8 @@ import { OneSeedlingComponent } from './seedlings/one-seedling/one-seedling.comp
 import { OneProgramComponent } from './programs/one-program/one-program.component';
 import { OneLineComponent } from './lines/one-line/one-line.component';
 import { UserComponent } from './common/user/user.component';
+import { ProfileComponent } from './profile/profile.component';
+import { UpdatePasswordComponent } from './update-password/update-password.component';
 
 
 
@@ -39,6 +41,8 @@ import { UserComponent } from './common/user/user.component';
     HomeGroupComponent,
     HomeSeedlingComponent,
     HomePublicationComponent,
+    ProfileComponent,
+    UpdatePasswordComponent,
     HeaderActionComponent
   ],
   imports: [
@@ -61,6 +65,8 @@ import { UserComponent } from './common/user/user.component';
     PublicationComponent,
     UserComponent,
     DepartmentComponent,
+    ProfileComponent,
+    UpdatePasswordComponent,
     HeaderActionComponent
   ]
 })

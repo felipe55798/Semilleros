@@ -10,6 +10,7 @@ import { ComponentsModule } from '../components/components.module';
 
 @NgModule({
   imports: [
+    ComponentsModule,
     IonicModule,
     CommonModule,
     FormsModule,

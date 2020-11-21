@@ -26,4 +26,8 @@ export class UserService {
       retry(2)
     );
   }
+
+  updateUser(user, id){
+    return this.http.put(`${url}/users/${id}`,user);
+  }
 }

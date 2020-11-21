@@ -1,7 +1,7 @@
 <ion-header [translucent]="true">
   <ion-toolbar>
     <ion-title>
-      Tab 3
+      Mi Perfil
     </ion-title>
     <ion-buttons slot="end">
       <app-header-action></app-header-action>
@@ -10,9 +10,33 @@
 </ion-header>
 
 <ion-content [fullscreen]="true">
-  <ion-header collapse="condense">
-    <ion-toolbar>
-      <ion-title size="large">Tab 3</ion-title>
-    </ion-toolbar>
-  </ion-header>
+  <div class="container_single" *ngIf=" user ">
+    <ion-avatar class="container_logo">
+      <img src="assets/images/user.svg" class="container_logo_user">
+    </ion-avatar>
+    <ion-card>
+      <ion-text color="primary">
+        <h2 class="ion-text-left ion-padding-start">{{ user.name }} {{ user.lastname}}</h2>
+      </ion-text>
+      <ion-text color="warning">
+        <h3>Correo Electrónico</h3>
+      </ion-text>
+        <h4>{{ user.email }}</h4>
+      <ion-text>
+        <ion-text color="warning">
+          <h3>Numero de Celular</h3>
+        </ion-text>
+        <h4>{{ user.cellphone }}</h4>
+      </ion-text>
+      <ion-text>
+        <ion-text color="warning">
+          <h3>{{ user.program ? 'Programa académico' : 'Departamento Académico'}}</h3>
+        </ion-text>
+        <h4>{{ user.program ? user.program.name : user.department.name }}</h4>
+      </ion-text>
+    </ion-card>
+  </div>
+  <ion-button color="primary" (click)="presentActionSheet()" expand="block">
+    Editar Mi Perfil
+  </ion-button>
 </ion-content>

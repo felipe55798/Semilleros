@@ -1,0 +1,39 @@
+.container_logo{
+    width:  110px;
+    height: 110px;
+    margin-top: 10px;
+    margin-left: auto;
+    margin-right: auto;
+    &_user{
+        width: 100%;
+        height: 100%;
+    }
+}
+h2{
+    text-align: center;
+}
+h3, h4{
+    padding-left: 20px;
+}
+
+a{
+    text-decoration: none;
+    margin-right: 15px;
+    font-size: 14px;
+    border: 2px solid #1e91d4;
+    padding: 4px 8px;
+    border-radius: 15px;
+}
+
+/* DOES NOT WORK - not specific enough */
+.action-sheet-group {
+    background: #e5e5e5;
+}
+
+/* Works - pass "my-custom-class" in cssClass to increase specificity */
+.my-custom-class .action-sheet-group {
+    background: #e5e5e5;
+}
+.my-custom-class {
+    --background: #e5e5e5;
+}

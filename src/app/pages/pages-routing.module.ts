@@ -112,10 +112,19 @@ const routes: Routes = [
     ]
   },
   {
+    path: 'update-profile',
+    children:[
+      {
+        path: ':id',
+        loadChildren: () => import('./update-profile/update-profile.module').then( m => m.UpdateProfilePageModule)
+      }
+    ]
+  },
+  {
     path:'',
     pathMatch: 'full',
     redirectTo:'groups'
-  }
+  },
 
 ];
 
