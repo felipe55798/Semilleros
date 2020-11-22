@@ -1,3 +1,5 @@
+import { Group } from './group';
+
 export interface Seedling {
     id?:number,
     group_id?:number,
@@ -6,5 +8,6 @@ export interface Seedling {
     updated_at?: Date,
     created_at?: Date,
     users?:[],
-    teacher_id?:number
+    teacher_id?:number,
+    group?:Group
 }

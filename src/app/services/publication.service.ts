@@ -22,4 +22,8 @@ export class PublicationService {
   createPublication(publication){
     return this.http.post(`${url}`,publication);
   }
+
+  updatePublication(publication_id, publication){
+    return this.http.put(`${url}/${publication_id}`,publication);
+  }
 }

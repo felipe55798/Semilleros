@@ -189,4 +189,32 @@ export class AuthService {
       })
     )
   }
+
+  async checkRole(role:number, role2?:number):Promise<boolean>{
+    if (this.user) {
+      let haveRole = this.user.roles.find(roleUser=>roleUser.id === role || roleUser.id === role2);
+      if (haveRole) {
+        return Promise.resolve(true)
+      }else{
+        this.navCtrl.navigateRoot('/tabs/tab1')
+        return Promise.resolve(false)
+      }
+    }else{
+      return new Promise(resolve=>{
+        this.getUser().subscribe(
+          res=>{
+            if (res) {
+              let haveRole = res.roles.find(roleUser=>roleUser.id === role || roleUser.id === role2);
+              if (haveRole) {
+                return resolve(true)
+              }else{
+                this.navCtrl.navigateRoot('/tabs/tab1')
+                return resolve(false)
+              }
+            }
+          }
+        )
+      })
+    }
+  }
 }

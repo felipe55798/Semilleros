@@ -47,7 +47,7 @@ export class Tab1Page{
           this.admin = true;
         }else{
           if (this.loggedUser.roles[0].id !== 4) {
-            if (this.loggedUser.department_id) {
+            if (this.loggedUser.seedlings.length > 0) {
               this.encargado = true;
             }
           }

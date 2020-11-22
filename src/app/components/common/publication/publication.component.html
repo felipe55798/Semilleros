@@ -1,8 +1,8 @@
 <a routerLink='/home/publications/{{ publication?.id }}' class="a_dep_container">
   <ion-card>
     <ion-card-content >
-      <p>{{ publication.references.length > 80 ? publication.references.substr(0, 80) + "..." : publication.references }}</p>
-      <span class="link">{{ publication.link }}</span>
+      <p>{{ publication.references.length > 80 ? publication.references.substr(0, 70) + "..." : publication.references }}</p>
+      <span class="link">{{ publication.link.substr(0, 40) + "..." }}</span>
       <span class="date">{{ publication.created_at|date }}</span>
     </ion-card-content>
   </ion-card>

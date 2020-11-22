@@ -8,6 +8,8 @@ import { SinglePublicationPageRoutingModule } from './single-publication-routing
 
 import { SinglePublicationPage } from './single-publication.page';
 
+import { InAppBrowser } from '@ionic-native/in-app-browser/ngx';
+
 @NgModule({
   imports: [
     CommonModule,
@@ -15,6 +17,9 @@ import { SinglePublicationPage } from './single-publication.page';
     IonicModule,
     SinglePublicationPageRoutingModule
   ],
-  declarations: [SinglePublicationPage]
+  declarations: [SinglePublicationPage],
+  providers: [
+    InAppBrowser
+  ]
 })
 export class SinglePublicationPageModule {}
