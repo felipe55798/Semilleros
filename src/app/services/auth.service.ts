@@ -8,6 +8,7 @@ import { User } from '../interfaces/user';
 import { NavController, ToastController } from '@ionic/angular';
 import { from, Observable, throwError } from 'rxjs';
 import { RefreshService } from './refresh.service';
+import { error } from 'protractor';
 
 
 const url = `${environment.url}/auth`;
@@ -58,7 +59,12 @@ export class AuthService {
   }
 
   refreshToken(tokenObj){
-    return this.http.get(`${URL}/refresh`,tokenObj);
+    return this.http.post(`${url}/refresh`,tokenObj).pipe(
+      catchError(error => {
+        console.log('Entré al cache error');
+        return throwError(error);
+      })
+    );
   }
 
   async setToken(token:string,refresh_token:string){
@@ -67,6 +73,20 @@ export class AuthService {
   }
 
   async logout(interceptor?:string){
+    this.http.get(`${url}/logout`).subscribe(
+      async (res:any) => {
+        const toast = await this.toastCtrl.create({
+          message: res.message,
+          duration: 2000,
+          color:'secondary'
+        });
+        toast.present();
+      },
+      (error => {
+        this.checkToken();
+        return throwError(error);
+      })
+    );
     this.user = null;
     this.token = null;
     await this.storage.clear()

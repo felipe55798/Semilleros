@@ -53,18 +53,20 @@ export class UserComponent implements OnInit {
       ); 
     }
   }
-
+ 
   handleResponse(response) {
     this.user = null;
     console.log('Cualquier cosa');
     this.update.emit(true);
     this.sending = false;
+    this.showMessage(response.message, 'success');
   }
 
   handleError(error:any) {
     console.error(error);
     this.update.emit(true);
     this.sending = false;
+    this.showMessage(error.message, 'danger');
   }
 
   async destroy(){
@@ -93,23 +95,20 @@ export class UserComponent implements OnInit {
     await alert.present();
   }
 
-  async handleResponseDestroy(res){
-    this.user = null;
-    this.sending = false;
+  async showMessage(message, color) {
     const toast = await this.toastCtrl.create({
-      message:res.message,
+      message,
+      color,
       duration:2000,
-      color:'secondary'
     })
     toast.present()
   }
-  async handleErrorDestroy(err){
-    this.sending = false;
-    const toast = await this.toastCtrl.create({
-      message:err.message,
-      duration:2000,
-      color:'danger'
-    })
-    toast.present()
+
+  async handleResponseDestroy(res){
+    this.user = null;
+    this.showMessage(res.message, 'secondary');
+  }
+  handleErrorDestroy(err){
+    this.showMessage(err.message,'danger')
   }
 }
