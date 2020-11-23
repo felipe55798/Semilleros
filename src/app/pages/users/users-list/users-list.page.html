@@ -18,11 +18,19 @@
             <h2>Encargados</h2>
           </ion-text>
           <app-user [admin]="true" [edit]="false" *ngFor="let teacher of teachers" [user]="teacher"></app-user>
-          <app-empty [title_message]="'No hay usuarios'"></app-empty>
+          <app-empty [title_message]="'No hay usuarios'" *ngIf="teachers.length === 0" ></app-empty>
+          <div class="container_button">
+            <a *ngIf="teachers.length === 0"  routerLink="/home/users/add" >
+              Agregar usuario
+            </a>
+          </div>
       </ion-col>
       <ion-col size="12" *ngIf="specific">
         <ion-text color="primary" class="ion-text-center">
           <h2>Solicitudes</h2>
+        </ion-text>
+        <ion-text class="ion-text-center">
+          <p style="color: gray;">Estas son las solicitudes de participación pendientes por cada semillero al cual perteneces</p>
         </ion-text>
         <div *ngFor="let item of seedlings">
           <ion-text color="primary" class="ion-text-left">

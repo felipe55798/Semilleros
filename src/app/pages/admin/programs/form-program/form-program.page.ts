@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
-import { NavController, ToastController } from '@ionic/angular';
+import { ActivatedRoute } from '@angular/router';
+import { LoadingController, NavController, ToastController } from '@ionic/angular';
 import { Department } from 'src/app/interfaces/department';
 import { Program } from 'src/app/interfaces/program';
 import { User } from 'src/app/interfaces/user';
@@ -38,20 +39,75 @@ export class FormProgramPage implements OnInit {
     name: new FormControl('',Validators.required),
     description: new FormControl('',Validators.required),
     department_id: new FormControl('',Validators.required),
-    coordinator_id: new FormControl('') 
+    coordinator_id: new FormControl(''),
+    id: new FormControl('')
   })
+
+  toEdit:boolean = false;
+  programToEdit:Program = {};
 
   constructor(private departmentService:DepartmentService,
               private programService:ProgramService,
               private toastCtrl:ToastController,
               private navCtrl: NavController,
               private userService:UserService,
-              private refreshService: RefreshService) { }
+              private refreshService: RefreshService,
+              private route:ActivatedRoute,
+              private loadingController: LoadingController) { }
 
   ngOnInit() {
     this.getDepartments();
     this.getTeachers();
+    let id = this.route.snapshot.paramMap.get('id');
+    if (id) {
+      this.loadProgramData(id);
+    }
   }
+
+  async loadProgramData(id){
+    const loading = await this.loadingController.create({
+      cssClass: 'my-custom-class',
+      message: 'Cargando información...',
+      duration: 2000
+    });
+    await loading.present();
+    this.programService.getProgram(id).subscribe(
+      res=>this.handleResponseLoad(res,loading),
+      err=>this.handleErrorLoad(err,loading)
+    )
+  }
+
+  async handleResponseLoad(res,loading){
+    const { role, data } = await loading.onDidDismiss();
+    const {name,description,department_id, coordinator_id, id} = res.program;
+    this.programToEdit = res.program;
+    const programLoaded = {
+      id,
+      name,
+      description,
+      department_id,
+      coordinator_id
+    }
+    this.program.setValue(programLoaded);
+    this.toEdit = true;
+  }
+
+  async handleErrorLoad(err,loading){
+    const { role, data } = await loading.onDidDismiss();
+    if (err.status === 404) {
+      this.navCtrl.navigateForward('/home/programs');
+      const toast = await this.toastCtrl.create({
+        header:'Error',
+        message:'Registro no encontrado',
+        color:'danger',
+        position:'top',
+        duration:2000
+      })
+      toast.present()
+    }
+  }
+
+
 
   getDepartments(){
     this.departmentService.getDepartmentsList().subscribe(
@@ -102,7 +158,7 @@ export class FormProgramPage implements OnInit {
 
     this.program.reset();
     this.refreshService.throwEvent('programs');
-    this.navCtrl.navigateRoot('/tabs/tab1');
+    this.navCtrl.navigateRoot('/home/programs');
   }
 
   async handleErrorCreate(err){
@@ -118,6 +174,14 @@ export class FormProgramPage implements OnInit {
       });
       toast.present();
     }
+  }
+
+  updateProgram(){
+    this.sending = true;
+    this.programService.update(this.programToEdit.id,this.program.value).subscribe(
+      res=>this.handleResponseCreate(res),
+      err=>this.handleErrorCreate(err)
+    )
   }
 
 }

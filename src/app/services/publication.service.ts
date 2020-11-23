@@ -26,4 +26,8 @@ export class PublicationService {
   updatePublication(publication_id, publication){
     return this.http.put(`${url}/${publication_id}`,publication);
   }
+
+  destroy(publication_id){
+    return this.http.delete(`${url}/${publication_id}`);
+  }
 }

@@ -29,7 +29,6 @@ export class UpdateProfilePage implements OnInit {
 
   handleResponse(res){
     this.user = res;
-    console.log(this.user);
   }
 
   handleError(err){

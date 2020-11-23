@@ -161,6 +161,7 @@ export class AddGroupPage implements OnInit {
       color:'success'
     });
     toast.present();
+    this.refreshService.throwEvent('groups');
     this.navCtrl.navigateForward('/home/groups',{
       queryParams:{
         refresh:true

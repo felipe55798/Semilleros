@@ -42,8 +42,9 @@ export class FormPublicationPage implements OnInit {
       Validators.required,
       Validators.pattern(reg)
     ])),
-    id: new FormControl(null),
-    group_id: new FormControl('',Validators.required)
+    id: new FormControl(''),
+    group_id: new FormControl('',Validators.required),
+    user_id: new FormControl('')
   })
 
   publicationToEdit:Publication = {};
@@ -71,9 +72,7 @@ export class FormPublicationPage implements OnInit {
   loadUser(){
     this.authService.getUser().subscribe(
       res=>{
-        this.loggedUser = res
-        console.log(this.loggedUser);
-        
+        this.loggedUser = res   
       }
     )
   }
@@ -93,15 +92,17 @@ export class FormPublicationPage implements OnInit {
 
   async handleResponse(res, loading){
     const { role, data } = await loading.onDidDismiss();
-    const { references, link, id } = res.publication;
+    const { references, link, id, group_id, user_id } = res.publication;
+    this.publicationToEdit = res.publication;
     const publication = {
       references, 
       link, 
-      id
+      id,
+      group_id,
+      user_id
     }
-
     this.publication.setValue(publication);
-
+    this.toEdit = true;
   }
 
   async handleError(err, loading){
@@ -121,7 +122,6 @@ export class FormPublicationPage implements OnInit {
 
   create(){
     this.sending = true;
-
     const newPublication = {
       ...this.publication.value,
       user_id: this.loggedUser.id,

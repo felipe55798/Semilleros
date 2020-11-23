@@ -30,4 +30,12 @@ export class LinesService {
   createLine(line){
     return this.http.post(`${url}`,line);
   }
+
+  destroy(line){
+    return this.http.delete(`${url}/${line}`)
+  }
+
+  update(line_id, line){
+    return this.http.put(`${url}/${line_id}`,line);
+  }
 }

@@ -8,4 +8,10 @@
 </ion-header>
 <ion-content>
   <app-one-seedling *ngFor="let seedling of seedlings" [seedling]=seedling></app-one-seedling>
+  <app-empty [title_message]="'No hay semilleros de investigación'" *ngIf="seedlings.length === 0" ></app-empty>
+  <div class="container_button">
+    <a *ngIf="admin && seedlings.length === 0"  routerLink="/home/seedlings/add" >
+      Agregar semillero de investigación
+    </a>
+  </div>
 </ion-content>

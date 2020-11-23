@@ -15,12 +15,12 @@ export class Tab3Page {
 
   user:User = null;
   constructor(private route: ActivatedRoute,
-    public apiService: UserService,
-    public authService: AuthService,
-    public actionSheetController: ActionSheetController,
-    private navCtrl:NavController,
-    private refreshService: RefreshService,
-    private loadingController: LoadingController) { }
+              private apiService: UserService,
+              private authService: AuthService,
+              private actionSheetController: ActionSheetController,
+              private navCtrl:NavController,
+              private refreshService: RefreshService,
+              private loadingController: LoadingController) { }
 
   ngOnInit() {    
     this.getUser();
@@ -29,7 +29,17 @@ export class Tab3Page {
         this.getUser();
       }
     );
-    console.log(this.user);
+    this.authService.logoutEvent.subscribe(
+      res=>{
+        this.user = null;
+      }
+    )
+
+    this.authService.loginEvent.subscribe(
+      res=>{
+        this.getUser()
+      }
+    )
   }
 
   async getUser(){

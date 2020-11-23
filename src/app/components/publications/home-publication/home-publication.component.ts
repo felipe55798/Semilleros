@@ -30,6 +30,8 @@ export class HomePublicationComponent implements OnInit {
     this.refreshService.refresh.subscribe(
       (res:string)=>{
         if (res === "publications") {
+          this.current_page = 0;
+          this.publications = [];
           this.getPublications()
         }
       }
@@ -38,7 +40,9 @@ export class HomePublicationComponent implements OnInit {
   }
 
   getPublications( event? ){
-    this.loading = true;
+    if (!event) {
+      this.loading = true;
+    }
     this.publicationService.getPublications(this.current_page).subscribe(
       res=>this.handleResponsePublication(res,event ),
       err=>this.handleErrorPublications(err)
@@ -47,15 +51,15 @@ export class HomePublicationComponent implements OnInit {
 
   handleResponsePublication(res, event?){
     const { current_page, data } = res.publications;
+    this.current_page = current_page;
     
-    if (data.length == 0 && event) {
+    if (data.length === 0 && event) {
       event.target.disabled = true;
       event.target.complete();
     }
-    this.current_page = current_page;
+    
     this.publications.push(...data);
-    this.loading= false;
-
+    this.loading = false;
     if (event) {
       event.target.complete();
     }
@@ -67,9 +71,6 @@ export class HomePublicationComponent implements OnInit {
   }
 
   loadPublications(event){
-    setTimeout(() => {
-      event.target.complete()
-      event.target.disabled = true;
-    }, 1000);
+    this.getPublications(event)
   }
 }

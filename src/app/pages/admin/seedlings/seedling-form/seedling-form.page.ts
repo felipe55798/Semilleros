@@ -78,8 +78,6 @@ export class SeedlingFormPage implements OnInit {
         async (res:any)=>{
           const { role, data } = await loading.onDidDismiss();
 
-          console.log(res);
-          
           const { name,description,group_id,teacher_id, id } = res.seedling;
           const seedling = {
             name,
@@ -158,7 +156,7 @@ export class SeedlingFormPage implements OnInit {
     toast.present();
     this.seedling.reset();
     this.refreshService.throwEvent('seedlings');
-    this.navCtrl.navigateRoot('/tabs/tab1');
+    this.navCtrl.navigateRoot('/home/seedlings');
   }
 
   async handleErrorCreate(err){
@@ -191,11 +189,8 @@ export class SeedlingFormPage implements OnInit {
       color:'success'
     });
     toast.present();
-    this.navCtrl.navigateForward('/home/seedlings',{
-      queryParams:{
-        refresh:true
-      }
-    })
+    this.refreshService.throwEvent('seedlings');
+    this.navCtrl.navigateForward('/home/seedlings')
   }
 
   async handleErrorUpdate(err){

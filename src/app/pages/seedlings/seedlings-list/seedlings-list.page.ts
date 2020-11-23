@@ -1,6 +1,8 @@
 import { Component, OnInit } from '@angular/core';
 import { error } from 'protractor';
 import { Seedling } from 'src/app/interfaces/seedling';
+import { AuthService } from 'src/app/services/auth.service';
+import { RefreshService } from 'src/app/services/refresh.service';
 import { SeedlingsService } from 'src/app/services/seedlings.service';
 
 @Component({
@@ -9,12 +11,33 @@ import { SeedlingsService } from 'src/app/services/seedlings.service';
   styleUrls: ['./seedlings-list.page.scss'],
 })
 export class SeedlingsListPage implements OnInit {
+  admin:boolean = false;
 
   seedlings:Seedling[] = [];
-  constructor(public apiService:SeedlingsService) { }
+  constructor(private apiService:SeedlingsService,
+              private refreshService: RefreshService,
+              private authService: AuthService) { }
 
   ngOnInit() {
     this.getSeedlings();
+    this.loadUser()
+    this.refreshService.refresh.subscribe(
+      (res:string)=>{
+        if (res === "seedlings") {
+          this.getSeedlings()
+        }
+      }
+    )
+  }
+
+  loadUser(){
+    this.authService.getUser().subscribe(
+      user=>{
+        if (user && user.roles[0].id === 1) {
+          this.admin = true;
+        }
+      }
+    )
   }
 
   getSeedlings() {
@@ -25,7 +48,6 @@ export class SeedlingsListPage implements OnInit {
   }
 
   handleResponse(response) {
-    console.log(response.seedlings);
     this.seedlings = response.seedlings;
   }
   

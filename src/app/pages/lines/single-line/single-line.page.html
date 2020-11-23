@@ -4,12 +4,20 @@
     <ion-buttons slot="start">
       <ion-back-button [defaultHref]="'/tabs'" ></ion-back-button>
     </ion-buttons>
+    <ion-buttons slot="end" *ngIf="admin" >
+      <ion-button (click)="presentActionSheet()">
+        <ion-icon slot="icon-only" name="ellipsis-vertical"></ion-icon>
+      </ion-button>
+    </ion-buttons>
   </ion-toolbar>
 </ion-header>
 
 <ion-content>
   <div class="container_single">
-    <ion-text color="primary">
+    <ion-text color="primary " >
+      <h4 class="ion-margin-start" >{{ line.name }}</h4>
+      <small class="ion-margin-start">{{ line.created_at|date }}</small>
+      <p color="secondary"><b>Grupo de investigación: </b> {{ line.group?.name }}</p>
     </ion-text>
     <p>{{ line.description }}</p>
   </div>

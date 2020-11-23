@@ -12,7 +12,6 @@ export class GroupComponent implements OnInit {
   constructor() { }
 
   ngOnInit() {
-    console.log('propiedad1 ' + this.group);
   }
 
 }

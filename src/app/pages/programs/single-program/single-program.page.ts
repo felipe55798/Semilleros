@@ -1,68 +1,79 @@
-import { ActionSheetController, AlertController, NavController, ToastController } from '@ionic/angular';
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
-import { Publication } from 'src/app/interfaces/publication';
-import { PublicationService } from 'src/app/services/publication.service';
-
-import { InAppBrowser } from '@ionic-native/in-app-browser/ngx';
+import { LoadingController, ActionSheetController, NavController, ToastController, AlertController } from '@ionic/angular';
+import { Program } from 'src/app/interfaces/program';
 import { AuthService } from 'src/app/services/auth.service';
+import { ProgramService } from 'src/app/services/program.service';
 import { RefreshService } from 'src/app/services/refresh.service';
 
-
 @Component({
-  selector: 'app-single-publication',
-  templateUrl: './single-publication.page.html',
-  styleUrls: ['./single-publication.page.scss'],
+  selector: 'app-single-program',
+  templateUrl: './single-program.page.html',
+  styleUrls: ['./single-program.page.scss'],
 })
-export class SinglePublicationPage implements OnInit {
+export class SingleProgramPage implements OnInit {
 
-  id: string;
-  publication:Publication = {};
-  canEdit:boolean = false;
+  program: Program = {};
+  admin:boolean = false;
   constructor(private route: ActivatedRoute,
-              private publicationService: PublicationService,
-              private iab: InAppBrowser, 
+              private programService: ProgramService,
+              private loadingController: LoadingController,
               private authService: AuthService,
               private actionSheetController: ActionSheetController,
               private navCtrl: NavController,
-              private alertController: AlertController,
               private toastCtrl: ToastController,
+              private alertController: AlertController,
               private refreshService: RefreshService) { }
 
   ngOnInit() {
-    this.id = this.route.snapshot.paramMap.get('id');
-    this.getPublication();
-    this.loadUser()
+    let id = this.route.snapshot.paramMap.get('id');
+    this.getProgram(id);
+    this.loadUser();
   }
 
   loadUser(){
     this.authService.getUser().subscribe(
       user=>{
-        if (user && (user.roles[0].id == 2 || user.roles[0].id == 3)) {
-          this.canEdit = true;
+        if (user && user.roles[0].id === 1) {
+          this.admin = true;
         }
       }
     )
   }
 
-  getPublication() {
-    return this.publicationService.getPublication(this.id).subscribe(
-      res => this.handleResponse(res),
-      err => this.handleError(err)
-    );
+  async getProgram(id){
+    const loading = await this.loadingController.create({
+      message:'Cargando información',
+      spinner:'crescent',
+      animated:true,
+      duration: 2000,
+      mode:'ios'
+    })
+    loading.present()
+    this.programService.getProgram(id).subscribe(
+      res=>this.handleResponse(res,loading),
+      err=>this.handleError(err,loading)
+    )
   }
 
-  handleResponse(response) {
-    this.publication = response.publication;
-  }
-  
-  handleError(error: any) {
-    console.error(error);
+  async handleResponse(res,loading){
+    await loading.onDidDismiss()
+    this.program = res.program;
   }
 
-  openLink(){
-    const browser = this.iab.create(this.publication.link);
-    browser.show();
+  async handleError(err,loading){
+    await loading.onDidDismiss()
+    if (err.status === 404) {
+      const toast = await this.toastCtrl.create({
+        header:'Error',
+        message: 'Registro no encontrado',
+        duration:3000,
+        color:'danger',
+      })
+      toast.present();
+
+      this.navCtrl.navigateForward('/home/programs');
+    }
   }
 
   async presentActionSheet() {
@@ -81,7 +92,7 @@ export class SinglePublicationPage implements OnInit {
         text: 'Editar información',
         icon: 'create',
         handler: () => {
-          this.navCtrl.navigateForward(`/home/publications/edit/${this.publication.id}`)
+          this.navCtrl.navigateForward(`/home/programs/edit/${this.program.id}`)
         }
       },{
         text: 'Cancelar',
@@ -96,7 +107,7 @@ export class SinglePublicationPage implements OnInit {
     const alert = await this.alertController.create({
       cssClass: 'my-custom-class',
       header: 'Confirme su acción',
-      message: 'Esta acción no se puede deshacer, ¿Seguro que desea eliminar esta publicación?',
+      message: 'Esta acción no se puede deshacer, ¿Seguro que desea eliminar este programa académico?',
       buttons: [
         {
           text: 'Cancelar',
@@ -106,7 +117,7 @@ export class SinglePublicationPage implements OnInit {
           text: 'Sí, eliminar',
           cssClass:'danger_text',
           handler: () => {
-            this.publicationService.destroy(this.publication.id).subscribe(
+            this.programService.destroy(this.program.id).subscribe(
             res=>this.handleResponseDelete(res),
             err=>this.handleErrorDelete(err)
           )
@@ -126,8 +137,8 @@ export class SinglePublicationPage implements OnInit {
       duration:3000
     })
     toast.present()
-    this.refreshService.throwEvent('publications');
-    this.navCtrl.navigateRoot('/tabs/tab1')
+    this.refreshService.throwEvent('programs');
+    this.navCtrl.navigateRoot('/home/programs')
   }
 
   async handleErrorDelete(err){

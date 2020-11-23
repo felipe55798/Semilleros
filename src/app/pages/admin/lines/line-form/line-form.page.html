@@ -3,7 +3,7 @@
     <ion-buttons slot="start">
       <ion-back-button [defaultHref]="'/tabs'"></ion-back-button>
     </ion-buttons>
-    <ion-title>Agregar Linea de investigación</ion-title>
+    <ion-title>{{ toEdit ? 'Editar ' : 'Agregar ' }} Linea de investigación</ion-title>
   </ion-toolbar>
 </ion-header>
 
@@ -14,7 +14,7 @@
     </div>
     <ion-row>
       <ion-col size="12">
-        <form [formGroup]="line" (ngSubmit)="createLine()" >
+        <form [formGroup]="line" (ngSubmit)="toEdit ? updateLine() : createLine()" >
           <ion-item>
             <ion-icon slot="end" class="ion-align-self-center" name="pricetag"></ion-icon>
             <ion-label position="floating">Nombre</ion-label>
@@ -35,7 +35,7 @@
   
           <ion-item>
             <ion-label>Grupo</ion-label>
-            <ion-select formControlName="group_id"  [value]="groups[0]?.id" placeholder="Grupo de investigación">
+            <ion-select formControlName="group_id"  [value]="toEdit ? line.get('group_id').value : groups[0]?.id" placeholder="Grupo de investigación">
               <ion-select-option *ngFor="let group of groups"  [value]="group.id">{{ group.name }}</ion-select-option>
             </ion-select>
           </ion-item>
@@ -70,7 +70,7 @@
           </div>
           <ion-button type="submit" [disabled]="line.invalid" expand="block" >
             <span *ngIf="!sending" >
-              Crear linea de investigación
+              {{ toEdit ? 'Actualizar' : 'Crear' }} linea de investigación
             </span>
             <ion-spinner *ngIf="sending"  name="lines-small"></ion-spinner>
           </ion-button>

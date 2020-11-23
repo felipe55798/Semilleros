@@ -1,3 +1,4 @@
+import { Department } from './department';
 import { User } from './user';
 
 export interface Program {
@@ -7,5 +8,7 @@ export interface Program {
     department_id?:number,
     updated_at?: Date,
     created_at?: Date,
-    coordinator_id?:User
+    coordinator_id?:number,
+    coordinator?:User,
+    department?:Department
 }

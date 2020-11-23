@@ -52,7 +52,6 @@ export class SingleGroupPage implements OnInit {
   }
 
   handleResponse(response) {
-    console.log(response);
     this.group = response.group;
   }
   

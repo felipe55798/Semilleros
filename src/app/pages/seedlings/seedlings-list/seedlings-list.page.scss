@@ -1,0 +1,12 @@
+.container_button{
+    display: flex;
+    justify-content: center;
+    width: 100%;
+    a{
+        text-align: center;
+        border: 2px solid #1e91d4;
+        padding: 8px 6px;
+        border-radius: 15px;
+        text-decoration: none;
+    }
+}

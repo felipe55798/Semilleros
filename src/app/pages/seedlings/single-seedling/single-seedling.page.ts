@@ -4,6 +4,7 @@ import { ActionSheetController, AlertController, NavController, ToastController 
 import { Seedling } from 'src/app/interfaces/seedling';
 import { User } from 'src/app/interfaces/user';
 import { AuthService } from 'src/app/services/auth.service';
+import { RefreshService } from 'src/app/services/refresh.service';
 import { SeedlingUserService } from 'src/app/services/seedling-user.service';
 import { SeedlingsService } from 'src/app/services/seedlings.service';
 
@@ -16,7 +17,7 @@ export class SingleSeedlingPage implements OnInit {
 
   id: string;
   seedling:Seedling = {};
-  teachers:User[] = [];
+  teacher:User = {};
   students:User[] = [];
   pertenece:number = -1;
   loading:boolean = true;
@@ -33,7 +34,8 @@ export class SingleSeedlingPage implements OnInit {
               private toastController : ToastController,
               private actionSheetController: ActionSheetController,
               private navCtrl:NavController,
-              private toastCtrl:ToastController
+              private toastCtrl:ToastController,
+              private refreshService: RefreshService
   ) { }
 
   ngOnInit() {
@@ -114,7 +116,7 @@ export class SingleSeedlingPage implements OnInit {
       duration:3000
     })
     toast.present()
-
+    this.refreshService.throwEvent('seedlings');
     this.navCtrl.navigateRoot('/home/seedlings')
   }
 
@@ -131,14 +133,13 @@ export class SingleSeedlingPage implements OnInit {
 
   handleResponse(response) {
     this.seedling = response.seedling;
-    this.teachers = response.teachers;
+    this.teacher = response.teacher;
     this.students = response.students;
 
     this.authService.getUser().subscribe(
       res=>{
         if (res) {
           if (res.roles[0].id === 4) {
-            console.log('Datos: ', this.seedling.id, 'seedlings', res.seedlings.length);
             let seedl =res.seedlings.find(seedling=>{
               return seedling.id === this.seedling.id;
             })
@@ -157,16 +158,24 @@ export class SingleSeedlingPage implements OnInit {
     )
   }
   
-  handleError(error: any) {
-    console.error(error);
+  async handleError(error: any) {
+    if (error.status === 404) {
+      const toast = await this.toastCtrl.create({
+        message:'Registro no encontrado',
+        header:'Error',
+        duration:2000,
+        position:'top',
+        color:'danger'
+      })
+      toast.present();
+      this.navCtrl.navigateForward('/home/seedlings');
+    }
   }
 
   participar(){
     this.authService.getUser().subscribe(
       async res=>{
         if (res) {
-          console.log('Entre aqui');
-          
           const alert = await this.alertController.create({
             cssClass: 'my-custom-class',
             header: 'Confirmar',

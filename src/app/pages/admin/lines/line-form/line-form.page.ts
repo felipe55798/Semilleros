@@ -1,13 +1,14 @@
 import { Group } from './../../../../interfaces/group';
 import { Component, OnInit } from '@angular/core';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
-import { NavController, ToastController } from '@ionic/angular';
+import { LoadingController, NavController, ToastController } from '@ionic/angular';
 import { Department } from 'src/app/interfaces/department';
 import { Line } from 'src/app/interfaces/line';
 import { DepartmentService } from 'src/app/services/departments.service';
 import { LinesService } from 'src/app/services/lines.service';
 import { GroupsService } from 'src/app/services/groups.service';
 import { RefreshService } from 'src/app/services/refresh.service';
+import { ActivatedRoute, ActivatedRouteSnapshot } from '@angular/router';
 
 @Component({
   selector: 'app-line-form',
@@ -34,8 +35,12 @@ export class LineFormPage implements OnInit {
   line = new FormGroup({
     name: new FormControl('', Validators.required),
     group_id: new FormControl('', Validators.required),
-    description: new FormControl('',Validators.required)
+    description: new FormControl('',Validators.required),
+    id: new FormControl('')
   })
+
+  toEdit:boolean = false;
+  lineToEdit:Line = {};
 
   sending:boolean = false;
 
@@ -45,10 +50,60 @@ export class LineFormPage implements OnInit {
               private lineService:LinesService,
               private toastCtrl:ToastController,
               private navCtrl:NavController,
-              private refreshService: RefreshService) { }
+              private refreshService: RefreshService,
+              private route: ActivatedRoute,
+              private loadingController: LoadingController) { }
 
   ngOnInit() {
     this.getGroups()
+    let id = this.route.snapshot.paramMap.get('id');
+    if (id) {
+      this.loadInfoLine(id)
+    }
+  }
+
+  async loadInfoLine(id){
+    const loading = await this.loadingController.create({
+      cssClass: 'my-custom-class',
+      message: 'Cargando información...',
+      duration: 2000
+    });
+    await loading.present();
+    this.lineService.getLine(id).subscribe(
+      res=>this.handleResponseLoad(res,loading),
+      err=>this.handleErrorLoad(err,loading)
+    )
+  }
+
+
+  async handleResponseLoad(res,loading){
+    const { role, data } = await loading.onDidDismiss();
+    const { id,name,group_id,description } = res.line;
+    this.lineToEdit = res.line;
+    const lineLoaded = {
+      id,
+      name,
+      group_id,
+      description
+    }
+    this.line.setValue(lineLoaded);
+    this.toEdit = true;
+
+  }
+
+  async handleErrorLoad(err,loading){
+    const { role, data } = await loading.onDidDismiss();
+    if (err.status === 404) {
+      this.navCtrl.navigateForward('/home/lines');
+      const toast = await this.toastCtrl.create({
+        header:err.statusText,
+        message:'Registro no encontrado',
+        color:'danger',
+        position:'top',
+        duration:2000
+      })
+      toast.present()
+    }
   }
 
   getGroups(){
@@ -86,7 +141,7 @@ export class LineFormPage implements OnInit {
     toast.present();
     this.line.reset();
     this.refreshService.throwEvent('lines');
-    this.navCtrl.navigateRoot('/tabs/tab1');
+    this.navCtrl.navigateRoot('/home/lines');
   }
 
   async handleErrorCreate(err){
@@ -98,6 +153,40 @@ export class LineFormPage implements OnInit {
         message: err.message,
         duration: 2000,
         color:'success'
+      });
+      toast.present();
+    }
+  }
+
+  updateLine(){
+    this.sending = true;
+    this.lineService.update(this.lineToEdit.id,this.line.value).subscribe(
+      res=>this.handleResponseUpdate(res),
+      err=>this.handleErrorResponse(err)
+    )
+  }
+
+  async handleResponseUpdate(res){
+    this.sending = false;
+    const toast = await this.toastCtrl.create({
+      message: res.message,
+      duration: 2000,
+      color:'success'
+    });
+    toast.present();
+    this.refreshService.throwEvent('lines');
+    this.navCtrl.navigateForward('/home/lines')
+  }
+
+  async handleErrorResponse(err){
+    this.sending =false;
+    if (err.status === 422) {
+      this.error_unprocesable = err.error.errors;
+    }else{
+      const toast = await this.toastCtrl.create({
+        message: err.message,
+        duration: 2000,
+        color:'danger'
       });
       toast.present();
     }

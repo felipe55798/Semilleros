@@ -12,7 +12,5 @@ export class OneGroupComponent implements OnInit {
   @Input() imgVisible:boolean = true;
   constructor() { }
 
-  ngOnInit() {
-    console.log('propiedad1 ' + this.group);
-  }
+  ngOnInit() {}
 }

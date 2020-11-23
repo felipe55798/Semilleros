@@ -28,9 +28,7 @@ export class SingleUserPage implements OnInit {
   }
 
   handleResponse(response) {
-    console.log(response.user);
     this.user = response.user;
-    console.log('The USER name is: ' + this.user);
   }
   
   handleError(error: any) {

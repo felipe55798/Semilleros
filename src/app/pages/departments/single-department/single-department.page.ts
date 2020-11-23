@@ -49,7 +49,6 @@ export class SingleDepartmentPage implements OnInit {
   }
 
   handleResponse(response) {
-    console.log(response);
     this.department = response.department;
   }
   

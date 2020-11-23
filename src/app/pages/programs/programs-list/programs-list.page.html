@@ -1,9 +1,24 @@
 <ion-header>
-  <ion-toolbar>
-    <ion-title>programs-list</ion-title>
+  <ion-toolbar color="warning">
+    <ion-title>Programas académicos</ion-title>
+    <ion-buttons slot="start">
+      <ion-back-button [defaultHref]="'/tabs'"></ion-back-button>
+    </ion-buttons>
   </ion-toolbar>
 </ion-header>
 
 <ion-content>
-
+  <ion-grid fixed>
+    <ion-row>
+      <ion-col size="12">
+        <app-one-program *ngFor="let program of programs"  [program]="program"></app-one-program>
+        <app-empty [title_message]="'No hay programas académicos'" *ngIf="programs.length === 0" ></app-empty>
+        <div class="container_button">
+          <a *ngIf="admin && programs.length === 0"  routerLink="/home/programs/add" >
+            Agregar programa académico
+          </a>
+        </div>
+      </ion-col>
+    </ion-row>
+  </ion-grid>
 </ion-content>

@@ -53,10 +53,8 @@
 
           <ion-item *ngIf="loggedUser" >
             <ion-label>Grupo</ion-label>
-            <ion-select formControlName="group_id"  
-            [value]="toEdit ? publication.get('group_id').value : loggedUser.seedlings[0].group_id" 
-            placeholder="Grupo de investigación">
-              <ion-select-option *ngFor="let seedling of loggedUser.seedlings"  [value]="seedling.group_id">{{ seedling.group.name }}</ion-select-option>
+            <ion-select formControlName="group_id" [value]="toEdit ? publication.get('group_id').value : loggedUser.groups[0]?.id" placeholder="Grupo de investigación">
+              <ion-select-option *ngFor="let group of loggedUser.groups"  [value]="group.id">{{ group.name }}</ion-select-option>
             </ion-select>
           </ion-item>
           <div class="error-message error_custom" *ngIf="error_unprocesable.group_id" >

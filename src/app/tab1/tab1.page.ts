@@ -43,11 +43,13 @@ export class Tab1Page{
       this.loading = false;
       if (res) {
         this.loggedUser = res;
+        console.log(this.loggedUser);
+        
         if (this.loggedUser.roles[0].id === 1) {
           this.admin = true;
         }else{
           if (this.loggedUser.roles[0].id !== 4) {
-            if (this.loggedUser.seedlings.length > 0) {
+            if (this.loggedUser.assigned_seedlings.length > 0) {
               this.encargado = true;
             }
           }

@@ -23,9 +23,7 @@ export class UserComponent implements OnInit {
               private toastCtrl: ToastController,
               private alertController: AlertController) { }
 
-  ngOnInit() {
-    console.log(this.user);
-  } 
+  ngOnInit() {} 
 
   aceptar() {
     let data = {
@@ -56,7 +54,6 @@ export class UserComponent implements OnInit {
  
   handleResponse(response) {
     this.user = null;
-    console.log('Cualquier cosa');
     this.update.emit(true);
     this.sending = false;
     this.showMessage(response.message, 'success');

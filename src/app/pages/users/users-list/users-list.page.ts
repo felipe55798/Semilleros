@@ -49,7 +49,6 @@ export class UsersListPage implements OnInit {
             if (res.roles[0].id === 3 || res.roles[0].id === 2) {
               this.specific = true;
               this.seedlings = res.assigned_seedlings;
-              console.log(this.seedlings);
             }
           }
         }
@@ -58,7 +57,6 @@ export class UsersListPage implements OnInit {
   }
 
   handleResponse(response) {
-    console.log(response);
     this.teachers = response.teachers;
   }
   

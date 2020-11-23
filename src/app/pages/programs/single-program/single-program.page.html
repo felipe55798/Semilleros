@@ -1,0 +1,32 @@
+<ion-header>
+  <ion-toolbar color="warning">
+    <ion-title>{{ program?.name }}</ion-title>
+    <ion-buttons slot="start">
+      <ion-back-button [defaultHref]="'/tabs'"></ion-back-button>
+    </ion-buttons>
+    <ion-buttons slot="end" *ngIf="admin" >
+      <ion-button (click)="presentActionSheet()">
+        <ion-icon slot="icon-only" name="ellipsis-vertical"></ion-icon>
+      </ion-button>
+    </ion-buttons>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content>
+  <img src="assets/images/fondo-3.jpg" alt="">
+  <ion-grid fixed>
+    <ion-row>
+      <ion-col size="12">
+        <ion-text color="primary">
+          <h2>{{ program.name }}</h2>
+          <small>{{ program.created_at|date }}</small>
+        </ion-text>
+        <p><b>Coordinador:</b>  <span style="color: gray;">{{ program.coordinator?.name }} {{ program.coordinator?.lastname }}</span></p>
+        <p><b>Departamento académico:</b>  <span style="color: gray;">{{ program.department?.name }}</span> </p>
+        <ion-text style="color: gray;">
+          <p>{{ program.description }}</p>
+        </ion-text>
+      </ion-col>
+    </ion-row>
+  </ion-grid>
+</ion-content>

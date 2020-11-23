@@ -149,6 +149,20 @@ const routes: Routes = [
       {
         path: ':id',
         loadChildren: () => import('./lines/single-line/single-line.module').then( m => m.SingleLinePageModule)
+      },
+      {
+        path:'edit/:id',
+        canActivate:[CheckTokenGuard],
+        children:[
+          {
+            path:'',
+            canActivate:[CheckRoleGuard],
+            data:{
+              role: 1
+            },
+            loadChildren: () => import('./admin/lines/line-form/line-form.module').then( m => m.LineFormPageModule)
+          }
+        ]
       }
     ]
   },
@@ -173,6 +187,34 @@ const routes: Routes = [
         path:'',
         canActivate:[CheckTokenGuard],
         loadChildren: () => import('./programs/programs-list/programs-list.module').then( m => m.ProgramsListPageModule),
+      },
+      {
+        path:':id',
+        canActivate:[CheckTokenGuard],
+        children:[
+          {
+            path:'',
+            canActivate:[CheckRoleGuard],
+            data:{
+              role: 1
+            },
+            loadChildren: () => import('./programs/single-program/single-program.module').then( m => m.SingleProgramPageModule)
+          }
+        ]
+      },
+      {
+        path:'edit/:id',
+        canActivate:[CheckTokenGuard],
+        children:[
+          {
+            path:'',
+            canActivate:[CheckRoleGuard],
+            data:{
+              role: 1
+            },
+            loadChildren: ()=>import('./admin/programs/form-program/form-program.module').then(m => m.FormProgramPageModule)
+          }
+        ]
       }
     ]
   },
@@ -225,6 +267,21 @@ const routes: Routes = [
       {
         path: ':id',
         loadChildren: () => import('./publications/single-publication/single-publication.module').then( m => m.SinglePublicationPageModule)
+      },
+      {
+        path:'edit/:id',
+        canActivate:[CheckTokenGuard],
+        children:[
+          {
+            path:'',
+            canActivate:[CheckRoleGuard],
+            data:{
+              role: 2,
+              role2: 3
+            },
+            loadChildren: () => import('./publications/form-publication/form-publication.module').then(m=>m.FormPublicationPageModule)
+          }
+        ]
       }
     ]
   },
@@ -241,7 +298,8 @@ const routes: Routes = [
     path:'',
     pathMatch: 'full',
     redirectTo:'groups'
-  }
+  },
+
 ];
 
 @NgModule({

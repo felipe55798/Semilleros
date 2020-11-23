@@ -17,4 +17,16 @@ export class ProgramService {
   createService(program){
     return this.http.post(`${url}`,program);
   }
+
+  getProgram(id){
+    return this.http.get(`${url}/${id}`);
+  }
+
+  destroy(id){
+    return this.http.delete(`${url}/${id}`);
+  }
+
+  update(program_id,program){
+    return this.http.put(`${url}/${program_id}`,program);
+  }
 }

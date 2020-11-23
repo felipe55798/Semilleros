@@ -13,7 +13,6 @@ export class SeedlingComponent implements OnInit {
   constructor() { }
 
   ngOnInit() {
-    console.log('propiedad Seedling: ' + this.seedling);
   }
 
 }

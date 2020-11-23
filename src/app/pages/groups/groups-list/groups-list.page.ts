@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { error } from 'protractor';
+import { RefreshService } from 'src/app/services/refresh.service';
 import { Group } from '../../../interfaces/group';
 import { GroupsService } from '../../../services/groups.service';
 
@@ -11,10 +12,18 @@ import { GroupsService } from '../../../services/groups.service';
 export class GroupsListPage implements OnInit {
 
   groups:Group[] = [];
-  constructor(public apiService: GroupsService) { }
+  constructor(public apiService: GroupsService,
+              private refreshService: RefreshService) { }
 
   ngOnInit() {
     this.getGroups();
+    this.refreshService.refresh.subscribe(
+      (res:string)=>{
+        if (res === "groups") {
+          this.getGroups()
+        }
+      }
+    )
   }
 
   getGroups() {
@@ -25,7 +34,6 @@ export class GroupsListPage implements OnInit {
   }
 
   handleResponse(response) {
-    console.log(response.groups);
     this.groups = response.groups;
   }
   
