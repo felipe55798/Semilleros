@@ -32,13 +32,7 @@ export class CheckTokenService implements HttpInterceptor{
                     this.authService.setToken(response.access_token,response.refresh_token);
                     this.refreshTokenInProgress = false;
                     this.refreshTokenSubject.next(authresponse['access_token']);
-
-                    return next.handle(this.injectToken(requ))
-                  }),
-                  catchError(err=>{
-                    this.refreshTokenInProgress = false;
-                    this.authService.logout('expired');
-
+                    
                     return next.handle(this.injectToken(requ))
                   })
                 )
