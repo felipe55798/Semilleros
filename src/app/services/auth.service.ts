@@ -59,34 +59,32 @@ export class AuthService {
   }
 
   refreshToken(tokenObj){
-    return this.http.post(`${url}/refresh`,tokenObj).pipe(
-      catchError(error => {
-        console.log('Entré al cache error');
-        return throwError(error);
-      })
-    );
+    return this.http.post(`${url}/refresh`,tokenObj);
   }
 
   async setToken(token:string,refresh_token:string){
+    this.token = token;
     await this.storage.set('token',token);
     await this.storage.set('refresh_token',refresh_token)
   }
 
-  async logout(interceptor?:string){
-    this.http.get(`${url}/logout`).subscribe(
-      async (res:any) => {
-        const toast = await this.toastCtrl.create({
-          message: res.message,
-          duration: 2000,
-          color:'secondary'
-        });
-        toast.present();
-      },
-      (error => {
-        this.checkToken();
-        return throwError(error);
-      })
-    );
+  async logout(interceptor?:string, valid = true){
+    if (valid) {
+      this.http.get(`${url}/logout`).subscribe(
+        async (res:any) => {
+          const toast = await this.toastCtrl.create({
+            message: res.message,
+            duration: 2000,
+            color:'secondary'
+          });
+          toast.present();
+        },
+        (error => {
+          this.checkToken();
+          return throwError(error);
+        })
+      );
+    }
     this.user = null;
     this.token = null;
     await this.storage.clear()

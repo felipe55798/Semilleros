@@ -32,7 +32,7 @@
         <ion-text color="warning">
           <h3>{{ user.program ? 'Programa académico' : 'Departamento Académico'}}</h3>
         </ion-text>
-        <h4>{{ user.program ? user.program.name : user.department.name }}</h4>
+        <h4>{{ user.program ? user.program.name : user.department ? user.department.name : '' }}</h4>
       </ion-text>
     </ion-card>
   </div>

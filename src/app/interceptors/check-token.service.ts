@@ -32,8 +32,21 @@ export class CheckTokenService implements HttpInterceptor{
                     this.authService.setToken(response.access_token,response.refresh_token);
                     this.refreshTokenInProgress = false;
                     this.refreshTokenSubject.next(authresponse['access_token']);
-                    
-                    return next.handle(this.injectToken(requ))
+
+                    let reqClone = requ.clone({
+                      setHeaders:{
+                        Authorization: `Bearer ${response.access_token}`
+                      }
+                    })
+
+                    return next.handle(reqClone)   
+                  }),
+                  catchError(err=>{
+                    this.refreshTokenInProgress = true;
+                    this.refreshTokenSubject.next(null);
+                    this.authService.logout('expired',false)
+
+                    return throwError(err);
                   })
                 )
 
@@ -45,17 +58,22 @@ export class CheckTokenService implements HttpInterceptor{
               filter(result => result !== null),
               take(1),
               switchMap((res)=>{
-                return next.handle(this.injectToken(requ))
+                let newReq = requ.clone({
+                  setHeaders:{
+                    Authorization: `Bearer ${res}`
+                  }
+                })
+                return next.handle(newReq)
               })
             )
           }
         }else{
           if (error.status === 401 && error.error.code === "invalid_token") {
-            this.authService.logout('invalid')
+            this.authService.logout('invalid',false)
             return throwError(err)
           }else{
             if (err.status === 404 && error.error.err === 'token_not_found') {
-              this.authService.logout('notfound');
+              this.authService.logout('notfound',false);
               return throwError(err)
             }
           }
@@ -71,19 +89,6 @@ export class CheckTokenService implements HttpInterceptor{
 
   getRefreshToken():Observable<String>{
     return from(this.storage.get('refresh_token'))
-  }
-
-
-  injectToken(request:HttpRequest<any>):any{
-    return this.getToken().pipe(
-      map((res)=>{
-        return request.clone({
-          setHeaders: {
-            Authorization: `Bearer ${res}`
-          }
-      });
-      })
-    )
   }
   
 }
