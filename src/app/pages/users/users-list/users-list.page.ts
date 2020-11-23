@@ -5,6 +5,7 @@ import { User } from 'src/app/interfaces/user';
 import { UserService } from 'src/app/services/user.service';
 import { AuthService } from 'src/app/services/auth.service';
 import { Seedling } from 'src/app/interfaces/seedling';
+import { RefreshService } from 'src/app/services/refresh.service';
 
 @Component({
   selector: 'app-users-list',
@@ -19,11 +20,16 @@ export class UsersListPage implements OnInit {
   specific:boolean = false;
   constructor(private route: ActivatedRoute,
     private authService: AuthService,
-    private userService: UserService) { }
+    private userService: UserService,
+    private refreshService: RefreshService) { }
 
   ngOnInit() {
     this.getTeachersList();
+    this.refreshUser();
     this.getUserInfo();
+    this.refreshService.updated.subscribe(
+      res => this.getUserInfo()
+    )
   }
 
   getTeachersList(){
@@ -36,17 +42,14 @@ export class UsersListPage implements OnInit {
   getUserInfo(){
     this.authService.getUser().subscribe(
       res => {
-        console.log(res);
-        
         if (res) {
           if (res.roles[0].id === 1) {
             this.admin = true;
-            console.log('Entro a Admin');
           }else{
             if (res.roles[0].id === 3 || res.roles[0].id === 2) {
               this.specific = true;
               this.seedlings = res.assigned_seedlings;
-              console.log('Entro a especificos', this.seedlings);
+              console.log(this.seedlings);
             }
           }
         }
@@ -64,7 +67,12 @@ export class UsersListPage implements OnInit {
   }
 
   refreshUser() {
+    this.authService.refreshUser();
+  }
 
+  doRefresh(event){
+    this.refreshUser();
+    event.target.complete()
   }
 
 }
