@@ -5,6 +5,7 @@ import { Program } from 'src/app/interfaces/program';
 import { User } from 'src/app/interfaces/user';
 import { AuthService } from 'src/app/services/auth.service';
 import { ProgramService } from 'src/app/services/program.service';
+import { RefreshService } from 'src/app/services/refresh.service';
 import { UserService } from 'src/app/services/user.service';
 
 @Component({
@@ -59,7 +60,8 @@ export class ProfileComponent implements OnInit {
     private userService: UserService,
     private navCtrl:NavController,
     private toastController: ToastController,
-    private programService: ProgramService) { }
+    private programService: ProgramService,
+    private refreshService: RefreshService) { }
 
   ngOnInit() {
     this.getPrograms();
@@ -99,9 +101,9 @@ export class ProfileComponent implements OnInit {
   }
 
   async handleResponse(data){
-    await this.authService.refreshUser();
     this.sending = false;
-    this.navCtrl.navigateForward('/tabs/tab3');
+    this.authService.refreshUser();
+    this.navCtrl.navigateRoot('/tabs/tab3');
     this.alertError(data.message, 'success', 'Hecho');
   }
 

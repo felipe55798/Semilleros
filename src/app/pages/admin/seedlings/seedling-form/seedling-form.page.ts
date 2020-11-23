@@ -1,10 +1,12 @@
 import { Component, OnInit } from '@angular/core';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
-import { NavController, ToastController } from '@ionic/angular';
+import { ActivatedRoute } from '@angular/router';
+import { LoadingController, NavController, ToastController } from '@ionic/angular';
 import { Group } from 'src/app/interfaces/group';
 import { Seedling } from 'src/app/interfaces/seedling';
 import { User } from 'src/app/interfaces/user';
 import { GroupsService } from 'src/app/services/groups.service';
+import { RefreshService } from 'src/app/services/refresh.service';
 import { SeedlingsService } from 'src/app/services/seedlings.service';
 import { UserService } from 'src/app/services/user.service';
 
@@ -36,24 +38,76 @@ export class SeedlingFormPage implements OnInit {
     ],
   } 
 
+  seedlingToEdit:Seedling = {};
+
+  toEdit:boolean = false;
+
   sending:boolean = false;
 
   seedling = new FormGroup({
     name: new FormControl('',Validators.required),
     description: new FormControl('',Validators.required),
     group_id: new FormControl('',Validators.required),
-    teacher_id: new FormControl('',Validators.required)
+    teacher_id: new FormControl('',Validators.required),
+    id: new FormControl('')
   })
 
   constructor(private groupService:GroupsService,
               private seedLingService:SeedlingsService,
               private toastCtrl: ToastController,
               private navCtrl: NavController,
-              private userService: UserService) { }
+              private userService: UserService,
+              private refreshService: RefreshService,
+              private route: ActivatedRoute,
+              private loadingController: LoadingController,
+  ) { }
 
-  ngOnInit() {
+  async ngOnInit() {
     this.getGroups();
-    this.getTeachers()
+    this.getTeachers();
+
+    let id = this.route.snapshot.paramMap.get('id');
+    if (id) {
+      const loading = await this.loadingController.create({
+        cssClass: 'my-custom-class',
+        message: 'Cargando información...',
+        duration: 2000
+      });
+      await loading.present();
+      this.seedLingService.getSeedling(id).subscribe(
+        async (res:any)=>{
+          const { role, data } = await loading.onDidDismiss();
+
+          console.log(res);
+          
+          const { name,description,group_id,teacher_id, id } = res.seedling;
+          const seedling = {
+            name,
+            description,
+            group_id,
+            teacher_id,
+            id
+          }
+          this.seedlingToEdit = res.seedling;
+          this.seedling.setValue(seedling);
+          this.toEdit = true;
+        },
+        async err=>{
+          const { role, data } = await loading.onDidDismiss();
+          if (err.status === 404) {
+            this.navCtrl.navigateForward('/home/groups');
+            const toast = await this.toastCtrl.create({
+              header:err.statusText,
+              message:'Registro no encontrado',
+              color:'danger',
+              position:'top',
+              duration:2000
+            })
+            toast.present()
+          }
+        }
+      )
+    }
   }
 
   getTeachers(){
@@ -102,11 +156,9 @@ export class SeedlingFormPage implements OnInit {
       color:'success'
     });
     toast.present();
-    this.navCtrl.navigateForward('/home/seedlings',{
-      queryParams:{
-        refresh:true
-      }
-    })
+    this.seedling.reset();
+    this.refreshService.throwEvent('seedlings');
+    this.navCtrl.navigateRoot('/tabs/tab1');
   }
 
   async handleErrorCreate(err){
@@ -118,6 +170,43 @@ export class SeedlingFormPage implements OnInit {
         message: err.message,
         duration: 2000,
         color:'success'
+      });
+      toast.present();
+    }
+  }
+
+  updateSeedling(){
+    this.sending = true;
+    this.seedLingService.update(this.seedling.value,this.seedlingToEdit.id).subscribe(
+      res=>this.handleResponseUpdate(res),
+      err=>this.handleErrorUpdate(err)
+    )
+  }
+
+  async handleResponseUpdate(res){
+    this.sending = false;
+    const toast = await this.toastCtrl.create({
+      message: res.message,
+      duration: 2000,
+      color:'success'
+    });
+    toast.present();
+    this.navCtrl.navigateForward('/home/seedlings',{
+      queryParams:{
+        refresh:true
+      }
+    })
+  }
+
+  async handleErrorUpdate(err){
+    this.sending = false;
+    if (err.status === 422) {
+      this.error_unprocesable = err.error.errors;
+    }else{
+      const toast = await this.toastCtrl.create({
+        message: err.message,
+        duration: 2000,
+        color:'danger'
       });
       toast.present();
     }

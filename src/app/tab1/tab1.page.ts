@@ -12,7 +12,8 @@ export class Tab1Page{
   show = false;
   loggedUser:User = null;
   loading:boolean = true;
-
+  admin:boolean = false;
+  encargado:boolean = false;
   visibleButtonList:boolean = false;
   
   constructor(private authService:AuthService,
@@ -30,6 +31,8 @@ export class Tab1Page{
     this.authService.logoutEvent.subscribe(res=>{
       if (res) {
         this.loggedUser = null;
+        this.admin = false;
+        this.encargado = false;
       }
     })
 
@@ -40,6 +43,16 @@ export class Tab1Page{
       this.loading = false;
       if (res) {
         this.loggedUser = res;
+        if (this.loggedUser.roles[0].id === 1) {
+          this.admin = true;
+        }else{
+          if (this.loggedUser.roles[0].id !== 4) {
+            if (this.loggedUser.department_id) {
+              this.encargado = true;
+            }
+          }
+
+        }
       }
     })
   }

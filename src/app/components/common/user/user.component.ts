@@ -1,6 +1,7 @@
-import { Component, Input, OnInit } from '@angular/core';
+import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
 import { Observable } from 'rxjs';
 import { User } from 'src/app/interfaces/user';
+import { SeedlingUserService } from 'src/app/services/seedling-user.service';
 
 @Component({
   selector: 'app-user',
@@ -10,9 +11,34 @@ import { User } from 'src/app/interfaces/user';
 export class UserComponent implements OnInit {
 
   @Input() user:User = {};
-  constructor() { }
+  @Input() edit:boolean = true;
+  @Output() update = new EventEmitter<boolean>();
+  constructor(private seedling_user_service:SeedlingUserService) { }
 
   ngOnInit() {
-    console.log('Los datos que llegaron son: ' + this.user);
+    console.log(this.user);
   } 
+
+  aceptar() {
+    let data = {
+      seedling_user: this.user['pivot'].id,
+      status: 1
+    };
+    this.seedling_user_service.setStatus(data).subscribe(
+      res => this.handleResponse(res),
+      err => this.handleError(err)
+    );
+  }
+
+  rechazar() {
+  }
+
+  handleResponse(response) {
+    console.log(response);
+    this.update.emit(true);
+  }
+
+  handleError(error:any) {
+    console.error(error)
+  }
 }

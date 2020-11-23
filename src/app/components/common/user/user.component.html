@@ -1,18 +1,30 @@
-<a routerLink='/home/users/{{ user.id }}' class="a_dep_container">
-  <ion-card>
-    <ion-card-content class="ion-no-padding">
-      <ion-item>
-        <ion-avatar slot="start">
-          <img src="assets/images/user.svg">
-        </ion-avatar>
-        <div>
-          <ion-card-title>{{ user.name }} {{user.lastname}}</ion-card-title>
-          <div class="group_desc">
-            <h4>{{ user.program ? user.program.name : user.department.name }}</h4>
-            {{ user.email }}
-          </div>
-        </div>
-      </ion-item>
-    </ion-card-content>
-  </ion-card>
-</a>
+<ion-item-sliding [disabled] = "edit">
+  <ion-item class="ion-no-padding ion-no-margin">
+    <a routerLink='/home/users/{{ user.id }}' class="a_dep_container">
+      <ion-card>
+        <ion-card-content class="ion-no-padding">
+          <ion-item>
+            <ion-avatar slot="start">
+              <img src="assets/images/user.svg">
+            </ion-avatar>
+            <div>
+              <ion-card-title>{{ user.name }} {{user.lastname}}</ion-card-title>
+              <div class="group_desc">
+                <h4>{{ user.program ? user.program.name : user.department.name }}</h4>
+                {{ user.email }}
+              </div>
+            </div>
+          </ion-item>
+        </ion-card-content>
+      </ion-card>
+    </a>
+  </ion-item>
+  <ion-item-options side="end">
+    <ion-item-option (click)="aceptar()" color="primary">
+      <ion-icon slot="icon-only" name="checkmark-circle"></ion-icon>
+    </ion-item-option>
+    <ion-item-option (click)="rechazar()" color="danger">
+      <ion-icon slot="icon-only" name="close-circle"></ion-icon>
+    </ion-item-option>
+  </ion-item-options>
+</ion-item-sliding>

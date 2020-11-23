@@ -11,11 +11,15 @@ export class PublicationService {
 
   constructor(private http:HttpClient) { }
 
-  getPublications(){
-    return this.http.get(`${url}`);
+  getPublications(page:number){
+    return this.http.get(`${url}?page=${page+1}`);
   }
 
   getPublication(id) {
     return this.http.get(`${url}/${id}`);
+  }
+
+  createPublication(publication){
+    return this.http.post(`${url}`,publication);
   }
 }

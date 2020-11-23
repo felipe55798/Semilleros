@@ -4,7 +4,7 @@
       <ion-back-button [defaultHref]="'/'"></ion-back-button>
     </ion-buttons>
     <ion-title class="ion-text-center">
-      Agregar semillero
+      {{ toEdit ? 'Editar ' : 'Agregar' }} semillero
     </ion-title>
   </ion-toolbar>
 </ion-header>
@@ -16,7 +16,7 @@
     </div>
     <ion-row>
       <ion-col size="12">
-        <form [formGroup]="seedling" (ngSubmit)="addSeedling()" >
+        <form [formGroup]="seedling" (ngSubmit)="toEdit ? updateSeedling() : addSeedling()" >
           <ion-item>
             <ion-icon slot="end" class="ion-align-self-center" name="pricetag"></ion-icon>
             <ion-label position="floating">Nombre</ion-label>
@@ -36,7 +36,7 @@
           </div>
           <ion-item>
             <ion-label>Grupo</ion-label>
-            <ion-select formControlName="group_id" [value]="groups[0]?.id" placeholder="Grupo de investigación">
+            <ion-select formControlName="group_id" [value]="toEdit ? seedling.get('group_id').value : groups[0]?.id" placeholder="Grupo de investigación">
               <ion-select-option *ngFor="let group of groups"  [value]="group.id">{{ group.name }}</ion-select-option>
             </ion-select>
           </ion-item>
@@ -45,8 +45,8 @@
             {{ error_unprocesable.group_id[0] }}
           </div>
           <div class="validation-errors">
-            <ng-container *ngFor="let validation of validation_messages.description">
-              <div class="error-message" *ngIf="seedling.get('description').hasError(validation.type) && (seedling.get('description').dirty || seedling.get('description').touched)">
+            <ng-container *ngFor="let validation of validation_messages.group_id">
+              <div class="error-message" *ngIf="seedling.get('group_id').hasError(validation.type) && (seedling.get('group_id').dirty || seedling.get('group_id').touched)">
                 <ion-icon slot="start" name="information-circle-outline"></ion-icon>
                 {{ validation.message }}
               </div>
@@ -55,7 +55,7 @@
 
           <ion-item>
             <ion-label>Encargado</ion-label>
-            <ion-select formControlName="teacher_id" [value]="teachers[0]?.id" placeholder="Encargado del semillero">
+            <ion-select formControlName="teacher_id" [value]="toEdit ? seedling.get('teacher_id').value : teachers[0]?.id" placeholder="Encargado del semillero">
               <ion-select-option *ngFor="let teacher of teachers"  [value]="teacher.id">{{ teacher.name }}</ion-select-option>
             </ion-select>
           </ion-item>
@@ -92,7 +92,7 @@
 
           <ion-button type="submit" [disabled]="seedling.invalid" expand="block" >
             <span *ngIf="!sending" >
-              Crear semillero
+              {{ toEdit ? 'Editar ': 'Crear ' }} semillero
             </span>
             <ion-spinner *ngIf="sending"  name="lines-small"></ion-spinner>
           </ion-button>

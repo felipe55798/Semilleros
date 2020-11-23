@@ -1,8 +1,11 @@
 import { Component, OnInit } from '@angular/core';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { NavController, ToastController } from '@ionic/angular';
+import { Department } from 'src/app/interfaces/department';
 import { Role } from 'src/app/interfaces/role';
 import { User } from 'src/app/interfaces/user';
+import { DepartmentService } from 'src/app/services/departments.service';
+import { RefreshService } from 'src/app/services/refresh.service';
 import { RoleService } from 'src/app/services/role.service';
 import { UserService } from 'src/app/services/user.service';
 
@@ -35,6 +38,9 @@ export class UsersFormPage implements OnInit {
     ],
     'role_id':[
       { type: 'required', message: 'El programa acádemico es obligatorio.' },
+    ],
+    'department_id':[
+      { type: 'required', message: 'El departamento acádemico es obligatorio.' },
     ]
   }
 
@@ -50,21 +56,26 @@ export class UsersFormPage implements OnInit {
       Validators.minLength(8)
     ])),
     password_confirmation: new FormControl('',Validators.required),
-    role_id: new FormControl('',Validators.required)
+    role_id: new FormControl('',Validators.required),
+    department_id: new FormControl('',Validators.required)
   })
 
   roles:Role[] = [];
+  departments:Department[] = [];
 
   sending:boolean = false;
 
   constructor(private roleService:RoleService,
               private userService:UserService,
               private toastCtrl:ToastController,
-              private navCtrl:NavController
+              private navCtrl:NavController,
+              private refreshService: RefreshService,
+              private departmentService: DepartmentService
   ) { }
 
   ngOnInit() {
     this.getRoles();
+    this.getDepartments();
   }
 
   getRoles(){
@@ -81,6 +92,20 @@ export class UsersFormPage implements OnInit {
 
   handleError(err){
     this.sending = false;
+    console.log(err);
+  }
+
+  getDepartments(){
+    this.departmentService.getDepartmentsList().subscribe(
+      res=>this.handleResponseDepartments(res),
+      err=>this.handleErrorDepartments(err)
+    )
+  }
+  handleResponseDepartments(res){
+    this.departments = res.departments;
+  }
+
+  handleErrorDepartments(err){
     console.log(err);
   }
 
@@ -101,7 +126,9 @@ export class UsersFormPage implements OnInit {
       position:'top'
     });
     toast.present();
-    this.navCtrl.navigateForward('/tabs/tab1');
+    this.user.reset();
+    this.refreshService.throwEvent('users');
+    this.navCtrl.navigateRoot('/tabs/tab1');
   }
 
   async handleErrorCreate(err){

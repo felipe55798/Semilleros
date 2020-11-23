@@ -10,6 +10,6 @@
 <ion-content>
   <app-profile *ngIf="id === '1' && user" [loggedUser]='user'></app-profile>
   <div>
-    <app-update-password *ngIf="id === '2'"></app-update-password>
+    <app-update-password *ngIf="id === '2' && user" [loggedUser]='user'></app-update-password>
   </div>
 </ion-content>

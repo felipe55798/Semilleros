@@ -14,7 +14,7 @@ export class SeedlingUserService {
     return this.http.post(`${url}/seedlingUser`,seedlingUser);
   }
 
-  setStatus(seedlingUser,status) {
-    return this.http.put(`${url}/seedlingUser/${seedlingUser}`,status);
+  setStatus(seedlingUser) {
+    return this.http.put(`${url}/changeStatus`,seedlingUser);
   }
 }

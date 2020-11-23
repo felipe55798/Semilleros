@@ -1,8 +1,9 @@
 import { Component } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
-import { ActionSheetController, NavController, ViewWillEnter } from '@ionic/angular';
+import { ActionSheetController, LoadingController, NavController, ViewWillEnter } from '@ionic/angular';
 import { User } from '../interfaces/user';
 import { AuthService } from '../services/auth.service';
+import { RefreshService } from '../services/refresh.service';
 import { UserService } from '../services/user.service';
 
 @Component({
@@ -17,26 +18,35 @@ export class Tab3Page {
     public apiService: UserService,
     public authService: AuthService,
     public actionSheetController: ActionSheetController,
-    private navCtrl:NavController) { }
+    private navCtrl:NavController,
+    private refreshService: RefreshService,
+    private loadingController: LoadingController) { }
 
   ngOnInit() {    
     this.getUser();
+    this.refreshService.updated.subscribe(
+      async res => {
+        this.getUser();
+      }
+    );
+    console.log(this.user);
   }
 
-  getUser(){
+  async getUser(){
+    const loading = await this.loadingController.create({
+      cssClass: 'my-custom-class',
+      message: 'Cargando información...',
+      duration: 2000
+    });
+    await loading.present();
     this.authService.getUser().subscribe(
-      res => this.handleResponse(res),
-      err => this.handleError(err)
+      async res => {
+        this.user = res;
+        const { role, data } = await loading.onDidDismiss();
+      }
     );
   }
-
-  handleResponse(response) {
-    this.user = response;
-  }
   
-  handleError(error: any) {
-    console.log(error);
-  }
 
   async presentActionSheet() {
     const actionSheet = await this.actionSheetController.create({

@@ -3,6 +3,8 @@ import { ActivatedRoute } from '@angular/router';
 import { from } from 'rxjs';
 import { User } from 'src/app/interfaces/user';
 import { UserService } from 'src/app/services/user.service';
+import { AuthService } from 'src/app/services/auth.service';
+import { Seedling } from 'src/app/interfaces/seedling';
 
 @Component({
   selector: 'app-users-list',
@@ -12,27 +14,57 @@ import { UserService } from 'src/app/services/user.service';
 export class UsersListPage implements OnInit {
 
   teachers:User[] = [];
+  seedlings:Seedling[] = [];
+  admin:boolean = false;
+  specific:boolean = false;
   constructor(private route: ActivatedRoute,
-    private authService: UserService) { }
+    private authService: AuthService,
+    private userService: UserService) { }
 
   ngOnInit() {
     this.getTeachersList();
+    this.getUserInfo();
   }
 
   getTeachersList(){
-    return this.authService.getTeachers().subscribe(
+    this.userService.getTeachers().subscribe(
       res => this.handleResponse(res),
       err => this.handleError(err)
     );
   }
 
+  getUserInfo(){
+    this.authService.getUser().subscribe(
+      res => {
+        console.log(res);
+        
+        if (res) {
+          if (res.roles[0].id === 1) {
+            this.admin = true;
+            console.log('Entro a Admin');
+          }else{
+            if (res.roles[0].id === 3 || res.roles[0].id === 2) {
+              this.specific = true;
+              this.seedlings = res.assigned_seedlings;
+              console.log('Entro a especificos', this.seedlings);
+            }
+          }
+        }
+      }
+    )
+  }
+
   handleResponse(response) {
     console.log(response);
-    this.teachers = response;
+    this.teachers = response.teachers;
   }
   
   handleError(error: any) {
     console.error(error);
+  }
+
+  refreshUser() {
+
   }
 
 }

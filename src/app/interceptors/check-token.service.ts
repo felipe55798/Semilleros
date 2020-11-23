@@ -20,7 +20,6 @@ export class CheckTokenService implements HttpInterceptor{
       catchError((err)=>{
         const error = (typeof err.error !== 'object') ? JSON.parse(err.error) : err;
         if (error.status === 401 && error.error.code === "token_expired") {
-          
           if (!this.refreshTokenInProgress) {
             this.refreshTokenInProgress = true;
             this.refreshTokenSubject.next(null);
@@ -63,11 +62,10 @@ export class CheckTokenService implements HttpInterceptor{
           }else{
             if (err.status === 404 && error.error.err === 'token_not_found') {
               this.authService.logout('notfound');
-              return next.handle(this.injectToken(requ))
+              return throwError(err)
             }
           }
         }
-
         return throwError(err)
       })
     )

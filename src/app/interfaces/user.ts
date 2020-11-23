@@ -13,8 +13,10 @@ export interface User {
     password_confirmation?:string,
     roles?:Role[],
     seedlings?:Seedling[],
+    assigned_seedlings?:Seedling[],
     department?:Department,
     program?:Program,
     program_id?:number,
-    role_id?:number
+    role_id?:number,
+    department_id?:number
 }

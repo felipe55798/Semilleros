@@ -7,6 +7,7 @@ import { Storage } from '@ionic/storage';
 import { User } from '../interfaces/user';
 import { NavController, ToastController } from '@ionic/angular';
 import { from, Observable, throwError } from 'rxjs';
+import { RefreshService } from './refresh.service';
 
 
 const url = `${environment.url}/auth`;
@@ -25,7 +26,8 @@ export class AuthService {
   constructor(private http:HttpClient,
               private storage:Storage,
               private navCtrl:NavController,
-              private toastCtrl:ToastController) { }
+              private toastCtrl:ToastController,
+              private refreshService: RefreshService) { }
 
   login(data){
     return this.http.post(`${url}/login`,data).pipe(
@@ -75,10 +77,10 @@ export class AuthService {
 
       switch (interceptor) {
         case 'expired':
-          message: 'Su sesión ha expirado, por favor vuelve a iniciar sesión'    
+          message = 'Su sesión ha expirado, por favor vuelve a iniciar sesión'    
           break;
         default:
-          message: 'Algo ha salido mal con su sesión actual, por favor vuelva a iniciar sesión'    
+          message = 'Algo ha salido mal con su sesión actual, por favor vuelva a iniciar sesión'    
           break;
       }
       const toast = await this.toastCtrl.create({
@@ -143,6 +145,11 @@ export class AuthService {
         map(user=>{
           this.user = user['user']
           return user['user']
+        }),
+        catchError((err)=>{
+          return new Observable((observer)=>{
+            return observer.next(null)
+          })
         })
       )
     }
@@ -158,6 +165,11 @@ export class AuthService {
             map(user=>{
               this.user = user['user']
               return user['user']
+            }),
+            catchError((err)=>{
+              return new Observable((observer)=>{
+                return observer.next(null)
+              })
             })
           )
         }
@@ -169,9 +181,11 @@ export class AuthService {
     if (!this.token) {
       await this.loadToken();
     }
-    this.http.get(`${url}/me`).subscribe(
+    
+    await this.http.get(`${url}/me`).subscribe(
       (res => {
         this.user = res['user'];
+        this.refreshService.updatedUser();
       }),
       (error => {
         this.checkToken();

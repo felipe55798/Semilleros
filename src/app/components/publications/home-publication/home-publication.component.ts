@@ -2,6 +2,7 @@ import { Component, Input, OnInit } from '@angular/core';
 import { Publication } from 'src/app/interfaces/publication';
 import { User } from 'src/app/interfaces/user';
 import { PublicationService } from 'src/app/services/publication.service';
+import { RefreshService } from 'src/app/services/refresh.service';
 
 @Component({
   selector: 'app-home-publication',
@@ -16,27 +17,46 @@ export class HomePublicationComponent implements OnInit {
     freeMode:true,
     spaceBetween:-10
   };
+  
+  current_page = 0;
 
   loading:boolean = false;
   @Input() user:User = null;
   
-  constructor(private publicationService:PublicationService) { }
+  constructor(private publicationService:PublicationService,
+              private refreshService: RefreshService) { }
 
   ngOnInit() {
+    this.refreshService.refresh.subscribe(
+      (res:string)=>{
+        this.getPublications()
+      }
+    )
     this.getPublications()
   }
 
-  getPublications(){
+  getPublications( event? ){
     this.loading = true;
-    this.publicationService.getPublications().subscribe(
-      res=>this.handleResponsePublication(res),
+    this.publicationService.getPublications(this.current_page).subscribe(
+      res=>this.handleResponsePublication(res,event ),
       err=>this.handleErrorPublications(err)
     )
   }
 
-  handleResponsePublication(res){
-    this.publications = res.publications;
+  handleResponsePublication(res, event?){
+    const { current_page, data } = res.publications;
+    
+    if (data.length == 0 && event) {
+      event.target.disabled = true;
+      event.target.complete();
+    }
+    this.current_page = current_page;
+    this.publications.push(...data);
     this.loading= false;
+
+    if (event) {
+      event.target.complete();
+    }
   }
 
   handleErrorPublications(err){

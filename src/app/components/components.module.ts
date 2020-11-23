@@ -53,6 +53,7 @@ import { UpdatePasswordComponent } from './update-password/update-password.compo
     RouterModule
   ],
   exports:[
+    EmptyComponent,
     LoginComponent,
     RegisterComponent,
     HomeGroupComponent,

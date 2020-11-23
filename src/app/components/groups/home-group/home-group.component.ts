@@ -4,6 +4,7 @@ import { Group } from 'src/app/interfaces/group';
 import { User } from 'src/app/interfaces/user';
 import { AuthService } from 'src/app/services/auth.service';
 import { GroupsService } from 'src/app/services/groups.service';
+import { RefreshService } from 'src/app/services/refresh.service';
 
 @Component({
   selector: 'app-home-group',
@@ -24,7 +25,8 @@ export class HomeGroupComponent implements OnInit {
   @Input() user:User = null;
 
   constructor(private groupService:GroupsService,
-              private authService:AuthService) { }
+              private authService:AuthService,
+              private refreshService: RefreshService) { }
 
   ngOnInit() {
     this.validRole()
@@ -45,6 +47,14 @@ export class HomeGroupComponent implements OnInit {
     })
 
     this.getGroups()
+
+    this.refreshService.refresh.subscribe(
+      (res:string)=>{
+        if (res === "groups") {
+          this.getGroups()
+        }
+      }
+    )
   }
 
   validRole(){
@@ -57,7 +67,7 @@ export class HomeGroupComponent implements OnInit {
 
   getGroups() {
     this.loading = true;
-    this.groupService.getGroupsList().subscribe(
+    this.groupService.getLatest().subscribe(
       response =>this.handleResponse(response), 
       err => this.handleError(err)
     );
