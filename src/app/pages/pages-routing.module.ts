@@ -135,6 +135,9 @@ const routes: Routes = [
           {
             path:'',
             canActivate:[CheckRoleGuard],
+            data:{
+              role: 1
+            },
             loadChildren: () => import('./admin/lines/line-form/line-form.module').then( m => m.LineFormPageModule),
           }
         ]

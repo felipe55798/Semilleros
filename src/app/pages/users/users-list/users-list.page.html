@@ -18,6 +18,7 @@
             <h2>Encargados</h2>
           </ion-text>
           <app-user [admin]="true" [edit]="false" *ngFor="let teacher of teachers" [user]="teacher"></app-user>
+          <app-empty [title_message]="'No hay usuarios'"></app-empty>
       </ion-col>
       <ion-col size="12" *ngIf="specific">
         <ion-text color="primary" class="ion-text-center">

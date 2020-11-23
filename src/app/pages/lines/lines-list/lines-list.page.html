@@ -9,4 +9,10 @@
 </ion-header>
 <ion-content>
   <app-one-line *ngFor="let line of lines" [line]=line></app-one-line>
+  <app-empty [title_message]="'No hay lineas de investigación'"></app-empty>
+  <div class="container_button">
+    <a *ngIf="loggedUser?.roles[0].id === 1"  routerLink="/home/lines/add" >
+      Agregar linea
+    </a>
+  </div>
 </ion-content>

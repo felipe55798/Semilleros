@@ -36,6 +36,6 @@ export class UserService {
   }
 
   destroy(user){
-    return this.http.delete(`${url}/${user.id}`);
+    return this.http.delete(`${url}/users/${user.id}`);
   }
 }

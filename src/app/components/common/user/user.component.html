@@ -32,7 +32,8 @@
 
   <ion-item-options *ngIf="admin" side="end" >
     <ion-item-option (click)="destroy()" color="danger">
-      <ion-icon slot="icon-only" name="close-circle"></ion-icon>
+      <ion-icon slot="icon-only" name="close-circle" *ngIf="!sending" ></ion-icon>
+      <ion-spinner name="lines-small" *ngIf="sending"  ></ion-spinner>
     </ion-item-option>
   </ion-item-options>
 </ion-item-sliding>

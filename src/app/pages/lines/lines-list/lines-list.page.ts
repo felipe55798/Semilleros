@@ -1,5 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { Line } from 'src/app/interfaces/line';
+import { User } from 'src/app/interfaces/user';
+import { AuthService } from 'src/app/services/auth.service';
 import { LinesService } from 'src/app/services/lines.service';
 import { RefreshService } from 'src/app/services/refresh.service';
 
@@ -10,9 +12,12 @@ import { RefreshService } from 'src/app/services/refresh.service';
 })
 export class LinesListPage implements OnInit {
 
+  loggedUser: User = null;
+
   lines:Line[] = [];
   constructor(private apiService: LinesService,
-              private refreshService: RefreshService) { }
+              private refreshService: RefreshService,
+              private authService: AuthService) { }
 
    ngOnInit(){
     this.refreshService.refresh.subscribe(
@@ -23,6 +28,15 @@ export class LinesListPage implements OnInit {
       }
     )
     this.getLines();
+    this.loadUser();
+  }
+
+  loadUser(){
+    this.authService.getUser().subscribe(
+      res=>{
+        this.loggedUser = res;
+      }
+    )
   }
 
   getLines() {
@@ -33,7 +47,6 @@ export class LinesListPage implements OnInit {
   }
 
   handleResponse(response) {
-    console.log(response.lines);
     this.lines = response.lines;
   }
   

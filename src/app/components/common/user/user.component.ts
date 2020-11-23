@@ -1,5 +1,5 @@
 import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
-import { ToastController } from '@ionic/angular';
+import { AlertController, ToastController } from '@ionic/angular';
 import { Observable } from 'rxjs';
 import { User } from 'src/app/interfaces/user';
 import { SeedlingUserService } from 'src/app/services/seedling-user.service';
@@ -17,9 +17,11 @@ export class UserComponent implements OnInit {
   @Input() admin:boolean = false;
   @Output() update = new EventEmitter<boolean>();
   sending:boolean = false;
+  
   constructor(private seedling_user_service:SeedlingUserService,
               private userService: UserService,
-              private toastCtrl: ToastController) { }
+              private toastCtrl: ToastController,
+              private alertController: AlertController) { }
 
   ngOnInit() {
     console.log(this.user);
@@ -65,15 +67,35 @@ export class UserComponent implements OnInit {
     this.sending = false;
   }
 
-  destroy(){
-    this.userService.destroy(this.user).subscribe(
-      res=>this.handleResponseDestroy(res),
-      err=>this.handleErrorDestroy(err)
-    )
+  async destroy(){
+    const alert = await this.alertController.create({
+      cssClass: 'my-custom-class',
+      header: 'Confirme su acción!',
+      message: 'Esta acción no se puede deshacer, ¿Está seguro que desea eliminar el usuario?',
+      buttons: [
+        {
+          text: 'Cancelar',
+          role: 'cancel',
+          cssClass: 'secondary'
+        }, {
+          text: 'Sí, eliminar',
+          handler: () => {
+            this.sending = true;
+            this.userService.destroy(this.user).subscribe(
+              res=>this.handleResponseDestroy(res),
+              err=>this.handleErrorDestroy(err)
+            )
+          }
+        }
+      ]
+    });
+
+    await alert.present();
   }
 
   async handleResponseDestroy(res){
     this.user = null;
+    this.sending = false;
     const toast = await this.toastCtrl.create({
       message:res.message,
       duration:2000,
@@ -81,7 +103,13 @@ export class UserComponent implements OnInit {
     })
     toast.present()
   }
-  handleErrorDestroy(err){
-    
+  async handleErrorDestroy(err){
+    this.sending = false;
+    const toast = await this.toastCtrl.create({
+      message:err.message,
+      duration:2000,
+      color:'danger'
+    })
+    toast.present()
   }
 }
