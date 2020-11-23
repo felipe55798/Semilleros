@@ -1,4 +1,4 @@
-<ion-item-sliding [disabled] = "edit">
+<ion-item-sliding [disabled] = "edit" *ngIf=" user ">
   <ion-item class="ion-no-padding ion-no-margin">
     <a routerLink='/home/users/{{ user.id }}' class="a_dep_container">
       <ion-card>
@@ -21,10 +21,12 @@
   </ion-item>
   <ion-item-options side="end">
     <ion-item-option (click)="aceptar()" color="primary">
-      <ion-icon slot="icon-only" name="checkmark-circle"></ion-icon>
+      <ion-icon slot="icon-only" name="checkmark-circle" *ngIf="!sending" ></ion-icon>
+      <ion-spinner name="lines-small" *ngIf="sending"></ion-spinner>
     </ion-item-option>
     <ion-item-option (click)="rechazar()" color="danger">
-      <ion-icon slot="icon-only" name="close-circle"></ion-icon>
+      <ion-icon slot="icon-only" name="close-circle" *ngIf="!sending" ></ion-icon>
+      <ion-spinner name="lines-small" *ngIf="sending"></ion-spinner>
     </ion-item-option>
   </ion-item-options>
 </ion-item-sliding>

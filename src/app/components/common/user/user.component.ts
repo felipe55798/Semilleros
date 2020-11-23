@@ -10,9 +10,10 @@ import { SeedlingUserService } from 'src/app/services/seedling-user.service';
 })
 export class UserComponent implements OnInit {
 
-  @Input() user:User = {};
+  @Input() user:User = null;
   @Input() edit:boolean = true;
   @Output() update = new EventEmitter<boolean>();
+  sending:boolean = false;
   constructor(private seedling_user_service:SeedlingUserService) { }
 
   ngOnInit() {
@@ -24,21 +25,38 @@ export class UserComponent implements OnInit {
       seedling_user: this.user['pivot'].id,
       status: 1
     };
-    this.seedling_user_service.setStatus(data).subscribe(
-      res => this.handleResponse(res),
-      err => this.handleError(err)
-    );
+    if (!this.sending) {
+      this.sending = true;
+      this.seedling_user_service.setStatus(data).subscribe(
+        res => this.handleResponse(res),
+        err => this.handleError(err)
+      );
+    }
   }
 
   rechazar() {
+    let data = {
+      seedling_user: this.user['pivot'].id,
+    };
+    if (!this.sending) {
+      this.sending = true;
+      this.seedling_user_service.deleteSeedlingUser(data).subscribe(
+        res => this.handleResponse(res),
+        err => this.handleError(err)
+      ); 
+    }
   }
 
   handleResponse(response) {
-    console.log(response);
+    this.user = null;
+    console.log('Cualquier cosa');
     this.update.emit(true);
+    this.sending = false;
   }
 
   handleError(error:any) {
-    console.error(error)
+    console.error(error);
+    this.update.emit(true);
+    this.sending = false;
   }
 }
