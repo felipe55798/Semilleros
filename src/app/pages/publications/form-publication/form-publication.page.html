@@ -1,9 +1,85 @@
 <ion-header>
   <ion-toolbar>
-    <ion-title>formPublication</ion-title>
+    <ion-buttons slot="start">
+      <ion-back-button [defaultHref]="'/tabs/tab1'"></ion-back-button>
+    </ion-buttons>
+    <ion-title>{{ toEdit ? 'Editar ' : 'Agregar'  }} publicación</ion-title>
   </ion-toolbar>
 </ion-header>
 
 <ion-content>
+  <ion-grid fixed>
+    <div class="img_container">
+      <img src="assets/images/poster.svg" class="img_add" alt="">
+    </div>
+    <ion-row>
+      <ion-col size="12">
+        <form [formGroup]="publication" (ngSubmit)="toEdit ? update() : create()" >
+          <ion-item>
+            <ion-icon slot="end" class="ion-align-self-center" name="reader"></ion-icon>
+            <ion-label position="floating">Descripción</ion-label>
+            <ion-textarea formControlName="references" [rows]="7"></ion-textarea>
+          </ion-item>
+          <div class="error-message error_custom" *ngIf="error_unprocesable.references" >
+            <ion-icon slot="start" name="information-circle-outline"></ion-icon>
+            {{ error_unprocesable.references[0] }}
+          </div>
+          <div class="validation-errors">
+            <ng-container *ngFor="let validation of validation_messages.references">
+              <div class="error-message" *ngIf="publication.get('references').hasError(validation.type) && (publication.get('references').dirty || publication.get('references').touched)">
+                <ion-icon slot="start" name="information-circle-outline"></ion-icon>
+                {{ validation.message }}
+              </div>
+            </ng-container>
+          </div>
 
+          <ion-item>
+            <ion-icon slot="end" class="ion-align-self-center" name="pricetag"></ion-icon>
+            <ion-label position="floating">Enlace</ion-label>
+            <ion-input type="text" formControlName="link" ></ion-input>
+          </ion-item>
+          <div class="error-message error_custom" *ngIf="error_unprocesable.link" >
+            <ion-icon slot="start" name="information-circle-outline"></ion-icon>
+            {{ error_unprocesable.link[0] }}
+          </div>
+          <div class="validation-errors">
+            <ng-container *ngFor="let validation of validation_messages.link">
+              <div class="error-message" *ngIf="publication.get('link').hasError(validation.type) && (publication.get('link').dirty || publication.get('link').touched)">
+                <ion-icon slot="start" name="information-circle-outline"></ion-icon>
+                {{ validation.message }}
+              </div>
+            </ng-container>
+          </div>
+
+          <ion-item *ngIf="loggedUser" >
+            <ion-label>Grupo</ion-label>
+            <ion-select formControlName="group_id"  
+            [value]="toEdit ? publication.get('group_id').value : loggedUser.seedlings[0].group_id" 
+            placeholder="Grupo de investigación">
+              <ion-select-option *ngFor="let seedling of loggedUser.seedlings"  [value]="seedling.group_id">{{ seedling.group.name }}</ion-select-option>
+            </ion-select>
+          </ion-item>
+          <div class="error-message error_custom" *ngIf="error_unprocesable.group_id" >
+            <ion-icon slot="start" name="information-circle-outline"></ion-icon>
+            {{ error_unprocesable.group_id[0] }}
+          </div>
+          <div class="validation-errors">
+            <ng-container *ngFor="let validation of validation_messages.group_id">
+              <div class="error-message" *ngIf="publication.get('group_id').hasError(validation.type) && (publication.get('group_id').dirty || publication.get('group_id').touched)">
+                <ion-icon slot="start" name="information-circle-outline"></ion-icon>
+                {{ validation.message }}
+              </div>
+            </ng-container>
+          </div>
+          
+          <ion-button type="submit" [disabled]="publication.invalid" expand="block" >
+            <span *ngIf="!sending" >
+              {{ toEdit ? 'Editar' : 'Crear' }} publicación
+            </span>
+            <ion-spinner *ngIf="sending"  name="lines-small"></ion-spinner>
+          </ion-button>
+        </form>
+      </ion-col>
+    </ion-row>
+  </ion-grid>
 </ion-content>

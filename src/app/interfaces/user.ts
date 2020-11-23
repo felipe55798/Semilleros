@@ -1,4 +1,5 @@
 import { Department } from './department';
+import { Group } from './group';
 import { Program } from './program';
 import { Role } from './role';
 import { Seedling } from './seedling';
@@ -18,5 +19,6 @@ export interface User {
     program?:Program,
     program_id?:number,
     role_id?:number,
-    department_id?:number
+    department_id?:number,
+    groups?: Group[]
 }

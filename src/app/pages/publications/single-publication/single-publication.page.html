@@ -9,13 +9,25 @@
 
 <ion-content>
   <img src="assets/images/fondo-3.jpg"/>
-  <div class="container_single">
-    <ion-text>
-      <h5 class="ion-text-left ion-padding-start">{{ publication.references }}</h5>
-    </ion-text>
-    <a routerLink='{{ publication.link }}' class="a_dep_container">{{ publication.link }}</a>
-    <ion-text>
-      <h5>{{ publication.created_at|date }}</h5>
-    </ion-text>
-  </div>
+  <ion-grid fixed class="ion-no-padding">
+    <ion-row>
+      <ion-col size="12">
+        <div class="container_single">
+          <ion-text>
+            <h5 class="ion-text-left ion-padding-start">{{ publication.references }}</h5>
+          </ion-text>
+          <p (click)="openLink()" class="a_dep_container">{{ publication.link }}</p>
+          <ion-text >
+            <p><b>Grupo de investigación:</b> {{ publication.group?.name }}</p>
+          </ion-text>
+          <ion-text >
+            <p><b>Creada por:</b> {{ publication.user?.name }} {{ publication.user?.lastname }}</p>
+          </ion-text>
+          <ion-text>
+            <h5>{{ publication.created_at|date }}</h5>
+          </ion-text>
+        </div>
+      </ion-col>
+    </ion-row>
+  </ion-grid>
 </ion-content>

@@ -29,7 +29,9 @@ export class HomePublicationComponent implements OnInit {
   ngOnInit() {
     this.refreshService.refresh.subscribe(
       (res:string)=>{
-        this.getPublications()
+        if (res === "publications") {
+          this.getPublications()
+        }
       }
     )
     this.getPublications()
