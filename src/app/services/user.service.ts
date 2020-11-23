@@ -32,8 +32,10 @@ export class UserService {
   }
 
   updatePassword(data){
-    console.log(data);
-    
     return this.http.put(`${url}/updatePassword`,data);
+  }
+
+  destroy(user){
+    return this.http.delete(`${url}/${user.id}`);
   }
 }

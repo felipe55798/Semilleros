@@ -1,7 +1,9 @@
 import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
+import { ToastController } from '@ionic/angular';
 import { Observable } from 'rxjs';
 import { User } from 'src/app/interfaces/user';
 import { SeedlingUserService } from 'src/app/services/seedling-user.service';
+import { UserService } from 'src/app/services/user.service';
 
 @Component({
   selector: 'app-user',
@@ -12,8 +14,11 @@ export class UserComponent implements OnInit {
 
   @Input() user:User = {};
   @Input() edit:boolean = true;
+  @Input() admin:boolean = false;
   @Output() update = new EventEmitter<boolean>();
-  constructor(private seedling_user_service:SeedlingUserService) { }
+  constructor(private seedling_user_service:SeedlingUserService,
+              private userService: UserService,
+              private toastCtrl: ToastController) { }
 
   ngOnInit() {
     console.log(this.user);
@@ -40,5 +45,25 @@ export class UserComponent implements OnInit {
 
   handleError(error:any) {
     console.error(error)
+  }
+
+  destroy(){
+    this.userService.destroy(this.user).subscribe(
+      res=>this.handleResponseDestroy(res),
+      err=>this.handleErrorDestroy(err)
+    )
+  }
+
+  async handleResponseDestroy(res){
+    this.user = null;
+    const toast = await this.toastCtrl.create({
+      message:res.message,
+      duration:2000,
+      color:'secondary'
+    })
+    toast.present()
+  }
+  handleErrorDestroy(err){
+
   }
 }

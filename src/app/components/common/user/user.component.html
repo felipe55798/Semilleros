@@ -1,7 +1,7 @@
-<ion-item-sliding [disabled] = "edit">
-  <ion-item class="ion-no-padding ion-no-margin">
+<ion-item-sliding [disabled]="edit">
+  <ion-item class="ion-no-margin ion-no-border item_principal" >
     <a routerLink='/home/users/{{ user.id }}' class="a_dep_container">
-      <ion-card>
+      <ion-card >
         <ion-card-content class="ion-no-padding">
           <ion-item>
             <ion-avatar slot="start">
@@ -19,11 +19,17 @@
       </ion-card>
     </a>
   </ion-item>
-  <ion-item-options side="end">
+  <ion-item-options side="end" *ngIf="!admin" >
     <ion-item-option (click)="aceptar()" color="primary">
       <ion-icon slot="icon-only" name="checkmark-circle"></ion-icon>
     </ion-item-option>
     <ion-item-option (click)="rechazar()" color="danger">
+      <ion-icon slot="icon-only" name="close-circle"></ion-icon>
+    </ion-item-option>
+  </ion-item-options>
+
+  <ion-item-options *ngIf="admin" side="end" >
+    <ion-item-option (click)="destroy()" color="danger">
       <ion-icon slot="icon-only" name="close-circle"></ion-icon>
     </ion-item-option>
   </ion-item-options>

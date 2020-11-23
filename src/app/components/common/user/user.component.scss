@@ -21,6 +21,11 @@ ion-item-option{
 
 .a_dep_container{
     text-decoration: none;
+    width: 96%;
+
+    ion-card{
+        width: 100%;
+    }
 }
 
 ion-avatar {     
@@ -28,4 +33,4 @@ ion-avatar {
     height : 100% !important;  
     max-width: 50px !important;  
     max-height: 50px !important; 
-    }
+}
