@@ -1,0 +1,49 @@
+<ion-header>
+  <ion-toolbar color="warning">
+    <ion-title>Restablecer Contraseña</ion-title>
+    <ion-buttons slot="start">
+      <ion-back-button defaultHref="/tabs"></ion-back-button>
+    </ion-buttons>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content>
+  <ion-grid fixed>
+    <ion-row>
+      <ion-col size="12">
+        <ion-img [src]="'assets/images/forgot.svg'"></ion-img>
+        <h2 class="ion-text-center">¿Olvidó la contraseña?</h2>
+        <p class="ion-text-center">Escribe el correo con el que te registraste y enviaremos un código de recuperación</p>
+        <form [formGroup]=data (ngSubmit)="resetPassword()">
+          <ion-item>
+            <ion-label position="floating">Correo Electrónico</ion-label>
+            <ion-input formControlName="email"></ion-input>
+          </ion-item>
+          <div class="error-message error_custom" *ngIf="error_unprocesable.email" >
+            {{ data.getError("email") }}
+            <ion-icon slot="start" name="information-circle-outline"></ion-icon>
+            {{ error_unprocesable.email[0] }}
+          </div>
+          <div class="validation-errors">
+            <ng-container *ngFor="let validation of validation_messages.email">
+              <div class="error-message" *ngIf="data.get('email').hasError(validation.type) && (data.get('email').dirty || data.get('email').touched)">
+                <ion-icon slot="start" name="information-circle-outline"></ion-icon>
+                {{ validation.message }}
+              </div>
+            </ng-container>
+          </div>
+          <ion-button type="submit" expand="block" [disabled]="data.invalid">
+            <span *ngIf="!sending">Solicitar Código</span>
+            <ion-spinner name="lines-small" *ngIf="sending"></ion-spinner>
+          </ion-button>
+        </form>
+      </ion-col>
+    </ion-row>
+  </ion-grid>
+</ion-content>
+
+<ion-footer class="ion-no-border">
+  <ion-toolbar>
+    <a routerLink="/auth">Iniciar Sesión</a>
+  </ion-toolbar>
+</ion-footer>

@@ -1,0 +1,90 @@
+p{
+    color: gray;
+}
+
+a{
+    text-decoration: none;
+    display: block;
+    text-align: center;
+}
+
+ion-img{
+    width: 80px;
+    margin: 0 auto;
+}
+
+.already {
+    display: block;
+    text-align: center;
+    padding-bottom: 10px;
+    margin-top: 5px;
+    text-decoration: none;
+}
+
+.error-message{
+    color: red;
+    margin: 10px 0;
+    font-size: 14px;
+}
+
+.item_input{
+    border: none;
+    ion-input {
+        border: none;
+        width: 10.5ch;
+        background: 
+          repeating-linear-gradient(90deg, 
+              dimgrey 0, 
+              dimgrey 1ch, 
+              transparent 0, 
+              transparent 1.5ch) 
+            0 87%/100% 2px no-repeat;
+        color: dimgrey;
+        font: 7ch consolas, monospace;
+        letter-spacing: .5ch;
+      }
+      ion-input:focus {
+        outline: none;
+        color: dodgerblue;
+      }
+}
+
+.item-interactive.ion-invalid.item-has-value {
+    --highlight-background: none !important;
+    ion-input{
+        background: 
+          repeating-linear-gradient(90deg, 
+            rgb(223, 5, 5) 0, 
+              rgb(223, 5, 5) 1ch, 
+              transparent 0, 
+              transparent 1.5ch) 
+            0 87%/100% 2px no-repeat;
+    }
+}
+
+.item-interactive.ion-valid.item-has-value{
+    --highlight-background: none !important;
+    ion-input{
+        background: 
+          repeating-linear-gradient(90deg, 
+            rgb(11, 202, 11) 0, 
+            rgb(11, 202, 11) 1ch, 
+              transparent 0, 
+              transparent 1.5ch) 
+            0 87%/100% 2px no-repeat;
+    }
+}
+
+.item-interactive.item-has-focus{
+    --highlight-background: none !important;
+    ion-input{
+        background: 
+          repeating-linear-gradient(90deg, 
+          dimgrey 0, 
+              dimgrey 1ch, 
+              transparent 0, 
+              transparent 1.5ch) 
+            0 87%/100% 2px no-repeat;
+    }
+}
+

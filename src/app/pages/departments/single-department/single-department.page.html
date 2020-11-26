@@ -13,16 +13,20 @@
 </ion-header>
 
 <ion-content>
-  <img src="assets/images/fondo-3.jpg"/>
+  <img src="https://www.lifeder.com/wp-content/uploads/2017/04/investigacion.jpg"/>
   <div class="container_single">
     <p>{{ department.description }}</p>
   </div>
   <div class="separator"></div>
   <div class="container_single">
-    <h2>Programas Asociados</h2>
+    <ion-text color="primary">
+      <h2>Programas Asociados</h2>
+    </ion-text>
     <app-one-program *ngFor="let program of department.programs" [program]="program" [imgVisible]=false></app-one-program>
   </div>
   <div class="separator"></div>
-  <h2>Grupos Asociados</h2>
+  <ion-text color="primary">
+    <h2>Grupos Asociados</h2>
+  </ion-text>
   <app-one-group *ngFor="let group of department.groups" [group]="group" [imgVisible]=false></app-one-group> 
 </ion-content>

@@ -45,7 +45,7 @@
         <ion-spinner *ngIf="sending"  name="lines-small"></ion-spinner>
       </ion-button>
   
-      <a href="" class="already">¿Olvidó la contraseña?</a>
+      <a [routerLink]="'/auth/reset'" class="already">¿Olvidó la contraseña?</a>
     </ion-col>
   </ion-row>
 </form>

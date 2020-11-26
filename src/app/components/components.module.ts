@@ -21,6 +21,9 @@ import { OneLineComponent } from './lines/one-line/one-line.component';
 import { UserComponent } from './common/user/user.component';
 import { ProfileComponent } from './profile/profile.component';
 import { UpdatePasswordComponent } from './update-password/update-password.component';
+import { CodeComponent } from './auth/password/code/code.component';
+import { RecoverPage } from '../pages/auth/password/recover/recover.page';
+import { RecoveryComponent } from './auth/password/recovery/recovery.component';
 
 
 
@@ -43,7 +46,9 @@ import { UpdatePasswordComponent } from './update-password/update-password.compo
     HomePublicationComponent,
     ProfileComponent,
     UpdatePasswordComponent,
-    HeaderActionComponent
+    HeaderActionComponent,
+    CodeComponent,
+    RecoveryComponent,
   ],
   imports: [
     CommonModule,
@@ -68,7 +73,9 @@ import { UpdatePasswordComponent } from './update-password/update-password.compo
     DepartmentComponent,
     ProfileComponent,
     UpdatePasswordComponent,
-    HeaderActionComponent
+    HeaderActionComponent,
+    CodeComponent,
+    RecoveryComponent
   ]
 })
 export class ComponentsModule { }

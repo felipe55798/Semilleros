@@ -1,0 +1,57 @@
+<ion-grid fixed>
+  <ion-row>
+    <ion-col size="12">
+      <ion-img [src]="'assets/images/candado-abierto.svg'"></ion-img>
+        <h2 class="ion-text-center">Tan solo un paso más</h2>
+        <p class="ion-text-center">Ingresa tu nueva contraseña</p>
+      <form [formGroup]="data" (ngSubmit)="recoverPassword()" >
+        <ion-item>
+          <ion-icon name="eye" slot="end" position="floating" class="ion-align-self-center"></ion-icon>
+          <ion-label position="floating">Contraseña Nueva</ion-label>
+          <ion-input formControlName="password" type="password"></ion-input>
+        </ion-item>
+        <div class="error-message error_custom" *ngIf="error.password" >
+          <ion-icon slot="start" name="information-circle-outline"></ion-icon>
+          {{ error.password[0] }}
+        </div>
+        <div class="validation-errors">
+          <ng-container *ngFor="let validation of validation_messages.password">
+            <div class="error-message" *ngIf="data.get('password').hasError(validation.type) && (data.get('password').dirty || data.get('password').touched)">
+              <ion-icon slot="start" name="information-circle-outline"></ion-icon>
+              {{ validation.message }}
+            </div>
+          </ng-container>
+        </div>
+      
+        <ion-item>
+          <ion-icon name="eye" slot="end" position="floating" class="ion-align-self-center"></ion-icon>
+          <ion-label position="floating">Confirmar Nueva Contraseña</ion-label>
+          <ion-input formControlName="password_confirmation" type="password"></ion-input>
+        </ion-item>
+        <div class="error-message error_custom" *ngIf="error.password_confirmation" >
+          <ion-icon slot="start" name="information-circle-outline"></ion-icon>
+          {{ error.password_confirmation[0] }}
+        </div>
+        <div class="validation-errors">
+          <ng-container *ngFor="let validation of validation_messages.password_confirmation">
+            <div class="error-message" *ngIf="data.get('password_confirmation').hasError(validation.type) && (data.get('password_confirmation').dirty || data.get('password_confirmation').touched)">
+              <ion-icon slot="start" name="information-circle-outline"></ion-icon>
+              {{ validation.message }}
+            </div>
+          </ng-container>
+        </div>
+      
+        <ion-row>
+          <ion-col size="12">
+            <ion-button type="submit" [disabled]="data.invalid" expand="block" class="ion-no-margin" fill="solid">
+              <span *ngIf="!sending" >
+                Actualizar Contraseña
+              </span>
+              <ion-spinner *ngIf="sending"  name="lines-small"></ion-spinner>
+            </ion-button>
+          </ion-col>
+        </ion-row>
+      </form>
+    </ion-col>
+  </ion-row>
+</ion-grid>

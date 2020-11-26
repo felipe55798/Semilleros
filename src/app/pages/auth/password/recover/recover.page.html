@@ -1,0 +1,19 @@
+<ion-header>
+  <ion-toolbar color="warning">
+    <ion-title>{{ valid ? "Nueva Contraseña" : "Código de verificación"}}</ion-title>
+    <ion-buttons slot="start">
+      <ion-back-button defaultHref="/auth"></ion-back-button>
+    </ion-buttons>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content>
+  <app-code *ngIf="!valid" (response)='handleEvent($event)'></app-code>
+  <app-recovery *ngIf="valid && passwordReset" [resetPassword]='passwordReset'></app-recovery>
+</ion-content>
+
+<ion-footer class="ion-no-border">
+  <ion-toolbar>
+    <a routerLink="/auth">Iniciar Sesión</a>
+  </ion-toolbar>
+</ion-footer>

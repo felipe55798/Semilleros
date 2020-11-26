@@ -1,0 +1,31 @@
+<ion-grid fixed>
+  <ion-row>
+    <ion-col size="12">
+      <ion-img [src]="'assets/images/promocion.svg'"></ion-img>
+      <h2 class="ion-text-center">Código Enviado</h2>
+      <p class="ion-text-center">Escribe el código de verificación de 6 dígitos que enviamos a tu correo electrónico</p>
+      <form [formGroup]=data (ngSubmit)="find()">
+        <ion-item class="item_input ">
+            <ion-input formControlName="token" maxlength="6"></ion-input>
+        </ion-item>
+        <div class="error-message error_custom" *ngIf="error_unprocesable.token" >
+          {{ data.getError("token") }}
+          <ion-icon slot="start" name="information-circle-outline"></ion-icon>
+          {{ error_unprocesable.token[0] }}
+        </div>
+        <div class="validation-errors">
+          <ng-container *ngFor="let validation of validation_messages.token">
+            <div class="error-message" *ngIf="data.get('token').hasError(validation.type) && (data.get('token').dirty || data.get('token').touched)">
+              <ion-icon slot="start" name="information-circle-outline"></ion-icon>
+              {{ validation.message }}
+            </div>
+          </ng-container>
+        </div>
+        <ion-button type="submit" expand="block" [disabled]="data.invalid" class="ion-margin-top">
+          <span *ngIf="!sending">Verificar Código</span>
+          <ion-spinner name="lines-small" *ngIf="sending"></ion-spinner>
+        </ion-button>
+      </form>
+    </ion-col>
+  </ion-row>
+</ion-grid>
