@@ -75,6 +75,11 @@ export class CheckTokenService implements HttpInterceptor{
             if (err.status === 404 && error.error.err === 'token_not_found') {
               this.authService.logout('notfound',false);
               return throwError(err)
+            }else{
+              if (err.status === 401 && error.error.code === 'not_permission') {
+                this.authService.logout('not_permission',false);
+                return throwError(err)
+              }
             }
           }
         }
