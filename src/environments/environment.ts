@@ -4,7 +4,7 @@
 
 export const environment = {
   production: false,
-  url:'https://uaminvestigando.herokuapp.com/api'
+  url:'http://localhost:8000/api'
 };
 
 /*
