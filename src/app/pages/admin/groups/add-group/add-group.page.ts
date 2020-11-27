@@ -102,12 +102,11 @@ export class AddGroupPage implements OnInit {
   }
 
   handleResponse(res){
-    // console.log(res);
     this.departments = res.departments;
 
   }
   handleError(err){
-    console.log(err);
+    this.handleErrorCreate('Error en el servidor, por favor intente más tarde');
   }
 
   createGroup(){

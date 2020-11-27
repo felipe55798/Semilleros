@@ -76,7 +76,7 @@ export class RegisterComponent implements OnInit {
         this.programs = res.programs;
       },
       (err)=>{
-        console.log(err);
+        this.alertError('Error en el servidor, intente mas tarde')
       }
     )
   }

@@ -1,6 +1,6 @@
 import { Component } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
-import { LoadingController } from '@ionic/angular';
+import { LoadingController, ToastController } from '@ionic/angular';
 import { Department } from '../interfaces/department';
 import { AuthService } from '../services/auth.service';
 import { DepartmentService } from '../services/departments.service';
@@ -19,7 +19,8 @@ export class Tab2Page {
               private loadingController: LoadingController,
               private route:ActivatedRoute,
               private refreshService: RefreshService,
-              private authService: AuthService) {}
+              private authService: AuthService,
+              private toastController: ToastController) {}
 
   ngOnInit() {
     this.refreshService.refresh.subscribe(
@@ -80,7 +81,7 @@ export class Tab2Page {
   }
 
   handleError(error: any) {
-    console.error(error);
+    this.alertError('Error en el servidor, por favor intente más tarde', 'danger', 'Error');
     this.loading = false;
   }
 
@@ -103,5 +104,18 @@ export class Tab2Page {
     await this.getDepartments()
     this.getUser()
     event.target.complete()
+  }
+
+  async alertError(message:string, color:string, header:string) {
+    const toast = await this.toastController.create({
+      header,
+      message,
+      position: 'top',
+      animated:true,
+      color,
+      duration:4000,
+      cssClass:'alert-error'
+    });
+    toast.present();
   }
 }

@@ -142,7 +142,7 @@ export class SingleProgramPage implements OnInit {
   }
 
   async handleErrorDelete(err){
-    console.log(err);
+    this.handleErrorDelete(err);
   }
 
 }

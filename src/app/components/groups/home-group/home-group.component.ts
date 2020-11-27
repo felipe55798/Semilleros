@@ -1,5 +1,5 @@
 import { Component, Input, OnInit } from '@angular/core';
-import { LoadingController } from '@ionic/angular';
+import { LoadingController, ToastController } from '@ionic/angular';
 import { Group } from 'src/app/interfaces/group';
 import { User } from 'src/app/interfaces/user';
 import { AuthService } from 'src/app/services/auth.service';
@@ -26,7 +26,8 @@ export class HomeGroupComponent implements OnInit {
 
   constructor(private groupService:GroupsService,
               private authService:AuthService,
-              private refreshService: RefreshService) { }
+              private refreshService: RefreshService,
+              private toastController: ToastController) { }
 
   ngOnInit() {
     this.validRole()
@@ -78,8 +79,21 @@ export class HomeGroupComponent implements OnInit {
   }
   
   handleError(error: any) {
-    console.error(error);
     this.loading = false;
+    this.alertError('Error en el servidor, intente mas tarde')
+  }
+
+  async alertError(message:string) {
+    const toast = await this.toastController.create({
+      header: 'Error',
+      message: message,
+      position: 'top',
+      animated:true,
+      color:'danger',
+      duration:4000,
+      cssClass:'alert-error'
+    });
+    toast.present();
   }
 
 }

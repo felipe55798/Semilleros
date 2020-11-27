@@ -15,7 +15,6 @@ export class RecoverPage implements OnInit {
   }
 
   handleEvent(event) {
-    console.log(event);
     this.valid = true;
     this.passwordReset = event.passwordReset;
   }

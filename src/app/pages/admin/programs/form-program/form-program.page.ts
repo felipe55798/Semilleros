@@ -121,7 +121,7 @@ export class FormProgramPage implements OnInit {
 
   }
   handleError(err){
-    console.log(err);
+    this.handleErrorCreate(err);
   }
 
   getTeachers(){
@@ -136,7 +136,7 @@ export class FormProgramPage implements OnInit {
   }
 
   handleErrorTeachers(err){
-    console.log(err);
+    this.handleErrorCreate(err);
   }
 
   addProgram(){

@@ -53,7 +53,7 @@ export class SingleDepartmentPage implements OnInit {
   }
   
   handleError(error: any) {
-    console.error(error);
+    this.alertError('Error en el servidor, por favor intente más tarde', 'danger', 'Error');
   }
 
   async presentActionSheet() {
@@ -122,7 +122,20 @@ export class SingleDepartmentPage implements OnInit {
   }
 
   async handleErrorDelete(err){
-    console.log(err);
+    this.alertError('Error en el servidor, por favor intente más tarde', 'danger', 'Error');
+  }
+
+  async alertError(message:string, color:string, header:string) {
+    const toast = await this.toastCtrl.create({
+      header,
+      message,
+      position: 'top',
+      animated:true,
+      color,
+      duration:4000,
+      cssClass:'alert-error'
+    });
+    toast.present();
   }
 
 }

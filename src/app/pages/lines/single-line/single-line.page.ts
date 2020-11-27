@@ -53,7 +53,7 @@ export class SingleLinePage implements OnInit {
   }
   
   handleError(error: any) {
-    console.error(error);
+    this.handleErrorDelete(error);
   }
 
   async presentActionSheet() {
@@ -122,7 +122,7 @@ export class SingleLinePage implements OnInit {
   }
 
   async handleErrorDelete(err){
-    console.log(err);
+    this.handleErrorDelete(err);
   }
 
 }

@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { ToastController } from '@ionic/angular';
 import { error } from 'protractor';
 import { Seedling } from 'src/app/interfaces/seedling';
 import { AuthService } from 'src/app/services/auth.service';
@@ -16,7 +17,8 @@ export class SeedlingsListPage implements OnInit {
   seedlings:Seedling[] = [];
   constructor(private apiService:SeedlingsService,
               private refreshService: RefreshService,
-              private authService: AuthService) { }
+              private authService: AuthService,
+              private toastController: ToastController) { }
 
   ngOnInit() {
     this.getSeedlings();
@@ -52,7 +54,20 @@ export class SeedlingsListPage implements OnInit {
   }
   
   handleError(error: any) {
-    console.error(error);
+    this.alertError('Error en el servidor, por favor intente más tarde', 'danger', 'Error');
+  }
+
+  async alertError(message:string, color:string, header:string) {
+    const toast = await this.toastController.create({
+      header,
+      message,
+      position: 'top',
+      animated:true,
+      color,
+      duration:4000,
+      cssClass:'alert-error'
+    });
+    toast.present();
   }
 
 }

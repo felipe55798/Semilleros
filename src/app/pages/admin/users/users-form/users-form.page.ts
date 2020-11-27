@@ -92,7 +92,7 @@ export class UsersFormPage implements OnInit {
 
   handleError(err){
     this.sending = false;
-    console.log(err);
+    this.handleErrorCreate(err);
   }
 
   getDepartments(){
@@ -106,7 +106,7 @@ export class UsersFormPage implements OnInit {
   }
 
   handleErrorDepartments(err){
-    console.log(err);
+    this.handleErrorCreate(err);
   }
 
   createUser(){

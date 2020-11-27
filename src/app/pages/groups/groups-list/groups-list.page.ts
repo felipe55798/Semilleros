@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { ToastController } from '@ionic/angular';
 import { error } from 'protractor';
 import { RefreshService } from 'src/app/services/refresh.service';
 import { Group } from '../../../interfaces/group';
@@ -13,7 +14,8 @@ export class GroupsListPage implements OnInit {
 
   groups:Group[] = [];
   constructor(public apiService: GroupsService,
-              private refreshService: RefreshService) { }
+              private refreshService: RefreshService,
+              private toastController: ToastController) { }
 
   ngOnInit() {
     this.getGroups();
@@ -38,6 +40,19 @@ export class GroupsListPage implements OnInit {
   }
   
   handleError(error: any) {
-    console.error(error);
+    this.alertError('Error en el servidor, por favor intente más tarde', 'danger', 'Error');
+  }
+
+  async alertError(message:string, color:string, header:string) {
+    const toast = await this.toastController.create({
+      header,
+      message,
+      position: 'top',
+      animated:true,
+      color,
+      duration:4000,
+      cssClass:'alert-error'
+    });
+    toast.present();
   }
 }

@@ -77,10 +77,7 @@ export class Tab3Page {
       }, {
         text: 'Cancelar',
         role: 'destructive',
-        icon: 'close',
-        handler: () => {
-          console.log('Delete clicked');
-        }
+        icon: 'close'
       } ]
     });
     await actionSheet.present();

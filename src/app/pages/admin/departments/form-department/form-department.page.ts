@@ -40,7 +40,8 @@ export class FormDepartmentPage implements OnInit {
               private toast:ToastController,
               private refreshService: RefreshService,
               private route: ActivatedRoute,
-              private loadingController: LoadingController) { }
+              private loadingController: LoadingController,
+              private toastController: ToastController) { }
 
   async ngOnInit() {
     let id = this.route.snapshot.paramMap.get('id');
@@ -110,7 +111,7 @@ export class FormDepartmentPage implements OnInit {
     if (err.status === 422) {
       this.error_unprocesable = err.error.errors;
     }else{
-      console.log(err);
+      this.alertError('Error en el servidor, por favor intente más tarde', 'danger', 'Error');
     }
   }
 
@@ -149,5 +150,18 @@ export class FormDepartmentPage implements OnInit {
       });
       toast.present();
     }
+  }
+
+  async alertError(message:string, color:string, header:string) {
+    const toast = await this.toastController.create({
+      header,
+      message,
+      position: 'top',
+      animated:true,
+      color,
+      duration:4000,
+      cssClass:'alert-error'
+    });
+    toast.present();
   }
 }

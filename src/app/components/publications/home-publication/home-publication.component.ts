@@ -1,4 +1,5 @@
 import { Component, Input, OnInit } from '@angular/core';
+import { ToastController } from '@ionic/angular';
 import { Publication } from 'src/app/interfaces/publication';
 import { User } from 'src/app/interfaces/user';
 import { PublicationService } from 'src/app/services/publication.service';
@@ -24,7 +25,8 @@ export class HomePublicationComponent implements OnInit {
   @Input() user:User = null;
   
   constructor(private publicationService:PublicationService,
-              private refreshService: RefreshService) { }
+              private refreshService: RefreshService,
+              private toastController: ToastController) { }
 
   ngOnInit() {
     this.refreshService.refresh.subscribe(
@@ -66,11 +68,24 @@ export class HomePublicationComponent implements OnInit {
   }
 
   handleErrorPublications(err){
-    console.log(err);
     this.loading= false;
+    this.alertError('Error en el servidor, por favor intente más tarde', 'danger', 'Error');
   }
 
   loadPublications(event){
     this.getPublications(event)
+  }
+
+  async alertError(message:string, color:string, header:string) {
+    const toast = await this.toastController.create({
+      header,
+      message,
+      position: 'top',
+      animated:true,
+      color,
+      duration:4000,
+      cssClass:'alert-error'
+    });
+    toast.present();
   }
 }
