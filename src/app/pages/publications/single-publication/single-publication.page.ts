@@ -1,4 +1,4 @@
-import { ActionSheetController, AlertController, NavController, ToastController } from '@ionic/angular';
+import { ActionSheetController, AlertController, LoadingController, NavController, ToastController } from '@ionic/angular';
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { Publication } from 'src/app/interfaces/publication';
@@ -27,6 +27,7 @@ export class SinglePublicationPage implements OnInit {
               private navCtrl: NavController,
               private alertController: AlertController,
               private toastCtrl: ToastController,
+              private loadingController: LoadingController,
               private refreshService: RefreshService) { }
 
   ngOnInit() {
@@ -45,7 +46,13 @@ export class SinglePublicationPage implements OnInit {
     )
   }
 
-  getPublication() {
+  async getPublication() {
+    const loading = await this.loadingController.create({
+      cssClass: 'my-custom-class',
+      message: 'Cargando información...',
+      duration: 2000
+    });
+    await loading.present();
     return this.publicationService.getPublication(this.id).subscribe(
       res => this.handleResponse(res),
       err => this.handleError(err)

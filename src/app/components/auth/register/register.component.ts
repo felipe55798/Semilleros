@@ -76,7 +76,7 @@ export class RegisterComponent implements OnInit {
         this.programs = res.programs;
       },
       (err)=>{
-        this.alertError('Error en el servidor, intente mas tarde')
+        this.alertError('Error en el servidor, intente mas tarde', 'danger','Error')
       }
     )
   }
@@ -91,6 +91,7 @@ export class RegisterComponent implements OnInit {
 
   handleResponse(data){
     this.sending = false;
+    this.alertError('','success','¡Bienvenido!')
     this.navCtrl.navigateRoot('/tabs/tab1');
   }
 
@@ -99,17 +100,17 @@ export class RegisterComponent implements OnInit {
     if (err.status === 422) {
       this.error = err.error.errors;
     }else{
-      this.alertError(err.error.message);
+      this.alertError(err.error.message, 'danger', 'Error');
     }
   }
 
-  async alertError(message:string) {
+  async alertError(message:string, color:string, header:string) {
     const toast = await this.toastController.create({
-      header: 'Error',
-      message: message,
+      header,
+      message,
       position: 'top',
       animated:true,
-      color:'danger',
+      color,
       duration:4000,
       cssClass:'alert-error'
     });

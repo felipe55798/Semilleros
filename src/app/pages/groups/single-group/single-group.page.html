@@ -22,6 +22,9 @@
   </div>
   <div class="separator"></div>
   <div class="container_single">
+    <p *ngIf="group.seedlings?.length === 0" class="ion-text-center empty_alert">
+      No hay semilleros relacionados con el grupo de investigación
+    </p>
     <ion-text color="primary">
       <h2>Semilleros Asociados</h2>
     </ion-text>
@@ -29,6 +32,9 @@
   </div>
   <div class="separator"></div> 
   <div class="container_single">
+    <p *ngIf="group.lines?.length === 0" class="ion-text-center empty_alert">
+      No hay estudiantes relacionados con el semillero
+    </p>
     <ion-text color="primary">
       <h2>Líneas de investigación</h2>
     </ion-text>
@@ -36,6 +42,9 @@
   </div>
   <div class="separator"></div> 
   <div class="container_single">
+    <p *ngIf="group.publications?.length === 0" class="ion-text-center empty_alert">
+      No hay estudiantes relacionados con el semillero
+    </p>
     <ion-text color="primary">
       <h2>Publicaciones</h2>
     </ion-text>

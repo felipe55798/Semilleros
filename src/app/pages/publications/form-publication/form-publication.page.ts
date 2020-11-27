@@ -21,7 +21,7 @@ export class FormPublicationPage implements OnInit {
 
   validation_messages = {
     'references': [
-        { type: 'required', message: 'La descripción de la publicación es obligatoria.' },
+        { type: 'required', message: 'Las referencias de la publicación es obligatoria.' },
     ],
     'group_id': [
       { type: 'required', message: 'El grupo de investigación es obligatorio.' },

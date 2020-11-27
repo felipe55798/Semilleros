@@ -14,14 +14,14 @@ export class SingleDepartmentPage implements OnInit {
   admin:boolean = false;
   id: string;
   department:Department = {};
+  loading:boolean = true;
   constructor(private route: ActivatedRoute,
               private apiService: DepartmentService,
               private authService: AuthService,
               private actionSheetController: ActionSheetController,
               private alertController:AlertController,
               private navCtrl:NavController,
-              private toastCtrl:ToastController,
-              private loadingController:LoadingController
+              private toastCtrl:ToastController
   ) {}
 
   ngOnInit() {
@@ -43,12 +43,6 @@ export class SingleDepartmentPage implements OnInit {
   }
 
   async getDepartment(){
-    const loading = await this.loadingController.create({
-      cssClass: 'my-custom-class',
-      message: 'Cargando información del departamento...',
-      duration: 2000
-    });
-    await loading.present();
     return this.apiService.getDepartment(this.id).subscribe(
       response => this.handleResponse(response),
       err => this.handleError(err)
@@ -57,10 +51,12 @@ export class SingleDepartmentPage implements OnInit {
 
   handleResponse(response) {
     this.department = response.department;
+    this.loading = false;
   }
   
   handleError(error: any) {
     this.alertError('Error en el servidor, por favor intente más tarde', 'danger', 'Error');
+    this.loading = false;
   }
 
   async presentActionSheet() {

@@ -57,6 +57,7 @@ export class LoginComponent implements OnInit {
       animated:true,
       animationDirection:'forward',
     });
+    this.alertError('', 'success', '¡Bienvenido!')
   }
 
   handleError(err){
@@ -64,17 +65,17 @@ export class LoginComponent implements OnInit {
     if (err.status === 422) {
       this.error_unprocesable = err.error.errors;
     }else{
-      this.alertError(err.error.message);
+      this.alertError(err.error.message, 'danger', 'Error');
     }
   }
 
-  async alertError(message:string) {
+  async alertError(message:string, color:string, header:string) {
     const toast = await this.toastController.create({
-      header: 'Error',
-      message: message,
+      header,
+      message,
       position: 'top',
       animated:true,
-      color:'danger',
+      color,
       duration:4000,
       cssClass:'alert-error'
     });

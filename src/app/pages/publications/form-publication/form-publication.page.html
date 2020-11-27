@@ -17,7 +17,7 @@
         <form [formGroup]="publication" (ngSubmit)="toEdit ? update() : create()" >
           <ion-item>
             <ion-icon slot="end" class="ion-align-self-center" name="reader"></ion-icon>
-            <ion-label position="floating">Descripción</ion-label>
+            <ion-label position="floating">Referencias</ion-label>
             <ion-textarea formControlName="references" [rows]="7"></ion-textarea>
           </ion-item>
           <div class="error-message error_custom" *ngIf="error_unprocesable.references" >

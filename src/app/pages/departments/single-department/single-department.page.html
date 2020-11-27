@@ -22,11 +22,30 @@
     <ion-text color="primary">
       <h2>Programas Asociados</h2>
     </ion-text>
+    <p *ngIf="department.programs?.length === 0" class="ion-text-center empty_alert">
+      No hay programas asociados al departamento
+    </p>
+    <div class="loading_box" *ngIf="loading"> 
+      <div class="loading_box__container">
+        <ion-spinner color="primary"   name="crescent" class="ion-margin-end"></ion-spinner>
+        Cargando...
+      </div>
+    </div>
     <app-one-program *ngFor="let program of department.programs" [program]="program" [imgVisible]=false></app-one-program>
   </div>
+  
   <div class="separator"></div>
   <ion-text color="primary">
     <h2>Grupos Asociados</h2>
   </ion-text>
+  <p *ngIf="department.groups?.length === 0" class="ion-text-center empty_alert">
+    No hay grupos asociados al departamento
+  </p>
+  <div class="loading_box" *ngIf="loading"> 
+    <div class="loading_box__container">
+      <ion-spinner color="primary"   name="crescent" class="ion-margin-end"></ion-spinner>
+      Cargando...
+    </div>
+  </div>
   <app-one-group *ngFor="let group of department.groups" [group]="group" [imgVisible]=false></app-one-group> 
 </ion-content>
