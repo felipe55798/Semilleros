@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
-import { ActionSheetController, AlertController, NavController, ToastController } from '@ionic/angular';
+import { ActionSheetController, AlertController, LoadingController, NavController, ToastController } from '@ionic/angular';
 import { Line } from 'src/app/interfaces/line';
 import { AuthService } from 'src/app/services/auth.service';
 import { LinesService } from 'src/app/services/lines.service';
@@ -23,7 +23,8 @@ export class SingleLinePage implements OnInit {
               private navCtrl: NavController,
               private alertController: AlertController,
               private toastCtrl: ToastController,
-              private refreshService: RefreshService) { }
+              private refreshService: RefreshService,
+              private loadingController: LoadingController) { }
 
   ngOnInit() {
     this.id = this.route.snapshot.paramMap.get('id');
@@ -41,7 +42,13 @@ export class SingleLinePage implements OnInit {
     )
   }
 
-  getLine() {
+  async getLine() {
+    const loading = await this.loadingController.create({
+      cssClass: 'my-custom-class',
+      message: 'Cargando información...',
+      duration: 2000
+    });
+    await loading.present();
     return this.apiService.getLine(this.id).subscribe(
       res => this.handleResponse(res),
       err => this.handleError(err)

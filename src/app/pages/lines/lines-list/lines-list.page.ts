@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { ToastController } from '@ionic/angular';
+import { LoadingController, ToastController } from '@ionic/angular';
 import { Line } from 'src/app/interfaces/line';
 import { User } from 'src/app/interfaces/user';
 import { AuthService } from 'src/app/services/auth.service';
@@ -19,7 +19,8 @@ export class LinesListPage implements OnInit {
   constructor(private apiService: LinesService,
               private refreshService: RefreshService,
               private authService: AuthService,
-              private toastController:ToastController) { }
+              private toastController:ToastController,
+              private loadingController: LoadingController) { }
 
    ngOnInit(){
     this.refreshService.refresh.subscribe(
@@ -41,7 +42,13 @@ export class LinesListPage implements OnInit {
     )
   }
 
-  getLines() {
+  async getLines() {
+    const loading = await this.loadingController.create({
+      cssClass: 'my-custom-class',
+      message: 'Cargando líneas de investigación...',
+      duration: 2000
+    });
+    await loading.present();
     this.apiService.getLinesList().subscribe(
       response => this.handleResponse(response), 
       err => this.handleError(err)

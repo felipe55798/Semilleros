@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
-import { ActionSheetController, AlertController, NavController, ToastController } from '@ionic/angular';
+import { ActionSheetController, AlertController, LoadingController, NavController, ToastController } from '@ionic/angular';
 import { Department } from 'src/app/interfaces/department';
 import { AuthService } from 'src/app/services/auth.service';
 import { DepartmentService } from 'src/app/services/departments.service';
@@ -20,7 +20,8 @@ export class SingleDepartmentPage implements OnInit {
               private actionSheetController: ActionSheetController,
               private alertController:AlertController,
               private navCtrl:NavController,
-              private toastCtrl:ToastController
+              private toastCtrl:ToastController,
+              private loadingController:LoadingController
   ) {}
 
   ngOnInit() {
@@ -41,7 +42,13 @@ export class SingleDepartmentPage implements OnInit {
     )
   }
 
-  getDepartment(){
+  async getDepartment(){
+    const loading = await this.loadingController.create({
+      cssClass: 'my-custom-class',
+      message: 'Cargando información del departamento...',
+      duration: 2000
+    });
+    await loading.present();
     return this.apiService.getDepartment(this.id).subscribe(
       response => this.handleResponse(response),
       err => this.handleError(err)

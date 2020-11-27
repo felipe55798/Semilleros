@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { ToastController } from '@ionic/angular';
+import { LoadingController, ToastController } from '@ionic/angular';
 import { error } from 'protractor';
 import { RefreshService } from 'src/app/services/refresh.service';
 import { Group } from '../../../interfaces/group';
@@ -15,7 +15,8 @@ export class GroupsListPage implements OnInit {
   groups:Group[] = [];
   constructor(public apiService: GroupsService,
               private refreshService: RefreshService,
-              private toastController: ToastController) { }
+              private toastController: ToastController,
+              private loadingController: LoadingController) { }
 
   ngOnInit() {
     this.getGroups();
@@ -28,7 +29,13 @@ export class GroupsListPage implements OnInit {
     )
   }
 
-  getGroups() {
+  async getGroups() {
+    const loading = await this.loadingController.create({
+      cssClass: 'my-custom-class',
+      message: 'Cargando grupos de investigación...',
+      duration: 2000
+    });
+    await loading.present();
     this.apiService.getGroupsList().subscribe(
       response => this.handleResponse(response), 
       err => this.handleError(err)
