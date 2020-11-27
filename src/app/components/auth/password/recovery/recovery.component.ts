@@ -61,11 +61,9 @@ export class RecoveryComponent implements OnInit {
 
   handleError(error) {
     this.sending = false;
-    console.error(error);
     if (error.status === 422) {
       this.error = error.error.errors;
     }else{
-      console.log(error);
       this.alertResponse(error.error.message, 'danger', 'Error');
     }
   }

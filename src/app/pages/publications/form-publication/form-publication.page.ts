@@ -150,7 +150,7 @@ export class FormPublicationPage implements OnInit {
     if (err.status === 422) {
       this.error_unprocesable = err.error.errors;
     }else{
-      console.log(err);
+      this.alertError('Error en el servidor, por favor intente más tarde', 'danger', 'Error');
     }
   }
 
@@ -181,8 +181,21 @@ export class FormPublicationPage implements OnInit {
     if (err.status === 422) {
       this.error_unprocesable = err.error.errors;
     }else{
-      console.log(err);
+      this.alertError('Error en el servidor, por favor intente más tarde', 'danger', 'Error');
     }
+  }
+
+  async alertError(message:string, color:string, header:string) {
+    const toast = await this.toast.create({
+      header,
+      message,
+      position: 'top',
+      animated:true,
+      color,
+      duration:4000,
+      cssClass:'alert-error'
+    });
+    toast.present();
   }
 
 } 

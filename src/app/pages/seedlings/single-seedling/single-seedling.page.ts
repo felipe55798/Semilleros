@@ -121,7 +121,7 @@ export class SingleSeedlingPage implements OnInit {
   }
 
   async handleErrorDelete(err){
-    console.log(err);
+    this.alertError('Error en el servidor, por favor intente más tarde', 'danger', 'Error');
   }
 
   getSeedling(){
@@ -243,12 +243,24 @@ export class SingleSeedlingPage implements OnInit {
 
   async handleErrorParticipate(error: any) {
     this.sending = false;
-    console.log(error);
     const toast = await this.toastController.create({
       header : 'Error',
       duration : 3000,
       message : error.error.message,
       color : 'danger'
+    });
+    toast.present();
+  }
+
+  async alertError(message:string, color:string, header:string) {
+    const toast = await this.toastController.create({
+      header,
+      message,
+      position: 'top',
+      animated:true,
+      color,
+      duration:4000,
+      cssClass:'alert-error'
     });
     toast.present();
   }

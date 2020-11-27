@@ -74,7 +74,7 @@ export class ProfileComponent implements OnInit {
         this.programs = res.programs;
       },
       (err)=>{
-        console.log(err);
+        this.alertError('Error en el servidor, por favor intente más tarde', 'danger', 'Error');
       }
     );
   }

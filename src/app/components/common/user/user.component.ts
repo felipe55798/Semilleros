@@ -60,7 +60,6 @@ export class UserComponent implements OnInit {
   }
 
   handleError(error:any) {
-    console.error(error);
     this.update.emit(true);
     this.sending = false;
     this.showMessage(error.message, 'danger');

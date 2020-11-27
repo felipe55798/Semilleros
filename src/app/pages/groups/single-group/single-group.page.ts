@@ -56,7 +56,7 @@ export class SingleGroupPage implements OnInit {
   }
   
   handleError(error: any) {
-    console.error(error);
+    this.handleResponseDelete(error);
   }
 
   async presentActionSheet() {
@@ -125,6 +125,6 @@ export class SingleGroupPage implements OnInit {
   }
 
   async handleErrorDelete(err){
-    console.log(err);
+    this.handleResponseDelete(err);
   }
 }

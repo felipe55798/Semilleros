@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
+import { ToastController } from '@ionic/angular';
 import { User } from 'src/app/interfaces/user';
 import { UserService } from 'src/app/services/user.service';
 
@@ -13,7 +14,8 @@ export class SingleUserPage implements OnInit {
   id: string;
   user:User = null;
   constructor(private route: ActivatedRoute,
-    public apiService: UserService) { }
+    public apiService: UserService,
+    private toastController: ToastController) { }
 
   ngOnInit() {
     this.id = this.route.snapshot.paramMap.get('id');
@@ -32,7 +34,20 @@ export class SingleUserPage implements OnInit {
   }
   
   handleError(error: any) {
-    console.log(error);
+    this.alertError('Error en el servidor, por favor intente más tarde', 'danger', 'Error');
+  }
+  
+  async alertError(message:string, color:string, header:string) {
+    const toast = await this.toastController.create({
+      header,
+      message,
+      position: 'top',
+      animated:true,
+      color,
+      duration:4000,
+      cssClass:'alert-error'
+    });
+    toast.present();
   }
 
 }

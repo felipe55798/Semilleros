@@ -6,6 +6,7 @@ import { UserService } from 'src/app/services/user.service';
 import { AuthService } from 'src/app/services/auth.service';
 import { Seedling } from 'src/app/interfaces/seedling';
 import { RefreshService } from 'src/app/services/refresh.service';
+import { ToastController } from '@ionic/angular';
 
 @Component({
   selector: 'app-users-list',
@@ -21,7 +22,8 @@ export class UsersListPage implements OnInit {
   constructor(private route: ActivatedRoute,
     private authService: AuthService,
     private userService: UserService,
-    private refreshService: RefreshService) { }
+    private refreshService: RefreshService,
+    private toastController: ToastController) { }
 
   ngOnInit() {
     this.getTeachersList();
@@ -61,7 +63,7 @@ export class UsersListPage implements OnInit {
   }
   
   handleError(error: any) {
-    console.error(error);
+    this.alertError('Error en el servidor, por favor intente más tarde', 'danger', 'Error');
   }
 
   refreshUser() {
@@ -71,6 +73,19 @@ export class UsersListPage implements OnInit {
   doRefresh(event){
     this.refreshUser();
     event.target.complete()
+  }
+
+  async alertError(message:string, color:string, header:string) {
+    const toast = await this.toastController.create({
+      header,
+      message,
+      position: 'top',
+      animated:true,
+      color,
+      duration:4000,
+      cssClass:'alert-error'
+    });
+    toast.present();
   }
 
 }

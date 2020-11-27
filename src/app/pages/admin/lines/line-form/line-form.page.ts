@@ -114,12 +114,11 @@ export class LineFormPage implements OnInit {
   }
 
   handleResponse(res){
-    // console.log(res);
     this.groups = res.groups;
 
   }
   handleError(err){
-    console.log(err);
+    this.handleErrorCreate(err);
   }
 
   createLine(){
@@ -152,7 +151,7 @@ export class LineFormPage implements OnInit {
       const toast = await this.toastCtrl.create({
         message: err.message,
         duration: 2000,
-        color:'success'
+        color:'danger'
       });
       toast.present();
     }

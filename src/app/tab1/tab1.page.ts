@@ -43,7 +43,6 @@ export class Tab1Page{
       this.loading = false;
       if (res) {
         this.loggedUser = res;
-        console.log(this.loggedUser);
         
         if (this.loggedUser.roles[0].id === 1) {
           this.admin = true;

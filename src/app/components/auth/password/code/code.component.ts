@@ -36,8 +36,6 @@ export class CodeComponent implements OnInit {
 
   find() {
     this.sending = true;
-    console.log('Entrando a find');
-    
     this.passwordService.findCode(this.data.value).subscribe(
       res => this.handleResponse(res),
       err => this.handleError(err)
@@ -45,18 +43,15 @@ export class CodeComponent implements OnInit {
   }
 
   handleResponse(response) {
-    console.log(response);
     this.response.emit(response);
     this.sending = false;
   }
 
   handleError(error) {
     this.sending = false;
-    console.error(error);
     if (error.status === 422) {
       this.error_unprocesable = error.error.errors;
     }else{
-      console.log(error);
       this.alertResponse(error.error.message, 'danger', 'Error');
     }
   }

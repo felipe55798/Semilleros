@@ -120,7 +120,7 @@ export class SeedlingFormPage implements OnInit {
   }
 
   handleErrorTeachers(err){
-    console.log(err);
+    this.handleErrorCreate(err);
   }
 
   getGroups(){
@@ -135,7 +135,7 @@ export class SeedlingFormPage implements OnInit {
 
   }
   handleError(err){
-    console.log(err);
+    this.handleErrorCreate(err);
   }
 
   addSeedling(){
@@ -167,7 +167,7 @@ export class SeedlingFormPage implements OnInit {
       const toast = await this.toastCtrl.create({
         message: err.message,
         duration: 2000,
-        color:'success'
+        color:'danger'
       });
       toast.present();
     }

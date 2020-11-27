@@ -1,4 +1,5 @@
 import { Component, Input, OnInit } from '@angular/core';
+import { ToastController } from '@ionic/angular';
 import { Seedling } from 'src/app/interfaces/seedling';
 import { User } from 'src/app/interfaces/user';
 import { AuthService } from 'src/app/services/auth.service';
@@ -25,7 +26,8 @@ export class HomeSeedlingComponent implements OnInit {
   @Input() user:User = null;
   constructor(private seedlingService:SeedlingsService,
               private authService:AuthService,
-              private refreshService: RefreshService) { }
+              private refreshService: RefreshService,
+              private toastController: ToastController) { }
 
   ngOnInit() {
     this.validRole()
@@ -77,7 +79,20 @@ export class HomeSeedlingComponent implements OnInit {
   }
 
   handleError(error: any) {
-    console.error(error);
     this.loading = false;
+    this.alertError('Error en el servidor, por favor intente más tarde', 'danger', 'Error');
+  }
+
+  async alertError(message:string, color:string, header:string) {
+    const toast = await this.toastController.create({
+      header,
+      message,
+      position: 'top',
+      animated:true,
+      color,
+      duration:4000,
+      cssClass:'alert-error'
+    });
+    toast.present();
   }
 }

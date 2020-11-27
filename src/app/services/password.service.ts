@@ -15,7 +15,6 @@ export class PasswordService {
   }
 
   findCode(data){
-    console.log(data);
     return this.httpClient.get(`${url}/findToken/${data.token}`);
   }
 
