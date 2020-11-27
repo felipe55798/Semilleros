@@ -20,4 +20,10 @@
   </ion-header>
 
   <app-department *ngFor="let department of departments ; let i = index" [department]=department [value]= i></app-department>
+  <app-empty [title_message]="'No hay departamentos disponibles'" *ngIf="departments.length === 0"  ></app-empty>
+  <div class="container_add_button" *ngIf="admin && departments.length === 0">
+    <a routerLink="/home/departments/add"  class="add_group_link ion-text-center">
+      Crear departamento
+    </a>
+  </div>
 </ion-content>

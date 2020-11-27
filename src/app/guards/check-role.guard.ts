@@ -14,8 +14,7 @@ export class CheckRoleGuard implements CanActivate {
     next: ActivatedRouteSnapshot,
     state: RouterStateSnapshot): Promise<boolean>{
     const { role, role2 } = next.data;
-    await this.authService.checkRole(Number(role), Number(role2))
-    return true;
+    return await this.authService.checkRole(Number(role), Number(role2))
   }
   
 }
