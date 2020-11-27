@@ -2,6 +2,7 @@ import { Component } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { LoadingController, ToastController } from '@ionic/angular';
 import { Department } from '../interfaces/department';
+import { AuthService } from '../services/auth.service';
 import { DepartmentService } from '../services/departments.service';
 import { RefreshService } from '../services/refresh.service';
 
@@ -12,12 +13,13 @@ import { RefreshService } from '../services/refresh.service';
 })
 export class Tab2Page {
   loading:boolean = true;
-
-  departments: Department[]=[];
+  admin: boolean = false;
+  departments: Department[]=[]; 
   constructor(private apiService: DepartmentService,
               private loadingController: LoadingController,
               private route:ActivatedRoute,
               private refreshService: RefreshService,
+              private authService: AuthService,
               private toastController: ToastController) {}
 
   ngOnInit() {
@@ -28,7 +30,35 @@ export class Tab2Page {
         }
       }
     )
+
+    this.authService.logoutEvent.subscribe(
+      res=>{
+        this.admin = false;
+      }
+    )
+
+    this.authService.loginEvent.subscribe(
+      res=>{
+        this.getUser()
+      }
+    )
+
     this.getDepartments();
+    this.getUser()
+  }
+
+  getUser(){
+    this.authService.getUser().subscribe(
+      user => {
+        if (user) {
+          if (user.roles[0].id === 1) {
+            console.log(user);
+            
+            this.admin = true;
+          }
+        }
+      }
+    )
   }
 
   async getDepartments() {
@@ -72,6 +102,7 @@ export class Tab2Page {
 
   async doRefresh(event){
     await this.getDepartments()
+    this.getUser()
     event.target.complete()
   }
 
