@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { ToastController } from '@ionic/angular';
+import { LoadingController, ToastController } from '@ionic/angular';
 import { error } from 'protractor';
 import { Seedling } from 'src/app/interfaces/seedling';
 import { AuthService } from 'src/app/services/auth.service';
@@ -18,7 +18,8 @@ export class SeedlingsListPage implements OnInit {
   constructor(private apiService:SeedlingsService,
               private refreshService: RefreshService,
               private authService: AuthService,
-              private toastController: ToastController) { }
+              private toastController: ToastController,
+              private loadingController: LoadingController) { }
 
   ngOnInit() {
     this.getSeedlings();
@@ -42,7 +43,13 @@ export class SeedlingsListPage implements OnInit {
     )
   }
 
-  getSeedlings() {
+  async getSeedlings() {
+    const loading = await this.loadingController.create({
+      cssClass: 'my-custom-class',
+      message: 'Cargando semilleros...',
+      duration: 2000
+    });
+    await loading.present();
     this.apiService.getSeedlingsList().subscribe(
       response => this.handleResponse(response), 
       err => this.handleError(err)

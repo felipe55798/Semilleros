@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
-import { ActionSheetController, AlertController, NavController, ToastController } from '@ionic/angular';
+import { ActionSheetController, AlertController, LoadingController, NavController, ToastController } from '@ionic/angular';
 import { Department } from 'src/app/interfaces/department';
 import { AuthService } from 'src/app/services/auth.service';
 import { DepartmentService } from 'src/app/services/departments.service';
@@ -14,6 +14,7 @@ export class SingleDepartmentPage implements OnInit {
   admin:boolean = false;
   id: string;
   department:Department = {};
+  loading:boolean = true;
   constructor(private route: ActivatedRoute,
               private apiService: DepartmentService,
               private authService: AuthService,
@@ -41,7 +42,7 @@ export class SingleDepartmentPage implements OnInit {
     )
   }
 
-  getDepartment(){
+  async getDepartment(){
     return this.apiService.getDepartment(this.id).subscribe(
       response => this.handleResponse(response),
       err => this.handleError(err)
@@ -50,10 +51,12 @@ export class SingleDepartmentPage implements OnInit {
 
   handleResponse(response) {
     this.department = response.department;
+    this.loading = false;
   }
   
   handleError(error: any) {
     this.alertError('Error en el servidor, por favor intente más tarde', 'danger', 'Error');
+    this.loading = false;
   }
 
   async presentActionSheet() {

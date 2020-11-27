@@ -8,5 +8,6 @@
   </ion-toolbar>
 </ion-header>
 <ion-content>
+  <app-empty [title_message]="'Sin grupos de investigación'" *ngIf="groups?.length === 0"></app-empty>
   <app-one-group *ngFor="let group of groups" [group]=group></app-one-group>
 </ion-content>

@@ -23,7 +23,7 @@ export class SingleProgramPage implements OnInit {
               private navCtrl: NavController,
               private toastCtrl: ToastController,
               private alertController: AlertController,
-              private refreshService: RefreshService) { }
+              private refreshService: RefreshService,) { }
 
   ngOnInit() {
     let id = this.route.snapshot.paramMap.get('id');

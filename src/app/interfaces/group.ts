@@ -10,6 +10,6 @@ export interface Group {
     updated_at?: Date,
     created_at?: Date,
     seedlings?:Seedling[],
-    publications?:Publication,
+    publications?:Publication[],
     lines?:Line[]
 }

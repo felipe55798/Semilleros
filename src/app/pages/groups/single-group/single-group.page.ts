@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
-import { ActionSheetController, AlertController, NavController, ToastController } from '@ionic/angular';
+import { ActionSheetController, AlertController, LoadingController, NavController, ToastController } from '@ionic/angular';
 import { Group } from 'src/app/interfaces/group';
 import { Seedling } from 'src/app/interfaces/seedling';
 import { AuthService } from 'src/app/services/auth.service';
@@ -25,6 +25,7 @@ export class SingleGroupPage implements OnInit {
               private alertController:AlertController,
               private navCtrl:NavController,
               private toastCtrl:ToastController,
+              private loadingController:LoadingController,
               private refresService: RefreshService
   ) { }
 
@@ -46,7 +47,13 @@ export class SingleGroupPage implements OnInit {
     )
   }
 
-  getGroup() {
+  async getGroup() {
+    const loading = await this.loadingController.create({
+      cssClass: 'my-custom-class',
+      message: 'Cargando información del grupo...',
+      duration: 2000
+    });
+    await loading.present();
     return this.apiService.getGroup(this.id).subscribe(
       res => this.handleResponse(res),
       err => this.handleError(err)

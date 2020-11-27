@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
-import { ActionSheetController, AlertController, NavController, ToastController } from '@ionic/angular';
+import { ActionSheetController, AlertController, LoadingController, NavController, ToastController } from '@ionic/angular';
 import { Seedling } from 'src/app/interfaces/seedling';
 import { User } from 'src/app/interfaces/user';
 import { AuthService } from 'src/app/services/auth.service';
@@ -35,6 +35,7 @@ export class SingleSeedlingPage implements OnInit {
               private actionSheetController: ActionSheetController,
               private navCtrl:NavController,
               private toastCtrl:ToastController,
+              private loadingController: LoadingController,
               private refreshService: RefreshService
   ) { }
 
@@ -124,7 +125,13 @@ export class SingleSeedlingPage implements OnInit {
     this.alertError('Error en el servidor, por favor intente más tarde', 'danger', 'Error');
   }
 
-  getSeedling(){
+  async getSeedling(){
+    const loading = await this.loadingController.create({
+      cssClass: 'my-custom-class',
+      message: 'Cargando información...',
+      duration: 2000
+    });
+    await loading.present();
     return this.apiService.getSeedling(this.id).subscribe(
       res => this.handleResponse(res),
       err => this.handleError(err)

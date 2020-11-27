@@ -6,7 +6,7 @@
       <p class="ion-text-center">Escribe el código de verificación de 6 dígitos que enviamos a tu correo electrónico</p>
       <form [formGroup]=data (ngSubmit)="find()">
         <ion-item class="item_input ">
-            <ion-input formControlName="token" maxlength="6"   (keyup)="handleKeyEvent($event)" ></ion-input>
+            <ion-input formControlName="token" maxlength="6" [type]="'number'"   (keyup)="handleKeyEvent($event)" ></ion-input>
         </ion-item>
         <div class="error-message error_custom" *ngIf="error_unprocesable.token" >
           {{ data.getError("token") }}
