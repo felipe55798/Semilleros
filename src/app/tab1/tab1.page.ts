@@ -2,6 +2,7 @@ import { Component } from '@angular/core';
 import { NavController } from '@ionic/angular';
 import { User } from '../interfaces/user';
 import { AuthService } from '../services/auth.service';
+import { RefreshService } from '../services/refresh.service';
 
 @Component({
   selector: 'app-tab1',
@@ -17,7 +18,8 @@ export class Tab1Page{
   visibleButtonList:boolean = false;
   
   constructor(private authService:AuthService,
-              private navCtrl:NavController) {}
+              private navCtrl:NavController,
+              private refreshService : RefreshService) {}
 
   async ngOnInit() {
     this.getUser();
@@ -64,5 +66,13 @@ export class Tab1Page{
   navigate(ruta:string){
     this.visibleButtonList = false;
     this.navCtrl.navigateForward(ruta);
+  }
+
+  async doRefresh(event){
+    this.refreshService.throwEvent('groups')
+    this.refreshService.throwEvent('seedlings')
+    this.refreshService.throwEvent('publications')
+
+    event.target.complete();
   }
 }
