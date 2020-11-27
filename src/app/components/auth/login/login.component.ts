@@ -15,7 +15,7 @@ export class LoginComponent implements OnInit {
   };
   validation_messages = {
     'email': [
-        { type: 'required', message: 'El correo es obligatorio.' },
+        { type: 'required', message: 'El correo es obligatorio' },
         { type: 'pattern', message: 'Formato de correo incorrecto.' }
       ],
       'password': [
