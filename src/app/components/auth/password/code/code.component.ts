@@ -71,24 +71,7 @@ export class CodeComponent implements OnInit {
 
   handleKeyEvent(event){
     if (event.target.value.length > 5) {
-      this.setPosition(event.target,5)
-    }
-  }
-
-  setPosition(element, position){
-    if (element != null) {
-      if (element.createTextRange) {
-        const range = element.createTextRange();
-        range.move('character', position);
-        range.select();
-      }else{
-        if (element.selectionStart) {
-          element.focus();
-          element.setSelectionRange(position,position);
-        }else{
-          element.focus();
-        }
-      }
+      event.target.blur();
     }
   }
 

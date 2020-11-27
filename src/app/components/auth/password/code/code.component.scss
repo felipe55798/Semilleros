@@ -40,8 +40,9 @@ ion-img{
               transparent 1.5ch) 
             0 87%/100% 2px no-repeat;
         color: dimgrey;
-        font: 6ch consolas, monospace;
+        font: 6.5ch consolas, monospace;
         letter-spacing: .5ch;
+        // margin-right: -1ch;
       }
       ion-input:focus {
         outline: none;
