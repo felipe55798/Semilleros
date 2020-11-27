@@ -5,6 +5,7 @@ import { Group } from 'src/app/interfaces/group';
 import { Seedling } from 'src/app/interfaces/seedling';
 import { AuthService } from 'src/app/services/auth.service';
 import { GroupsService } from 'src/app/services/groups.service';
+import { RefreshService } from 'src/app/services/refresh.service';
 
 @Component({
   selector: 'app-single-group',
@@ -23,7 +24,8 @@ export class SingleGroupPage implements OnInit {
               private actionSheetController: ActionSheetController,
               private alertController:AlertController,
               private navCtrl:NavController,
-              private toastCtrl:ToastController
+              private toastCtrl:ToastController,
+              private refresService: RefreshService
   ) { }
 
   ngOnInit() {
@@ -55,8 +57,19 @@ export class SingleGroupPage implements OnInit {
     this.group = response.group;
   }
   
-  handleError(error: any) {
-    this.handleResponseDelete(error);
+  async handleError(error: any) {
+    if (error.status === 404) {
+      this.refresService.throwEvent('groups');
+      this.navCtrl.navigateForward('/home/groups');
+      const toast = await this.toastCtrl.create({
+        header:error.statusText,
+        message:'Registro no encontrado',
+        color:'danger',
+        position:'top',
+        duration:2000
+      })
+      toast.present()
+    }
   }
 
   async presentActionSheet() {

@@ -190,17 +190,7 @@ const routes: Routes = [
       },
       {
         path:':id',
-        canActivate:[CheckTokenGuard],
-        children:[
-          {
-            path:'',
-            canActivate:[CheckRoleGuard],
-            data:{
-              role: 1
-            },
-            loadChildren: () => import('./programs/single-program/single-program.module').then( m => m.SingleProgramPageModule)
-          }
-        ]
+        loadChildren: () => import('./programs/single-program/single-program.module').then( m => m.SingleProgramPageModule)
       },
       {
         path:'edit/:id',
